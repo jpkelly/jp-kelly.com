@@ -15,9 +15,18 @@ function App() {
         <Header background="brand">
           <div className="navigation-sub">
             <Button icon={<Home />} hoverIndicator />
-            <Anchor href="/" margin="small" label="Projects" />
+            {/* <Anchor href="/" margin="small" label="Projects" />
             <Anchor href="/articles" margin="small" label="Articles" />
-            <Anchor href="/about" margin="small" label="About" />
+            <Anchor href="/about" margin="small" label="About" /> */}
+            <Link to="/" className="item">
+              Projects
+            </Link>
+            <Link to="/articles" className="item">
+              Articles
+            </Link>
+            <Link to="/about" className="item">
+              About
+            </Link>
           </div>
         </Header>
         <div className="navigation">

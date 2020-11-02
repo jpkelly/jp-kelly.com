@@ -20,7 +20,7 @@ function App() {
             <Anchor href="/about" margin="small" label="About" />
           </div>
         </Header>
-        {/* <div className="navigation">
+        <div className="navigation">
           <div className="navigation-sub">
             <Link to="/" className="item">
               Projects
@@ -32,7 +32,7 @@ function App() {
               About
             </Link>
           </div>
-        </div> */}
+        </div>
         {/* // Set up the Router */}
         <Route exact path="/" component={Projects} />
         <Route path="/articles" component={Articles} />

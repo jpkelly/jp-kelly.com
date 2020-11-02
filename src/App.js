@@ -10,10 +10,6 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        {/* // Set up the Router */}
-        <Route exact path="/" component={Projects} />
-        <Route path="/articles" component={Articles} />
-        <Route path="/about" component={About} />
         <div className="navigation">
           {/* <img src={logo} className="logo-image" alt="Logo Image" /> */}
           <div className="navigation-sub">
@@ -29,6 +25,10 @@ function App() {
             </Link>
           </div>
         </div>
+        {/* // Set up the Router */}
+        <Route exact path="/" component={Projects} />
+        <Route path="/articles" component={Articles} />
+        <Route path="/about" component={About} />
       </div>
     </BrowserRouter>
   );

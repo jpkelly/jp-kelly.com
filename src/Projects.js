@@ -9,20 +9,20 @@ function Projects(props) {
       <Thumbnail
         link="https://via.placeholder.com/150"
         image="https://via.placeholder.com/150"
-        title="150 px"
-        category=""
+        title="150 pc"
+        category="Interactive"
       />
       <Thumbnail
-        link="https://via.placeholder.com/150"
-        image="https://via.placeholder.com/150"
-        title="150 px"
-        category=""
+        link="https://via.placeholder.com/250"
+        image="https://via.placeholder.com/250"
+        title="250 px"
+        category="UI"
       />
       <Thumbnail
-        link="https://via.placeholder.com/150"
-        image="https://via.placeholder.com/150"
-        title="150 px"
-        category=""
+        link="https://via.placeholder.com/350"
+        image="https://via.placeholder.com/350"
+        title="350 px"
+        category="Code"
       />
     </div>
   );

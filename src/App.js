@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 // Import the BrowserRouter, Route and Link components
 import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { Box, Button, Anchor, Header, Text, Menu, Grommet } from 'grommet';
+import { Home } from 'grommet-icons';
 import Projects from './Projects.js';
 import Articles from './Articles.js';
 import About from './About.js';
@@ -10,10 +12,16 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <div className="navigation">
-          {/* <img src={logo} className="logo-image" alt="Logo Image" /> */}
+        <Header background="brand">
           <div className="navigation-sub">
-            {/* // Set up the Links */}
+            <Button icon={<Home />} hoverIndicator />
+            <Anchor href="/" margin="small" label="Projects" />
+            <Anchor href="/articles" margin="small" label="Articles" />
+            <Anchor href="/about" margin="small" label="About" />
+          </div>
+        </Header>
+        {/* <div className="navigation">
+          <div className="navigation-sub">
             <Link to="/" className="item">
               Projects
             </Link>
@@ -24,7 +32,7 @@ function App() {
               About
             </Link>
           </div>
-        </div>
+        </div> */}
         {/* // Set up the Router */}
         <Route exact path="/" component={Projects} />
         <Route path="/articles" component={Articles} />

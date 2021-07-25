@@ -10,7 +10,7 @@ function Projects(props) {
       <Box align="center" background="dark-2">
         <Button label="hello world" primary onClick={() => alert('hello, world')} />
         <div>
-          <h1>Projects</h1>
+          <h1>Projects!</h1>
           <Thumbnail
             link="https://via.placeholder.com/150"
             image="https://via.placeholder.com/150"

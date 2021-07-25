@@ -12,21 +12,21 @@ function Projects(props) {
         <div>
           <h1>Projects!</h1>
           <Thumbnail
-            link="https://via.placeholder.com/150"
-            image="https://via.placeholder.com/150"
+            link="https://via.placeholder.com/350x250"
+            image="https://via.placeholder.com/350x250"
             title="150 pc"
             category="Interactive"
           />
           <Thumbnail
-            link="https://via.placeholder.com/250"
-            image="https://via.placeholder.com/250"
+            link="https://via.placeholder.com/350x250"
+            image="https://via.placeholder.com/350x250"
             title="250 px"
             category="UI"
           />
           <Thumbnail
-            link="https://via.placeholder.com/350"
-            image="https://via.placeholder.com/350"
-            title="350 px"
+            link="https://via.placeholder.com/350x250"
+            image="https://via.placeholder.com/350x250"
+            title="250 px"
             category="Code"
           />
         </div>

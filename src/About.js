@@ -6,7 +6,7 @@ import { Home } from 'grommet-icons';
 function About(props) {
   return (
     <Grommet plain>
-      <Box align="center" background="dark-3">
+      <Box align="center" background="black">
         <Button label="hello world" primary onClick={() => alert('hello, world')} />
         <Box
           align="start"
@@ -14,7 +14,7 @@ function About(props) {
           pad="medium"
           flex
           fill="vertical"
-          background={{ color: 'accent-4' }}
+          background={{ color: 'dark-1' }}
         >
           <Text size="xxlarge" />
           {/* <Video
@@ -24,6 +24,8 @@ function About(props) {
           /> */}
           {/* <Vimeo video="https://player.vimeo.com/video/340782519" autoplay /> */}
           <Vimeo video={340782519} width={1280} height={720} autoplay loop />
+          &nbsp;
+          <Vimeo video={340248961} width={1280} height={720} autoplay loop />
         </Box>
         <Distribution
           values={[

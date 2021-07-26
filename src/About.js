@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Video } from './Video';
+import Vimeo from '@u-wave/react-vimeo';
 import { Box, Button, Video, Text, Distribution, Grommet } from 'grommet';
 import { Home } from 'grommet-icons';
 
@@ -17,11 +17,13 @@ function About(props) {
           background={{ color: 'accent-4' }}
         >
           <Text size="xxlarge" />
-          <Video
+          {/* <Video
             controls="below"
             src="https://assets.mixkit.co/videos/preview/mixkit-a-man-paddling-on-a-board-near-the-seashore-1578-small.mp4"
             loop
-          />
+          /> */}
+          {/* <Vimeo video="https://player.vimeo.com/video/340782519" autoplay /> */}
+          <Vimeo video={340782519} width={1280} height={720} autoplay loop />
         </Box>
         <Distribution
           values={[

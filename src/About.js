@@ -23,9 +23,9 @@ function About(props) {
             loop
           /> */}
           {/* <Vimeo video="https://player.vimeo.com/video/340782519" autoplay /> */}
-          <Vimeo video={340782519} width={1280} height={720} autoplay loop />
+          <Vimeo video={340782519} width={1280} height={720} autoplay loop autopause="False" />
           &nbsp;
-          <Vimeo video={340248961} width={1280} height={720} autoplay loop />
+          <Vimeo video={340248961} width={1280} height={720} autoplay loop autopause="False" />
         </Box>
         <Distribution
           values={[

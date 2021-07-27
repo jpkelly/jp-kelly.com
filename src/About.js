@@ -14,7 +14,7 @@ function About(props) {
           pad="medium"
           flex
           fill="vertical"
-          background={{ color: 'dark-1' }}
+          background={{ color: '#111' }}
         >
           <Text size="xxlarge" />
           {/* <Video

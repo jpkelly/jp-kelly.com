@@ -22,6 +22,7 @@ function About(props) {
             loop
           /> */}
           {/* <Vimeo video="https://player.vimeo.com/video/340782519" autoplay /> */}
+          <h1>鶴の恩返し (The Crane's Gift)</h1>
           <Vimeo video={489306679} width={1280} height={720} />
         </Box>
         <Distribution

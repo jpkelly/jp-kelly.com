@@ -10,3 +10,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+a {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(0, 173, 279);
+}

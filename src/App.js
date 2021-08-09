@@ -21,15 +21,17 @@ function App() {
             <Link to="/" className="item">
               Projects
             </Link>
+            &nbsp;
             <Link to="/articles" className="item">
               Articles
             </Link>
+            &nbsp;
             <Link to="/about" className="item">
               About
             </Link>
           </div>
         </Header>
-        <div className="navigation">
+        {/* <div className="navigation">
           <div className="navigation-sub">
             <Link to="/" className="item">
               Projects
@@ -41,7 +43,7 @@ function App() {
               About
             </Link>
           </div>
-        </div>
+        </div> */}
         {/* // Set up the Router */}
         <Route exact path="/" component={Projects} />
         <Route path="/articles" component={Articles} />

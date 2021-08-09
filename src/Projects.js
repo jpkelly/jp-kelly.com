@@ -9,14 +9,13 @@ function Projects(props) {
   return (
     <Grommet plain>
       <Box align="center" background="black">
-        <Button label="hello world" primary onClick={() => alert('hello, world')} />
         <Box
           align="start"
           justify="between"
           pad="medium"
           flex
           fill="vertical"
-          background={{ color: '#111' }}
+          background={{ color: '#000' }}
         >
           <Text size="xxlarge" />
           {/* <Video
@@ -45,6 +44,7 @@ function Projects(props) {
           )}
         </Distribution>
       </Box>
+      <Button label="hello world" primary onClick={() => alert('hello, world')} />
     </Grommet>
   );
 }

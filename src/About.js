@@ -7,14 +7,13 @@ function About(props) {
   return (
     <Grommet plain>
       <Box align="center" background="black">
-        <Button label="hello world" primary onClick={() => alert('hello, world')} />
         <Box
           align="start"
           justify="between"
           pad="medium"
           flex
           fill="vertical"
-          background={{ color: '#111' }}
+          background={{ color: '#000' }}
         >
           <Text size="xxlarge" />
           {/* <Video
@@ -23,9 +22,7 @@ function About(props) {
             loop
           /> */}
           {/* <Vimeo video="https://player.vimeo.com/video/340782519" autoplay /> */}
-          <Vimeo video={340782519} width={1280} height={720} autoplay loop autopause="False" />
-          &nbsp;
-          <Vimeo video={340248961} width={1280} height={720} autoplay loop autopause="False" />
+          <Vimeo video={489306679} width={1280} height={720} />
         </Box>
         <Distribution
           values={[
@@ -42,6 +39,7 @@ function About(props) {
             </Box>
           )}
         </Distribution>
+        <Button label="hello world" primary onClick={() => alert('hello, world')} />
       </Box>
     </Grommet>
   );

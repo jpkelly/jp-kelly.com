@@ -12,7 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header background="brand">
+        <Header background="black">
           <div className="navigation-sub">
             <Button icon={<Home />} hoverIndicator />
             {/* <Anchor href="/" margin="small" label="Projects" />

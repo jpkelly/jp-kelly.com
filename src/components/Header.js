@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BiHomeSmile } from 'react-icons/bi';
+// import { BiHomeSmile } from 'react-icons/bi';
 import kamon from '../kamon.png';
 
 const Header = props => {
@@ -8,7 +8,7 @@ const Header = props => {
     <h1 className="text-4xl">
       <Link to="/">
         {/* <kamon className="inline-block align-top" /> */}
-        <img src={kamon} className="inline-block align-top kamon" />
+        <img src={kamon} className="inline-block align-top kamon" alt="logo" />
       </Link>
       <div className="inline-block mt-1">
         <Link to="/">Projects</Link>

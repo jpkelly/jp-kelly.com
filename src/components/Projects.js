@@ -14,6 +14,7 @@ function Projects(props) {
           loop
           autopause="False"
           responsive="True"
+          controls="False"
         />
         &nbsp;
         <Vimeo
@@ -24,6 +25,7 @@ function Projects(props) {
           loop
           autopause="False"
           responsive="True"
+          controls="False"
         />
       </div>
     </div>

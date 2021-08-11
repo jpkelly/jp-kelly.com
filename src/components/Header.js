@@ -10,12 +10,18 @@ const Header = props => {
         {/* <kamon className="inline-block align-top" /> */}
         <img src={kamon} className="inline-block align-top kamon" alt="logo" />
       </Link>
-      <div className="inline-block mt-1">
-        <Link to="/">Projects</Link>
-        &nbsp;
-        <Link to="/articles">Articles</Link>
-        &nbsp;
-        <Link to="/about">About</Link>
+      <div className="inline-block mt-1 divide-x-2">
+        <Link className="px-3" to="/">
+          Projects
+        </Link>
+        {/* &nbsp; */}
+        <Link className="px-3" to="/articles">
+          Articles
+        </Link>
+        {/* &nbsp; */}
+        <Link className="px-3" to="/about">
+          About
+        </Link>
       </div>
     </h1>
   );

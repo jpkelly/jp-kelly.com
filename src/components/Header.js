@@ -5,7 +5,7 @@ import kamon from '../kamon.png';
 
 const Header = props => {
   return (
-    <h1 className="text-4xl">
+    <h1 className="xl:text-3xl 2xl:text-4xl">
       <Link to="/">
         {/* <kamon className="inline-block align-top" /> */}
         <img src={kamon} className="inline-block align-top kamon" alt="logo" />

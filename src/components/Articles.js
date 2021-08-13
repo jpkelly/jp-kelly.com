@@ -12,14 +12,17 @@ function Articles(props) {
         <div className="col-span-8 md:col-span-8 lg:col-span-5 max-w-prose">
           <p className="text-base xl:text-lg">
             I have always loved technology and science. As a kid my first major purchase was a
-            computer with a 6502 processor and 4k of RAM. (upgradeable to 8k). I had visions of
+            computer with a 6502 processor and 4k of RAM (upgradeable to 8k). I had visions of
             combining video imagery and computer graphics. That computer was only capable of
             displaying graphics composed of ASCII characters. Later I had access to an Amiga
             computer which I used to merge graphics with video. I have worked in the live events
             industry for many years as a video engineer and projectionist. I have a keen sense of
-            what it takes to make imagery look great on screen. Over the years I have constantly
-            learned to use new software and equipment to create art. I found that I especially love
-            to play along with music as a VJ.
+            what it takes to make imagery look great on screen. I found that I especially love to
+            play along with music as a VJ. Over the years I have had the opportunity to do live
+            visuals for a number of musicians, events and parties. I am constantly learning to use
+            new software and equipment to create video art. I am a generalist by nature and am able
+            to integrate many disciplines. My background in electronics lends itself to the
+            integration of sensors and other input devices to create interactive installations.
           </p>
         </div>
 

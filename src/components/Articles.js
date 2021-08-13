@@ -5,12 +5,12 @@ function Articles(props) {
   return (
     <div className="container mx-auto my-5 py-5">
       <h2>JP Kelly</h2>
-      <div className="grid grid-cols-1 md:grid-cols-8 grid-rows-1 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-8 grid-rows-1 gap-10">
         <div className="col-span-8 md:col-span-8 lg:col-span-3">
           <img className="object-cover h-full w-full" src={jpk} alt="JP Kelly" />
         </div>
-        <div className="col-span-8 md:col-span-8 lg:col-span-5 max-w-prose">
-          <p className="text-base xl:text-lg">
+        <div className=" -mt-1.5 col-span-8 md:col-span-8 lg:col-span-5 max-w-prose">
+          <p>
             I have always loved technology and science. As a kid my first major purchase was a
             computer with a 6502 processor and 4k of RAM (upgradeable to 8k). I had visions of
             combining video imagery and computer graphics. That computer was only capable of
@@ -45,6 +45,7 @@ function Articles(props) {
         <li>Ableton</li>
         <li>Unreal Engine</li>
         <li>Bash</li>
+        <li>Typography</li>
       </ul>
       <div className="col-span-full items-center border border-yellow-300">
         <button

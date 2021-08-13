@@ -11,7 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 p {
-  @apply text-base xl:text-lg;
+  @apply text-base xl:text-lg mb-3;
 }
 
 h2 {

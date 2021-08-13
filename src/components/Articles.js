@@ -1,29 +1,36 @@
 import React from 'react';
+import jpk from '../jpk.jpg';
 
 function Articles(props) {
   return (
-    <div className="container mx-auto flex items-center py-5 bg-green-900">
-      <div className="float-left block mx-auto items-center bg-red-900">
-        <h2 className="text-2xl bg-black">Articles</h2>
-        <p className=" w-96  ">
-          I remember being very young and wanting to become a part of the C.I.A. or F.B.I. with the
-          intention of working my way up and somehow exposing them from the inside. I have no idea
-          where this thought originated, perhaps my mother. I always loved technology. As a kid my
-          first major purchase was a computer. It had a 6502 processor and 4k of RAM. (upgradeable
-          to 8k). I had visions of combining video imagery and computer graphics. Many years later I
-          actually found the means to merge graphics with video. While studying graphic design at
-          California College of the Arts I discovered agitprop, which appealed to my subversive
-          nature. This, combined with the focus on technology of the C.C.A. Media Arts department, I
-          found a direction for my art practice I could be passionate about.
-        </p>
-      </div>
-      <div className="w-96 border border-yellow-300">
-        <button
-          class="bg-transparant border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded"
-          onClick={() => alert('hello, world')}
-        >
-          Button
-        </button>
+    <div className="container mx-auto my-5 py-5">
+      <h2>JP Kelly</h2>
+      <div className="grid grid-cols-1 md:grid-cols-8 grid-rows-3 gap-5">
+        <div className="col-span-8 md:col-span-8 lg:col-span-3">
+          <img className="object-cover h-full w-full" src={jpk} alt="JP Kelly" />
+        </div>
+        <div className="col-span-8 md:col-span-8 lg:col-span-5 max-w-prose">
+          <p className="text-base xl:text-lg">
+            I have always loved technology and science. As a kid my first major purchase was a
+            computer with a 6502 processor and 4k of RAM. (upgradeable to 8k). I had visions of
+            combining video imagery and computer graphics. That computer was only capable of
+            displaying graphics composed of ASCII characters. Later I had access to an Amiga
+            computer which I used to merge graphics with video. I have worked in the live events
+            industry for many years as a video engineer and projectionist. I have a keen sense of
+            what it takes to make imagery look great on screen. Over the years I have constantly
+            learned to use new software and equipment to create art. I found that I especially love
+            to play along with music as a VJ.
+          </p>
+        </div>
+
+        <div className="col-span-full items-center border border-yellow-300">
+          <button
+            class="bg-transparant border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded"
+            onClick={() => alert('hello, world')}
+          >
+            Button
+          </button>
+        </div>
       </div>
     </div>
   );

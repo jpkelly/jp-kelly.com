@@ -11,21 +11,21 @@ function Gallery(props) {
           <Card
             title="My Title"
             text="Pie jujubes cupcake topping dessert tootsie roll tiramisu. Fruitcake cake muffin tart cupcake. Carrot cake topping sugar plum cotton candy chupa chups icing sweet roll danish chocolate cake."
-            imgsrc="https://picsum.photos/600/400/?random"
+            imgsrc="thumbnails/191-600x400.jpg"
             link="/huds"
           />
 
           <Card
             title="My Title"
             text="Pie jujubes cupcake topping dessert tootsie roll tiramisu. Fruitcake cake muffin tart cupcake. Carrot cake topping sugar plum cotton candy chupa chups icing sweet roll danish chocolate cake."
-            imgsrc="https://picsum.photos/600/400/?random"
+            imgsrc="thumbnails/627-600x400.jpg"
             link="/huds"
           />
 
           <Card
             title="My Title"
             text="Pie jujubes cupcake topping dessert tootsie roll tiramisu. Fruitcake cake muffin tart cupcake. Carrot cake topping sugar plum cotton candy chupa chups icing sweet roll danish chocolate cake."
-            imgsrc="https://picsum.photos/600/400/?random"
+            imgsrc="thumbnails/800-600x400.jpg"
             link="/huds"
           />
 

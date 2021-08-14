@@ -13,26 +13,26 @@ const Header = props => {
         <Link className="px-3" to="/about">
           About
         </Link>
-        <Link className="px-3" to="/projects">
+        <Link className="px-3" to="/gallery">
           Gallery
         </Link>
 
         {/* MAKE COMPONENT */}
-        <div class=" inline-block dropdown z-50">
-          <span class="px-3">Projects</span>
-          <ul class="z-50 dropdown-menu absolute hidden rounded-b text-gray-200 bg-gray-900 pt-1">
-            <li class="">
-              <Link className="px-3" to="/nac2018">
-                NAC'18 OEX
+        <div id="menu" className=" inline-block dropdown z-50">
+          <span className="px-3">Projects</span>
+          <ul className="z-50 dropdown-menu absolute hidden rounded-b-lg text-gray-200 bg-black py-3 ">
+            <li className="py-3">
+              <Link className="link px-3" to="/nac2018">
+                NAC 2018 OEX
               </Link>
             </li>
-            <li class="">
-              <Link className="px-3" to="/cranestory">
+            <li className="py-3">
+              <Link className="link px-3" to="/cranestory">
                 Crane Story
               </Link>
             </li>
-            <li class="">
-              <Link className="px-3" to="/projects">
+            <li className="py-3">
+              <Link className="link px-3" to="/huds">
                 HUDs
               </Link>
             </li>

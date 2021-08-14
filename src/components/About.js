@@ -29,8 +29,8 @@ function About(props) {
           </p>
           <p>
             While at California College of the Arts I learned how to uniquely express my views of
-            social issues through art that engages the viewer. My goal and vision is to allow people
-            to grow and learn through art that touches their hearts.
+            social issues through art that engages the viewer. My goal and vision is to provide a
+            way for people to grow and learn by touching their hearts.
           </p>
         </div>
       </div>

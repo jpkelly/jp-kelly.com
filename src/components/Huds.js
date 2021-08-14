@@ -1,7 +1,7 @@
 import React from 'react';
 import Vimeo from '@u-wave/react-vimeo';
 
-function Projects(props) {
+function Huds(props) {
   return (
     <div className="container mx-auto flex items-center my-5 py-5 ">
       <div className="container mx-auto">
@@ -33,4 +33,4 @@ function Projects(props) {
   );
 }
 
-export default Projects;
+export default Huds;

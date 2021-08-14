@@ -7,6 +7,7 @@ function Projects(props) {
       <div className="container mx-auto">
         <h2>Heads-up Displays</h2>
         <Vimeo
+          className="z-0"
           video={340782519}
           width={1280}
           height={720}

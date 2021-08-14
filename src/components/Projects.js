@@ -3,7 +3,7 @@ import Vimeo from '@u-wave/react-vimeo';
 
 function Projects(props) {
   return (
-    <div className="container mx-auto flex items-center my-5 py-5">
+    <div className="container mx-auto flex items-center my-5 py-5 ">
       <div className="container mx-auto">
         <h2>Heads-up Displays</h2>
         <Vimeo

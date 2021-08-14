@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Projects from './components/Projects.js';
 import About from './components/About.js';
 import Cranestory from './components/Cranestory.js';
+import Nac2018 from './components/Nac2018.js';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/projects" component={Projects} />
           <Route path="/about" component={About} />
           <Route path="/cranestory" component={Cranestory} />
+          <Route path="/nac2018" component={Nac2018} />
         </Switch>
       </div>
     </BrowserRouter>

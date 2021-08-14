@@ -20,10 +20,10 @@ function About(props) {
           <p>
             I have worked in the live events industry for many years as a video engineer and
             projectionist. I have a keen sense of what it takes to make imagery look great on
-            screen. I found that I especially love to play along with music as a VJ. Over the years
-            I have had the opportunity to do live visuals for a number of musicians, events, and
-            parties. I am constantly learning to use new software and equipment to create video art.
-            I am a generalist by nature and am able to merge many disciplines. My background in
+            screen. I found that I especially love to play video along with music as a VJ. Over the
+            years I have had the opportunity to do live visuals for a number of musicians, events,
+            and parties. I am constantly learning to use new software and equipment to create video
+            art. I am a generalist by nature and am able to merge many disciplines. My background in
             electronics lends itself to the integration of sensors and other input devices to create
             interactive installations.
           </p>
@@ -50,7 +50,8 @@ function About(props) {
         <li>Ableton</li>
         <li>Unreal Engine</li>
         <li>Bash</li>
-        <li>Typography</li>
+        <li>Graphic design & Typography</li>
+        <li>Barco Eventmaster (E2)</li>
       </ul>
       <div className="col-span-full mt-12">
         <button

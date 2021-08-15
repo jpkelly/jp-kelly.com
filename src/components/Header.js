@@ -32,8 +32,18 @@ const Header = props => {
               </Link>
             </li>
             <li className="py-3">
+              <Link className="link px-3" to="/craneflock">
+                Flock of Cranes
+              </Link>
+            </li>
+            <li className="py-3">
               <Link className="link px-3" to="/huds">
                 HUDs
+              </Link>
+            </li>
+            <li className="py-3">
+              <Link className="link px-3" to="/saturn">
+                Saturn
               </Link>
             </li>
           </ul>

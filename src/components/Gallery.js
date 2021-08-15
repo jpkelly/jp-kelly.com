@@ -13,33 +13,45 @@ function Gallery(props) {
             text="Made with Notch. Inspired by a story of a man who rescues a crane one cold winter night."
             imgsrc="thumbnails/cranestory.png"
             link="/cranestory"
+            alttext="The Crane's Requital"
           />
-
           <Card
-            title="Heads Up Displays"
-            text="Made with Notch. Some futuristic data displays"
-            imgsrc="thumbnails/huds.png"
-            link="/huds"
+            title="Flock of Cranes"
+            text="Testing out the flocking node in Notch."
+            imgsrc="thumbnails/craneflock.png"
+            link="/craneflock"
+            alttext="Flock of paper cranes"
           />
-
           <Card
             title="NAC 2018 Opening Experience"
             text="Opening video for the 2018 BMW National Aftersales Conference. Attendees were given a QR code which allowed them to upload photos to be displayed on the screen during the opening video."
             imgsrc="thumbnails/nac18.png"
             link="/nac2018"
+            alttext="NAC 2018 opening experience"
           />
-
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" />
+          <Card
+            title="Heads Up Displays"
+            text="Futuristic data displays made with Notch. "
+            imgsrc="thumbnails/huds.png"
+            link="/huds"
+            alttext="Heads Up Displays"
+          />
+          <Card
+            title="Saturn Orbit Test"
+            text="On screen visuals for an audience interactive game at a live event. Created with Notch."
+            imgsrc="thumbnails/saturn.png"
+            link="/saturn"
+            alttext="Saturn"
+          />
+          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
         </div>
       </div>
     </div>

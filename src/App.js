@@ -1,10 +1,12 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
-import Gallery from './components/Gallery.js';
-import About from './components/About.js';
-import Huds from './components/Huds.js';
-import Cranestory from './components/Cranestory.js';
-import Nac2018 from './components/Nac2018.js';
+import Gallery from './components/Gallery';
+import About from './components/About';
+import Huds from './components/Huds';
+import Cranestory from './components/Cranestory';
+import Craneflock from './components/Craneflock';
+import Nac2018 from './components/Nac2018';
+import Saturn from './components/Saturn';
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
           <Route path="/about" component={About} />
           <Route path="/huds" component={Huds} />
           <Route path="/cranestory" component={Cranestory} />
+          <Route path="/craneflock" component={Craneflock} />
           <Route path="/nac2018" component={Nac2018} />
+          <Route path="/saturn" component={Saturn} />
         </Switch>
       </div>
     </BrowserRouter>

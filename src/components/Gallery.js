@@ -38,7 +38,7 @@ function Gallery(props) {
           />
           <Card
             title="Saturn Orbit Test"
-            text="On screen visuals for an audience interactive game at a live event. Created with Notch."
+            text="On screen visuals for an interactive game at a live event. Created with Notch."
             imgsrc="thumbnails/saturn.png"
             link="/saturn"
             alttext="Saturn"

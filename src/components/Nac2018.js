@@ -7,7 +7,14 @@ function Nac2018(props) {
       <div className="w-full grid grid-cols-1 grid-rows- gap-0">
         <div className="container mx-auto">
           <h2>NAC 2018 Opening Experience</h2>
-          <Vimeo video={563887969} width={1280} height={720} responsive="True" autoplay="True" />
+          <Vimeo
+            video={563887969}
+            width={1280}
+            height={720}
+            responsive="True"
+            autoplay="True"
+            autopause="False"
+          />
         </div>
         <div className=" h-5 pr-3 text-right text-xs">A Studio Firefly Production</div>
         <h2 className="">About This Project</h2>

@@ -17,14 +17,14 @@ function Gallery(props) {
           />
           <Card
             title="Flock of Cranes"
-            text="Testing out the flocking node in Notch."
+            text="Testing out the flocking node in Notch. Cloning 3D objects with randomized textures."
             imgsrc="thumbnails/craneflock.png"
             link="/craneflock"
             alttext="Flock of paper cranes"
           />
           <Card
             title="NAC 2018 Opening Experience"
-            text="Opening video for the 2018 BMW National Aftersales Conference. Attendees were given a QR code which allowed them to upload photos to be displayed on the screen during the opening video."
+            text="2018 BMW National Aftersales Conference opening. Attendees use QR code to upload photos which are shown screen."
             imgsrc="thumbnails/nac18.png"
             link="/nac2018"
             alttext="NAC 2018 opening experience"

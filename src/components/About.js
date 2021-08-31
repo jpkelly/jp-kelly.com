@@ -34,7 +34,13 @@ function About(props) {
           </p>
         </div>
       </div>
-      <h2 className="mt-10 col-span-full">Here are a few of my favorie tools:</h2>
+      <button
+        className="bg-transparant w-full md:w-1/6 mt-10 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded"
+        onClick={() => window.open('contactform', '_self')}
+      >
+        Contact
+      </button>
+      <h2 className="mt-7 col-span-full">Here are a few of my favorie tools:</h2>
       <ul className="">
         <li>Photoshop, Illustrator, After Effects</li>
         <li>Rhino, Blender, Cinema 4D</li>

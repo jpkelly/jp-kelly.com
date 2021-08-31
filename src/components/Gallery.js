@@ -6,7 +6,7 @@ function Gallery(props) {
     <div className="container mx-auto my-5 py-5 ">
       <h2>Project Gallery</h2>
       {/* wrapper */}
-      <div className="container w-full mx-auto px-4 md:px-12">
+      <div className="container w-full mx-auto ">
         <div className="flex flex-wrap -mx-1 lg:-mx-4">
           <Card
             title="鶴の恩返し (The Crane's Requital)"
@@ -41,10 +41,22 @@ function Gallery(props) {
             text="On screen visuals for an interactive game at a live event. Created with Notch."
             imgsrc="thumbnails/saturn.png"
             link="/saturn"
-            alttext="Saturn"
+            alttext="Saturn Notch"
           />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          <Card
+            title="F8 Developers Interactive Installation"
+            text="Attendees manipulate visuals in real time. Notch, TouchDesigner, LEAP Motion and StreamDeck controller."
+            imgsrc="thumbnails/F8interactive.png"
+            link="/F8interactive"
+            alttext="F8 Interactive Installation"
+          />
+          <Card
+            title="Houdini Previz"
+            text="Previsualization of smoke effect for a MINI show created in Houdini."
+            imgsrc="thumbnails/Houdini.png"
+            link="/houdini"
+            alttext="Houdini Smoke"
+          />
           <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
           <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
           <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />

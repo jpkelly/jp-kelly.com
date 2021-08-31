@@ -7,6 +7,9 @@ import Cranestory from './components/Cranestory';
 import Craneflock from './components/Craneflock';
 import Nac2018 from './components/Nac2018';
 import Saturn from './components/Saturn';
+import F8interactive from './components/F8interactive';
+import Houdini from './components/Houdini';
+import ContactForm from './components/ContactForm';
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
           <Route path="/craneflock" component={Craneflock} />
           <Route path="/nac2018" component={Nac2018} />
           <Route path="/saturn" component={Saturn} />
+          <Route path="/F8interactive" component={F8interactive} />
+          <Route path="/Houdini" component={Houdini} />
+          <Route path="/contactform" component={ContactForm} />
         </Switch>
       </div>
     </BrowserRouter>

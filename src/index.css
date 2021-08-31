@@ -11,7 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 p {
-  @apply text-base xl:text-lg mb-3;
+  @apply text-base xl:text-lg mb-3 max-w-prose;
 }
 
 h2 {
@@ -20,6 +20,18 @@ h2 {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.formInput {
+  @apply border border-blue-500 bg-black text-white font-normal py-2 px-4 rounded;
+}
+
+.submit-btn {
+  @apply border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded;
+}
+
+.errorMessage {
+  @apply text-red-400;
 }
 
 /* a {

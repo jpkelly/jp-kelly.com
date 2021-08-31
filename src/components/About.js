@@ -55,8 +55,8 @@ function About(props) {
       </ul>
       <div className="col-span-full mt-12">
         <button
-          class="bg-transparant border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded"
-          onClick={() => alert('hello, world')}
+          className="bg-transparant w-full md:w-1/6 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded"
+          onClick={() => window.open('contactform', '_self')}
         >
           Contact
         </button>

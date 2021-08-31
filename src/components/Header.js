@@ -5,7 +5,7 @@ import kamon from '../kamon.png';
 
 const Header = props => {
   return (
-    <h1 className="xl:text-3xl 2xl:text-4xl">
+    <h1 className="xl:text-2xl 2xl:text-4xl">
       <Link to="/about">
         <img src={kamon} className="kamon" alt="logo" />
       </Link>
@@ -21,27 +21,27 @@ const Header = props => {
         <div id="menu" className=" inline-block dropdown z-50">
           <span className="px-3">Projects</span>
           <ul className="z-50 dropdown-menu absolute hidden rounded-b-lg text-gray-200 bg-black py-3 ">
-            <li className="py-3">
+            <li className="py-3 text-2xl">
               <Link className="link px-3" to="/nac2018">
                 NAC 2018 OEX
               </Link>
             </li>
-            <li className="py-3">
+            <li className="py-3 text-2xl">
               <Link className="link px-3" to="/cranestory">
                 Crane Story
               </Link>
             </li>
-            <li className="py-3">
+            <li className="py-3 text-2xl">
               <Link className="link px-3" to="/craneflock">
                 Flock of Cranes
               </Link>
             </li>
-            <li className="py-3">
+            <li className="py-3 text-2xl">
               <Link className="link px-3" to="/huds">
                 HUDs
               </Link>
             </li>
-            <li className="py-3">
+            <li className="py-3 text-2xl">
               <Link className="link px-3" to="/saturn">
                 Saturn
               </Link>

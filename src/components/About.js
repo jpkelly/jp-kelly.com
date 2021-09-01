@@ -59,14 +59,14 @@ function About(props) {
         <li>Graphic design & Typography</li>
         <li>Barco Eventmaster (E2)</li>
       </ul>
-      <div className="col-span-full mt-12">
+      {/* <div className="col-span-full mt-12">
         <button
           className="bg-transparant w-full md:w-1/6 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded"
           onClick={() => window.open('contactform', '_self')}
         >
           Contact
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -48,9 +48,6 @@ a:hover {
   @apply inline-block align-top mx-0 my-0 transform scale-50 xl:scale-75 2xl:scale-100 -mr-2 xl:mr-1 2xl:mr-4 2xl:mt-2.5 2xl:ml-2.5;
 }
 
-.dropdown:hover .dropdown-menu {
+/* .dropdown:hover .dropdown-menu {
   display: block;
-}
-.dropdown:focus ~ .dropdown-menu {
-  display: none;
-}
+} */

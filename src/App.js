@@ -10,6 +10,8 @@ import Saturn from './components/Saturn';
 import F8interactive from './components/F8interactive';
 import Houdini from './components/Houdini';
 import ContactForm from './components/ContactForm';
+import Nac19 from './components/Nac19';
+import PIWorks from './components/PIWorks';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path="/F8interactive" component={F8interactive} />
           <Route path="/Houdini" component={Houdini} />
           <Route path="/contactform" component={ContactForm} />
+          <Route path="/nac19" component={Nac19} />
+          <Route path="/PIWorks" component={PIWorks} />
         </Switch>
       </div>
     </BrowserRouter>

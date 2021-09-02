@@ -21,6 +21,7 @@ function F8interactive(props) {
             autoplay="True"
             autopause="False"
             loop="True"
+            muted="True"
           />
         </div>
         <div className="my-1 w-full md:w-full lg:my-4 lg:w-1/2 lg:pl-5 xl:pl-10">

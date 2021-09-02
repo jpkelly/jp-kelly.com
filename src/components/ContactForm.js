@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 const toastifySuccess = () => {
   toast.success('Message sent!', {
     position: 'bottom-left',
-    autoClose: 5000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -58,7 +58,7 @@ const ContactForm = () => {
       <div className="container w-full mx-auto">
         <div className="contactForm w-full xl:w-2/3">
           <form className="w-full" id="contact-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-            <div className="pr-10 pb-5 inline-block w-full md:w-full lg:w-1/2">
+            <div className="lg:pr-10 pb-5 inline-block w-full md:w-full lg:w-1/2">
               <input
                 type="text"
                 name="name"
@@ -75,7 +75,7 @@ const ContactForm = () => {
               {errors.name && <span className="errorMessage">{errors.name.message}</span>}
             </div>
 
-            <div className=" pr-10 pb-5 inline-block w-full md:w-full lg:w-1/2">
+            <div className=" lg:pr-10 pb-5 inline-block w-full md:w-full lg:w-1/2">
               <input
                 type="email"
                 name="email"
@@ -91,7 +91,7 @@ const ContactForm = () => {
               )}
             </div>
 
-            <div className="pr-10 pb-5 w-full">
+            <div className="lg:pr-10 pb-5 w-full">
               <input
                 type="text"
                 name="subject"
@@ -108,7 +108,7 @@ const ContactForm = () => {
               {errors.subject && <span className="errorMessage">{errors.subject.message}</span>}
             </div>
 
-            <div className="pr-10 pb-5 w-full">
+            <div className="lg:pr-10 pb-5 w-full">
               <textarea
                 rows={5}
                 name="message"
@@ -121,7 +121,7 @@ const ContactForm = () => {
               {errors.message && <span className="errorMessage">Please enter a message</span>}
             </div>
 
-            <div className="pr-10 pb-5 w-full">
+            <div className="lg:pr-10 pb-5 w-full">
               <button className="submit-btn w-full md:w-1/6" type="submit">
                 Send
               </button>

@@ -54,7 +54,7 @@ function Gallery(props) {
             title="NAC 2018 Opening Experience"
             text="2018 BMW National Aftersales Conference opening. Attendees use QR code to upload photos which are shown screen."
             imgsrc="thumbnails/nac18.png"
-            link="/nac2018"
+            link="/nac18"
             alttext="NAC 2018 opening experience"
           />
           <Card
@@ -75,7 +75,7 @@ function Gallery(props) {
             title="TOTO Hologram"
             text="This is a hologram (Pepper's Ghost) of an animated character for TOTO's San Francisco showroom."
             imgsrc="thumbnails/TOTO.png"
-            link="/toto"
+            link="/TOTO"
             alttext="TOTO Hologram"
           />
           <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />

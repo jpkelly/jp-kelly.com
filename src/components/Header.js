@@ -31,14 +31,14 @@ const Header = props => {
         >
           <span className="px-3">Projects</span>
           {toggleMenu && (
-            <ul className="z-50 dropdown-menu absolute rounded-b-lg text-gray-200 bg-black py-3 ">
+            <ul className="z-50 dropdown-menu absolute rounded-b-lg text-gray-200 bg-black bg-opacity-80 py-3 ">
               <li
                 className="py-3 text-2xl"
                 onClick={() => {
                   setToggleMenu(!toggleMenu);
                 }}
               >
-                <Link className="link px-3" to="/nac2018">
+                <Link className="link px-3" to="/nac18">
                   NAC 2018 OEX
                 </Link>
               </li>

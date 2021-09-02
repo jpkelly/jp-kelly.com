@@ -1,7 +1,7 @@
 import React from 'react';
 import Vimeo from '@u-wave/react-vimeo';
 
-function Nac2018(props) {
+function Nac18(props) {
   return (
     <div className="container mx-auto flex items-center my-5 py-5">
       <div className="w-full grid grid-cols-1 grid-rows- gap-0">
@@ -35,4 +35,4 @@ function Nac2018(props) {
   );
 }
 
-export default Nac2018;
+export default Nac18;

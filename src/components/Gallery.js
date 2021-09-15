@@ -78,10 +78,7 @@ function Gallery(props) {
             link="/TOTO"
             alttext="TOTO Hologram"
           />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
-          <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" />
+          {/* <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" /> */}
         </div>
       </div>
     </div>

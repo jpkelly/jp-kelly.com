@@ -34,6 +34,15 @@ function App() {
           <Route path="/nac19" component={Nac19} />
           <Route path="/PIWorks" component={PIWorks} />
           <Route path="/TOTO" component={TOTO} />
+          <Route
+            path="/archive"
+            component={() => {
+              window.open('https://jpkelly.net');
+              window.location.href = '/about';
+
+              return null;
+            }}
+          />
         </Switch>
       </div>
     </BrowserRouter>

@@ -6,6 +6,7 @@ function Saturn(props) {
     <div className="container mx-auto flex items-center my-5 py-5">
       <div className="container mx-auto">
         <h2>Saturn Orbit Test</h2>
+        <p>On screen visuals for an interactive game at a live event. Created with Notch.</p>
         <Vimeo video={587375676} width={1280} height={720} responsive="True" autoplay="True" />
       </div>
     </div>

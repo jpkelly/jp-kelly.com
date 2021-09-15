@@ -6,6 +6,11 @@ function TOTO(props) {
     <div className="container mx-auto items-center my-5 py-5 ">
       <div className="w-full mx-auto">
         <h2>TOTO Hologram/Immersive Experience</h2>
+        <p>
+          This is a hologram (Pepper's Ghost) of an animated character for TOTO's San Francisco
+          showroom. Designed and implemented display, and custom electronics for interfacing with
+          existing control system.
+        </p>
         <Vimeo
           video={596273520}
           width={1280}

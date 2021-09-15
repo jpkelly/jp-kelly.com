@@ -6,6 +6,9 @@ function Cranestory(props) {
     <div className="container mx-auto flex items-center my-5 py-5">
       <div className="container mx-auto">
         <h2>鶴の恩返し (The Crane's Requital)</h2>
+        <p>
+          Made with Notch. Inspired by a story of a man who rescues a crane one cold winter night.
+        </p>
         <Vimeo
           video={489306679}
           width={1280}

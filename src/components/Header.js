@@ -38,8 +38,8 @@ const Header = props => {
                   setToggleMenu(!toggleMenu);
                 }}
               >
-                <Link className="link px-3" to="/nac18">
-                  NAC 2018 OEX
+                <Link className="link px-3" to="/F8interactive">
+                  F8 Interactive
                 </Link>
               </li>
               <li
@@ -68,8 +68,18 @@ const Header = props => {
                   setToggleMenu(!toggleMenu);
                 }}
               >
+                <Link className="link px-3" to="/PIWorks">
+                  PIWorks 2019
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
                 <Link className="link px-3" to="/huds">
-                  HUDs
+                  Heads Up Displays
                 </Link>
               </li>
               <li
@@ -79,7 +89,57 @@ const Header = props => {
                 }}
               >
                 <Link className="link px-3" to="/saturn">
-                  Saturn
+                  Saturn Orbit
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
+                <Link className="link px-3" to="/nac18">
+                  NAC 2018 OEX
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
+                <Link className="link px-3" to="/nac19">
+                  NAC 2019 Banner
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
+                <Link className="link px-3" to="/houdini">
+                  Houdini Smoke
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
+                <Link className="link px-3" to="/TOTO">
+                  TOTO Hologram
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
+                <Link className="link px-3" to="/archive">
+                  Archive
                 </Link>
               </li>
             </ul>

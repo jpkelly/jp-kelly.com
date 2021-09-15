@@ -6,6 +6,7 @@ function Huds(props) {
     <div className="container mx-auto flex items-center my-5 py-5 ">
       <div className="container mx-auto">
         <h2>Heads-up Displays</h2>
+        <p>Futuristic data displays made with Notch.</p>
         <Vimeo
           className="z-0"
           video={340782519}

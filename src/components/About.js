@@ -52,7 +52,7 @@ function About(props) {
         <li>Unreal Engine</li>
         <li>Graphic design & Typography</li>
         <li>Arduino, Raspberry Pi, sensors, electronics tools</li>
-        <li>HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python, C++, C#</li>
+        <li>HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python</li>
         <li>GitHub, stackoverflow, Google</li>
       </ul>
       {/* <div className="col-span-full mt-12">

@@ -43,8 +43,8 @@ function About(props) {
       <h2 className="mt-7 col-span-full">Here are a few of my favorie tools:</h2>
       <ul className="">
         <li>Photoshop, Illustrator, After Effects</li>
-        <li>Rhino, Grasshopper, Blender, Cinema 4D</li>
         <li>Notch, TouchDesigner, MaxMSP, VDMX</li>
+        <li>Rhino, Grasshopper, Blender, Cinema 4D</li>
         <li>disguise (d3)</li>
         <li>Barco Eventmaster (E2)</li>
         <li>projectors, LED</li>

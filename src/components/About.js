@@ -53,7 +53,7 @@ function About(props) {
         <li>Graphic design & Typography</li>
         <li>Arduino, Raspberry Pi, sensors, electronics tools</li>
         <li>HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python, C++, C#</li>
-        <li>GitHub, stackoverflow, google</li>
+        <li>GitHub, stackoverflow, Google</li>
       </ul>
       {/* <div className="col-span-full mt-12">
         <button

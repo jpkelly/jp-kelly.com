@@ -43,21 +43,17 @@ function About(props) {
       <h2 className="mt-7 col-span-full">Here are a few of my favorie tools:</h2>
       <ul className="">
         <li>Photoshop, Illustrator, After Effects</li>
-        <li>Rhino, Blender, Cinema 4D</li>
-        <li>HTML, CSS, Javascript</li>
-        <li>TouchDesigner</li>
-        <li>VDMX</li>
-        <li>Arduino, Raspberry Pi</li>
-        <li>GitHub</li>
+        <li>Rhino, Grasshopper, Blender, Cinema 4D</li>
+        <li>Notch, TouchDesigner, MaxMSP, VDMX</li>
         <li>disguise (d3)</li>
-        <li>Notch</li>
-        <li>Python</li>
-        <li>MaxMSP</li>
+        <li>Barco Eventmaster (E2)</li>
+        <li>projectors, LED</li>
         <li>Ableton</li>
         <li>Unreal Engine</li>
-        <li>Bash</li>
         <li>Graphic design & Typography</li>
-        <li>Barco Eventmaster (E2)</li>
+        <li>Arduino, Raspberry Pi, sensors, electronics tools</li>
+        <li>HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python, C++, C#</li>
+        <li>GitHub, stackoverflow, google</li>
       </ul>
       {/* <div className="col-span-full mt-12">
         <button

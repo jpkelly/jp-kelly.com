@@ -13,6 +13,7 @@ import ContactForm from './components/ContactForm';
 import Nac19 from './components/Nac19';
 import PIWorks from './components/PIWorks';
 import TOTO from './components/TOTO';
+import Manhole from './components/Manhole';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/nac19" component={Nac19} />
           <Route path="/PIWorks" component={PIWorks} />
           <Route path="/TOTO" component={TOTO} />
+          <Route path="/manhole" component={Manhole} />
           <Route
             path="/archive"
             component={() => {

@@ -138,6 +138,16 @@ const Header = props => {
                   setToggleMenu(!toggleMenu);
                 }}
               >
+                <Link className="link px-3" to="/manhole">
+                  Manhole Cover
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
                 <Link className="link px-3" to="/archive">
                   Archive
                 </Link>

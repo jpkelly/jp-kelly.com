@@ -7,83 +7,90 @@ function Gallery(props) {
       <h2>Project Gallery</h2>
       {/* wrapper */}
       <div className="container w-full mx-auto ">
-        <div className="flex flex-wrap -mx-1 lg:-mx-4">
+        {/* <div className="flex flex-wrap -mx-1 lg:-mx-4"> */}
+        <div className="md:masonry-2-col lg:masonry-3-col box-border mx-auto before:box-inherit after:box-inherit">
           <Card
             title="F8 Developers Interactive Installation"
             text="Attendees manipulate visuals in real time. Notch, TouchDesigner, LEAP Motion and StreamDeck controller."
-            imgsrc="thumbnails/F8interactive.png"
+            imgsrc={[
+              { src: 'thumbnails/F8interactive.png', alt: 'F8 Interactive Installation' },
+              { src: 'thumbnails/F8interactive2.png', alt: 'F8 Interactive Installation User' }
+            ]}
             link="/F8interactive"
-            alttext="F8 Interactive Installation"
           />
           <Card
             title="鶴の恩返し (The Crane's Requital)"
             text="Made with Notch. Inspired by a story of a man who rescues a crane one cold winter night."
-            imgsrc="thumbnails/cranestory.png"
+            imgsrc={[
+              { src: 'thumbnails/CraneB+W.png', alt: 'Crane B+W' },
+              { src: 'thumbnails/cranestory.png', alt: 'The Crane&#39;s Requital' }
+            ]}
             link="/cranestory"
-            alttext="The Crane's Requital"
           />
           <Card
             title="Flock of Cranes"
             text="Testing out the flocking node in Notch. Cloning 3D objects with randomized textures."
-            imgsrc="thumbnails/craneflock.png"
+            imgsrc={[{ src: 'thumbnails/craneflock.png', alt: 'Flock of paper cranes' }]}
             link="/craneflock"
-            alttext="Flock of paper cranes"
           />
           <Card
             title="PIWorks 2019 Opening Animation"
             text="Animation for opening of PIWorks 2019 conference. Created with Cinema4D."
-            imgsrc="thumbnails/PIWorks.png"
+            imgsrc={[{ src: 'thumbnails/PIWorks.png', alt: 'PIWorks Opening' }]}
             link="/PIWorks"
-            alttext=""
           />
           <Card
             title="Heads Up Displays"
             text="Futuristic data displays made with Notch."
-            imgsrc="thumbnails/huds.png"
+            imgsrc={[
+              { src: 'thumbnails/hud1.png', alt: 'Heads Up Displays' },
+              { src: 'thumbnails/hud2.png', alt: 'Heads Up Displays' },
+              { src: 'thumbnails/hud3.png', alt: 'Heads Up Displays' }
+            ]}
             link="/huds"
-            alttext="Heads Up Displays"
           />
           <Card
             title="Saturn Orbit Test"
             text="On screen visuals for an interactive game at a live event. Created with Notch."
-            imgsrc="thumbnails/saturn.png"
+            imgsrc={[{ src: 'thumbnails/saturn.png', alt: 'Saturn Notch' }]}
             link="/saturn"
-            alttext="Saturn Notch"
           />
           <Card
             title="NAC 2018 Opening Experience"
             text="2018 BMW National Aftersales Conference opening. Attendees use QR code to upload photos which are shown screen."
-            imgsrc="thumbnails/nac18.png"
+            imgsrc={[{ src: 'thumbnails/nac18.png', alt: 'NAC 2018 opening experience' }]}
             link="/nac18"
-            alttext="NAC 2018 opening experience"
           />
           <Card
             title="NAC 2019 Digital Ribbon"
             text="Screen look for BMW National Aftersales Conference. Created with Notch, Aftereffects, and disguise (d3)."
-            imgsrc="thumbnails/nac19.png"
+            imgsrc={[{ src: 'thumbnails/nac19.png', alt: 'NAC 2019 Screen Look' }]}
             link="/nac19"
-            alttext="NAC 2019 Screen Look"
           />
           <Card
             title="Houdini Previz"
             text="Previsualization of smoke effect for a MINI show created in Houdini."
-            imgsrc="thumbnails/Houdini.png"
+            imgsrc={[
+              { src: 'thumbnails/Houdini.png', alt: 'Houdini Smoke' },
+              { src: 'thumbnails/miniPreViz.png', alt: 'Houdini Smoke' }
+            ]}
             link="/houdini"
-            alttext="Houdini Smoke"
           />
           <Card
             title="TOTO Hologram"
             text="This is a hologram (Pepper's Ghost) of an animated character for TOTO's San Francisco showroom."
-            imgsrc="thumbnails/TOTO.png"
+            imgsrc={[
+              { src: 'thumbnails/TOTO.png', alt: 'TOTO Hologram' },
+              { src: 'thumbnails/prototype.png', alt: 'Hologram Prototype' },
+              { src: 'thumbnails/rpi.png', alt: 'Custom PCB' }
+            ]}
             link="/TOTO"
-            alttext="TOTO Hologram"
           />
           <Card
             title="Manhole Cover in Rain"
             text="Playing around with substances in Notch."
-            imgsrc="thumbnails/manhole.png"
+            imgsrc={[{ src: 'thumbnails/manhole.png', alt: 'manhole cover' }]}
             link="/manhole"
-            alttext="manhole cover"
           />
           {/* <Card title="title" text="text" imgsrc="thumbnails/huds.png" link="/huds" alttext="" /> */}
         </div>

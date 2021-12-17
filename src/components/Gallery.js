@@ -36,7 +36,10 @@ function Gallery(props) {
           <Card
             title="PIWorks 2019 Opening Animation"
             text="Animation for opening of PIWorks 2019 conference. Created with Cinema4D."
-            imgsrc={[{ src: 'thumbnails/PIWorks.png', alt: 'PIWorks Opening' }]}
+            imgsrc={[
+              { src: 'thumbnails/PiWorksWireframe.png', alt: 'PIWorks Wireframe' },
+              { src: 'thumbnails/PIWorks.png', alt: 'PIWorks Opening' }
+            ]}
             link="/PIWorks"
           />
           <Card
@@ -58,13 +61,19 @@ function Gallery(props) {
           <Card
             title="NAC 2018 Opening Experience"
             text="2018 BMW National Aftersales Conference opening. Attendees use QR code to upload photos which are shown screen."
-            imgsrc={[{ src: 'thumbnails/nac18.png', alt: 'NAC 2018 opening experience' }]}
+            imgsrc={[
+              { src: 'thumbnails/nac18.png', alt: 'NAC 2018 opening experience' },
+              { src: 'thumbnails/NAClook.png', alt: 'NAC 2018 opening experience' }
+            ]}
             link="/nac18"
           />
           <Card
             title="NAC 2019 Digital Ribbon"
             text="Screen look for BMW National Aftersales Conference. Created with Notch, Aftereffects, and disguise (d3)."
-            imgsrc={[{ src: 'thumbnails/nac19.png', alt: 'NAC 2019 Screen Look' }]}
+            imgsrc={[
+              { src: 'thumbnails/NACribbon.png', alt: 'NAC 2019 Digital Ribbon' },
+              { src: 'thumbnails/nac19.png', alt: 'NAC 2019 Screen Look' }
+            ]}
             link="/nac19"
           />
           <Card

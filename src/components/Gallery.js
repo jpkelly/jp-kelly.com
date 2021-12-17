@@ -28,9 +28,12 @@ function Gallery(props) {
             link="/cranestory"
           />
           <Card
-            title="Flock of Cranes"
+            title="Flock of Paper Cranes"
             text="Testing out the flocking node in Notch. Cloning 3D objects with randomized textures."
-            imgsrc={[{ src: 'thumbnails/craneflock.png', alt: 'Flock of paper cranes' }]}
+            imgsrc={[
+              { src: 'thumbnails/craneflock2.png', alt: 'Flock of paper cranes' },
+              { src: 'thumbnails/craneflock.png', alt: 'Flock of paper cranes' }
+            ]}
             link="/craneflock"
           />
           <Card

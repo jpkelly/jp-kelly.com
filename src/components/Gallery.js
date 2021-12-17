@@ -22,7 +22,7 @@ function Gallery(props) {
             title="鶴の恩返し (The Crane's Requital)"
             text="Made with Notch. Inspired by a story of a man who rescues a crane one cold winter night."
             imgsrc={[
-              { src: 'thumbnails/CraneB+W.png', alt: 'Crane B+W' },
+              { src: 'thumbnails/CraneB+W.png', alt: 'Crane in Black and White' },
               { src: 'thumbnails/cranestory.png', alt: 'The Crane&#39;s Requital' }
             ]}
             link="/cranestory"

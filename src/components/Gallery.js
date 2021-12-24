@@ -10,6 +10,16 @@ function Gallery(props) {
         {/* <div className="flex flex-wrap -mx-1 lg:-mx-4"> */}
         <div className="md:masonry-2-col lg:masonry-3-col box-border mx-auto before:box-inherit after:box-inherit">
           <Card
+            title="Encoder for Tracking Lens Data"
+            text="3D printed enclosure and programming controller for sending lens data via OSC."
+            imgsrc={[
+              { src: 'thumbnails/encoder1.png', alt: 'Enclosure CAD Drawing' },
+              { src: 'thumbnails/encoder2.png', alt: 'Enclosure Assembly' },
+              { src: 'thumbnails/encoder3.png', alt: 'Installed on Camera' }
+            ]}
+            link="/encoder"
+          />
+          <Card
             title="F8 Developers Interactive Installation"
             text="Attendees manipulate visuals in real time. Notch, TouchDesigner, LEAP Motion and StreamDeck controller."
             imgsrc={[

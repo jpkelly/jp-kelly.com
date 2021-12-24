@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@u-wave/react-vimeo": "^0.9.5",
+    "devcert": "^1.2.0",
     "dotenv": "^10.0.0",
     "emailjs-com": "^3.2.0",
     "framer": "^1.2.9",

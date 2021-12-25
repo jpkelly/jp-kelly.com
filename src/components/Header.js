@@ -12,9 +12,6 @@ const Header = props => {
         <img src={kamon} className="kamon" alt="logo" />
       </Link>
       <div className="inline-block divide-x-2 mt-2.5 xl:mt-1 2xl:mt-3">
-        <Link className="px-3" to="/about">
-          About
-        </Link>
         <Link className="px-3" to="/gallery">
           Gallery
         </Link>
@@ -156,6 +153,9 @@ const Header = props => {
           )}
         </div>
         {/* END DROPDOWN MENU https://codepen.io/huphtur/pen/ordMeN */}
+        <Link className="px-3" to="/about">
+          About
+        </Link>
       </div>
     </h1>
   );

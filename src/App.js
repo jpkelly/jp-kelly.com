@@ -22,7 +22,7 @@ function App() {
       <div className="w-full mt-3 px-5 font-normal bg-black text-gray-300">
         <Header />
         <Switch>
-          <Route exact path="/" component={About} />
+          <Route exact path="/" component={Gallery} />
           <Route path="/gallery" component={Gallery} />
           <Route path="/about" component={About} />
           <Route path="/huds" component={Huds} />

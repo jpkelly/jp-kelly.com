@@ -4,7 +4,7 @@ import Card from './Card';
 function Gallery(props) {
   return (
     <div className="container mx-auto my-5 py-5 ">
-      <h2>Project Gallery</h2>
+      <h2>A few things I have worked on.</h2>
       {/* wrapper */}
       <div className="container w-full mx-auto ">
         {/* <div className="flex flex-wrap -mx-1 lg:-mx-4"> */}

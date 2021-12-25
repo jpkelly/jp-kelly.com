@@ -13,6 +13,7 @@ class ImageList extends React.Component {
         // not last one
         images.push(<img alt={p.alt} className="block h-auto w-full mb-1" src={p.src} />);
       }
+      return true;
     });
     return images;
   }

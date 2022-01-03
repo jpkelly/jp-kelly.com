@@ -10,6 +10,15 @@ function Gallery(props) {
         {/* <div className="flex flex-wrap -mx-1 lg:-mx-4"> */}
         <div className="md:masonry-2-col lg:masonry-3-col box-border mx-auto before:box-inherit after:box-inherit">
           <Card
+            title="GPIO / OSC interface"
+            text="Raspberry Pi based device for interfacing analog/digital, input/output to OSC Messaging. Includes POE, and integrated display."
+            imgsrc={[
+              { src: 'thumbnails/jPioBox.png', alt: 'GPIO/OSC interfate' },
+              { src: 'thumbnails/jPioTest.png', alt: 'Tester for GPIO/OSC interface' }
+            ]}
+            link="/jpio"
+          />
+          <Card
             title="Encoder for Tracking Lens Data"
             text="3D printed enclosure and programming controller for sending lens data via OSC."
             imgsrc={[

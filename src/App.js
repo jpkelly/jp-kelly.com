@@ -15,6 +15,7 @@ import PIWorks from './components/PIWorks';
 import TOTO from './components/TOTO';
 import Manhole from './components/Manhole';
 import Encoder from './components/Encoder';
+import JpIO from './components/JpIO';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/TOTO" component={TOTO} />
           <Route path="/manhole" component={Manhole} />
           <Route path="/encoder" component={Encoder} />
+          <Route path="/jpio" component={JpIO} />
           <Route
             path="/archive"
             component={() => {

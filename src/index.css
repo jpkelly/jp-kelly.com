@@ -34,10 +34,11 @@ code {
   @apply text-red-400;
 }
 
-/* a {
+p > a {
   color: white;
-  text-decoration: none;
-} */
+  text-decoration: underline;
+}
+
 a:hover {
   color: rgb(0, 173, 279);
 }

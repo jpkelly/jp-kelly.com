@@ -12,6 +12,13 @@ function JpIO(props) {
           system runs in RAM off of a read only disk to minimize the possibility of disk corruption.
           It can run off of POE, has automatic cooling and an integrated display. Assembled with
           custom laser cut and 3D printed components.
+          <br />
+          <a
+            href="https://github.com/jpkelly/autopi/blob/master/OSCautomationhat.py"
+            target="_blank"
+          >
+            Python code
+          </a>
         </p>
         {/* <Vimeo
           video={596273520}

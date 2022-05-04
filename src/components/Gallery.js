@@ -14,7 +14,8 @@ function Gallery(props) {
             text="Raspberry Pi based device for interfacing analog/digital, input/output to OSC Messaging. Includes POE, and integrated display."
             imgsrc={[
               { src: 'thumbnails/jPioBox.png', alt: 'GPIO/OSC interfate' },
-              { src: 'thumbnails/jPioTest.png', alt: 'Tester for GPIO/OSC interface' }
+              { src: 'thumbnails/jPioTest.png', alt: 'Tester for GPIO/OSC interface' },
+              { src: 'thumbnails/jPioBracket.png', alt: 'Tester for GPIO/OSC interface' }
             ]}
             link="/jpio"
           />

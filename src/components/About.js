@@ -1,5 +1,6 @@
 import React from 'react';
 import jpk from '../jpk.jpg';
+import { DiReact } from 'react-icons/di';
 
 function About(props) {
   return (
@@ -32,6 +33,15 @@ function About(props) {
             social issues through art that engages the viewer. My goal and vision is to provide a
             way for people to grow and learn by touching their hearts.
           </p>
+          <p>
+            This site was built by hand using React.&nbsp;
+            <a href="https://github.com/jpkelly/jp-kelly.com" target="_blank">
+              Here is the code.
+            </a>
+          </p>
+          <p>
+            <DiReact />
+          </p>
         </div>
       </div>
       <button
@@ -55,6 +65,7 @@ function About(props) {
         <li>HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python</li>
         <li>GitHub, stackoverflow, Google</li>
       </ul>
+
       {/* <div className="col-span-full mt-12">
         <button
           className="bg-transparant w-full md:w-1/6 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded"

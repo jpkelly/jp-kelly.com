@@ -19,6 +19,10 @@ function JpIO(props) {
           >
             Python code
           </a>
+          <br />
+          <a href="https://github.com/jpkelly/jpioBox/blob/main/jpio_test.toe.zip" target="_blank">
+            TouchDesigner file
+          </a>
         </p>
         {/* <Vimeo
           video={596273520}

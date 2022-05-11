@@ -1,1 +1,0 @@
-# jp-kelly.com

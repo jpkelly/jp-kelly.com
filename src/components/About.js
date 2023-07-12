@@ -1,5 +1,5 @@
 import React from 'react';
-import jpk from '../jpk.jpg';
+import jpk from '../jpkelly.jpg';
 import {DiReact} from 'react-icons/di';
 
 function About(props) {

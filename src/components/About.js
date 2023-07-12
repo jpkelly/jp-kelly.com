@@ -45,7 +45,7 @@ function About(props) {
 				<li>Photoshop, Illustrator, After Effects</li>
 				<li>Notch, TouchDesigner, MaxMSP, VDMX</li>
 				<li>Rhino, Grasshopper, Blender, Cinema 4D</li>
-				<li>disguise, Watchout, Pixera</li>
+				<li>disguise(d3), Watchout, Pixera</li>
 				<li>Barco Eventmaster (E2)</li>
 				<li>projectors, LED</li>
 				<li>Ableton</li>

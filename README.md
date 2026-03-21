@@ -105,8 +105,8 @@ MDX authoring note:
 - Reusable embed component: `src/components/mdx/VimeoEmbed.js`
 - Use `autoplay={true}` for the approved silent autoplay pages. `VimeoEmbed` translates that into Vimeo background mode, mute, loop, and no controls.
 - Current approved autoplay pages: Heads-up Displays, F-8 Interactive, Saturn Orbit Test, Houdini Smoke, NAC 2019 Digital Ribbon, and TOTO Hologram/Immersive Experience.
-- By default, `VimeoEmbed` shows the play button, starts with sound when clicked, and loops.
-- Use `loop={false}` for a play-once video.
+- For non-autoplay pages, `VimeoEmbed` shows the play button, starts with sound when clicked, and plays once by default.
+- For autoplay pages, videos loop by default; set `loop={false}` to make an autoplay video play once.
 - Current route wired to MDX content: `src/components/NotchIMAG.js`
 - Additional routes wired to MDX content:
 	- `src/components/NAC23VJ.js` -> `src/content/projects/nac23vj.mdx`

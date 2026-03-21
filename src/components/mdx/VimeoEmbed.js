@@ -4,14 +4,14 @@ function VimeoEmbed({
   video,
   controls = true,
   autoplay = false,
-  loop = true,
+  loop,
   muted = false,
   background = false,
   portrait = false
 }) {
   const autoplayEnabled = autoplay || background;
   const mutedEnabled = muted || autoplayEnabled;
-  const loopEnabled = loop;
+  const loopEnabled = typeof loop === 'boolean' ? loop : autoplayEnabled;
   const controlsEnabled = autoplayEnabled ? false : controls;
   const backgroundEnabled = autoplayEnabled;
 

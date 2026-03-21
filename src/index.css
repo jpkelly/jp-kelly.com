@@ -91,8 +91,8 @@ a:hover {
 }
 
 .dropdown-menu .link.px-3 {
-  font-size: 0.75rem !important;
-  line-height: 1.05 !important;
+  font-size: 0.9rem !important;
+  line-height: 1.15 !important;
   padding-top: 0.1rem !important;
   padding-bottom: 0.1rem !important;
 }

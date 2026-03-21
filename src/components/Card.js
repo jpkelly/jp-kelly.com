@@ -10,7 +10,7 @@ const Card = ({ title, text, imgsrc, link }) => {
         <a href={link}>
           <article className="group overflow-hidden border border-gray-300 rounded-lg">
             <header className=" items-center justify-between leading-tight p-2 md:p-4">
-              <h3 className="text-xl xl:text-2xl">
+              <h3 className="text-xl xl:text-2xl mb-2">
                 <text className="no-underline ">{title}</text>
               </h3>
               <p className="text-sm">{text}</p>

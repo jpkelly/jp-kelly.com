@@ -20,7 +20,6 @@ function Nac18(props) {
             video={563887969}
             autoplay
             muted
-            background
           />
         </div>
         <div className=" h-5 pr-3 text-right text-xs">A Studio Firefly Production</div>

@@ -13,7 +13,7 @@ const Card = ({ title, text, imgsrc, link }) => {
               <h3 className="text-xl xl:text-2xl mb-2">
                 <text className="no-underline ">{title}</text>
               </h3>
-              <p className="text-sm">{text}</p>
+              <p className="text-sm mb-0 mt-0">{text}</p>
             </header>
             <ImageList photo={imgsrc} />
           </article>

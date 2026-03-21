@@ -101,17 +101,14 @@ Optional fields:
 
 MDX authoring note:
 
-- Pilot page: `src/content/projects/notchimag.mdx`
+- Project content lives in `src/content/projects/<project-id>.mdx`.
+- Routes are rendered through a single project template in `src/App.js` and mapped by `project.id`.
 - Reusable embed component: `src/components/mdx/VimeoEmbed.js`
 - Use `autoplay={true}` for the approved silent autoplay pages. `VimeoEmbed` translates that into Vimeo background mode, mute, loop, and no controls.
 - Current approved autoplay pages: Heads-up Displays, F-8 Interactive, Saturn Orbit Test, Houdini Smoke, NAC 2019 Digital Ribbon, and TOTO Hologram/Immersive Experience.
 - For non-autoplay pages, `VimeoEmbed` shows the play button, starts with sound when clicked, and plays once by default.
 - For autoplay pages, videos loop by default; set `loop={false}` to make an autoplay video play once.
-- Current route wired to MDX content: `src/components/NotchIMAG.js`
-- Additional routes wired to MDX content:
-	- `src/components/NAC23VJ.js` -> `src/content/projects/nac23vj.mdx`
-	- `src/components/Huds.js` -> `src/content/projects/huds.mdx`
-	- `src/components/Saturn.js` -> `src/content/projects/saturn.mdx`
+
 
 If a project needs its own detail page component, add/import the component and map `routeKey` in `src/App.js`.
 

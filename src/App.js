@@ -3,45 +3,45 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
 import About from './components/About';
-import Huds from './components/Huds';
-import Cranestory from './components/Cranestory';
-import Craneflock from './components/Craneflock';
-import Nac18 from './components/Nac18';
-import Saturn from './components/Saturn';
-import F8interactive from './components/F8interactive';
-import Houdini from './components/Houdini';
 import ContactForm from './components/ContactForm';
-import Nac19 from './components/Nac19';
-import PIWorks from './components/PIWorks';
-import TOTO from './components/TOTO';
-import Manhole from './components/Manhole';
-import Encoder from './components/Encoder';
-import JpIO from './components/JpIO';
-import NotchIMAG from './components/NotchIMAG';
-import NAC23VJ from './components/NAC23VJ';
 import projects from './content/projects.json';
+import NAC23VJContent from './content/projects/nac23vj.mdx';
+import NotchIMAGContent from './content/projects/notchimag.mdx';
+import JpIOContent from './content/projects/jpio.mdx';
+import EncoderContent from './content/projects/encoder.mdx';
+import F8InteractiveContent from './content/projects/f8interactive.mdx';
+import CranestoryContent from './content/projects/cranestory.mdx';
+import CraneflockContent from './content/projects/craneflock.mdx';
+import PIWorksContent from './content/projects/piworks.mdx';
+import HudsContent from './content/projects/huds.mdx';
+import SaturnContent from './content/projects/saturn.mdx';
+import Nac18Content from './content/projects/nac18.mdx';
+import Nac19Content from './content/projects/nac19.mdx';
+import HoudiniContent from './content/projects/houdini.mdx';
+import TOTOContent from './content/projects/toto.mdx';
+import ManholeContent from './content/projects/manhole.mdx';
 
-const projectRouteComponents = {
-	NAC23VJ,
-	NotchIMAG,
-	JpIO,
-	Encoder,
-	F8interactive,
-	Cranestory,
-	Craneflock,
-	PIWorks,
-	Huds,
-	Saturn,
-	Nac18,
-	Nac19,
-	Houdini,
-	TOTO,
-	Manhole
+const projectContentComponents = {
+	nac23vj: NAC23VJContent,
+	notchimag: NotchIMAGContent,
+	jpio: JpIOContent,
+	encoder: EncoderContent,
+	f8interactive: F8InteractiveContent,
+	cranestory: CranestoryContent,
+	craneflock: CraneflockContent,
+	piworks: PIWorksContent,
+	huds: HudsContent,
+	saturn: SaturnContent,
+	nac18: Nac18Content,
+	nac19: Nac19Content,
+	houdini: HoudiniContent,
+	toto: TOTOContent,
+	manhole: ManholeContent
 };
 
 const projectRoutes = projects
 	.map(project => {
-		const component = projectRouteComponents[project.routeKey];
+		const component = projectContentComponents[project.id];
 		if (!component) {
 			return [];
 		}
@@ -174,7 +174,13 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 		};
 	}, [title, description, imagePath, canonicalPath, routeProps.location]);
 
-	return <ProjectComponent {...routeProps} />;
+	return (
+		<div className="container mx-auto flex items-center my-5 py-5">
+			<div className="container mx-auto">
+				<ProjectComponent />
+			</div>
+		</div>
+	);
 }
 
 function App() {

@@ -77,12 +77,7 @@ Result: adding or editing a project in one file updates menu + gallery + routing
 
 ## Changelog
 
-- 2026-03-21: `9e9fad80` - Migrated build system from CRA/CRACO to Vite, upgraded Tailwind/PostCSS, and preserved production output to `build/`.
-- 2026-03-21: `660a6f99` - Refactored project data into a shared content model used by gallery cards, dropdown items, and route generation.
-- 2026-03-21: Tailwind upgraded from v3 to v4 (`tailwindcss` + `@tailwindcss/postcss`) with updated CSS entrypoint and build artifacts.
-- 2026-03-21: Added build-time content validation (`scripts/validate-content.mjs`) and wired it into `npm run build`.
-- 2026-03-21: Added explicit `seoTitle` and `seoDescription` values for all projects in `src/content/projects.json`.
-
+- 2026-03-21: Added explicit `seoImage` values for all project entries to curate social preview images.
 ## Content Editing Guide
 
 To add a new project, update `src/content/projects.json` with:

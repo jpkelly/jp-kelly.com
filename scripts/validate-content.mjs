@@ -75,6 +75,14 @@ for (let index = 0; index < projects.length; index += 1) {
     fail(`project "${project.id}" has an invalid "cardText"`);
   }
 
+  if ('seoTitle' in project && !isNonEmptyString(project.seoTitle)) {
+    fail(`project "${project.id}" has invalid optional "seoTitle"`);
+  }
+
+  if ('seoDescription' in project && !isNonEmptyString(project.seoDescription)) {
+    fail(`project "${project.id}" has invalid optional "seoDescription"`);
+  }
+
   if (!Array.isArray(project.thumbnails) || project.thumbnails.length === 0) {
     fail(`project "${project.id}" must include at least one thumbnail`);
   }

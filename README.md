@@ -71,6 +71,7 @@ The following are generated from that shared data:
 - Gallery cards (`src/components/Gallery.js`)
 - Header dropdown project list (`src/components/Header.js`)
 - Project routes and aliases (`src/App.js`)
+- Project page document title + meta description (`src/App.js`)
 
 Result: adding or editing a project in one file updates menu + gallery + routing consistently.
 
@@ -91,6 +92,8 @@ To add a new project, update `src/content/projects.json` with:
 - `routeKey`: page component mapping key used in `src/App.js`
 - `cardTitle`, `cardText`, `thumbnails`: gallery card content
 - optional `aliases`: additional legacy or alternate paths
+- optional `seoTitle`: browser tab title for the project page
+- optional `seoDescription`: meta description for the project page
 
 If a project needs its own detail page component, add/import that component and map its `routeKey` in `src/App.js`.
 

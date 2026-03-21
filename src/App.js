@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
@@ -46,13 +47,53 @@ const projectRoutes = projects
 		}
 
 		const paths = [project.path, ...(project.aliases || [])];
+		const title = project.seoTitle || `${project.cardTitle} | JP Kelly`;
+		const description = project.seoDescription || project.cardText;
 		return paths.map(path => ({
 			id: `${project.id}-${path}`,
 			path,
-			component
+			component,
+			title,
+			description
 		}));
 	})
 	.flat();
+
+const DEFAULT_TITLE = 'JP Kelly';
+const DEFAULT_DESCRIPTION = 'Portfolio site for JP Kelly.';
+
+function ProjectRoutePage({ component: ProjectComponent, title, description, ...routeProps }) {
+	useEffect(() => {
+		const previousTitle = document.title;
+		document.title = title || DEFAULT_TITLE;
+
+		let descriptionTag = document.querySelector('meta[name="description"]');
+		let createdTag = false;
+		const previousDescription = descriptionTag?.getAttribute('content') || '';
+
+		if (!descriptionTag) {
+			descriptionTag = document.createElement('meta');
+			descriptionTag.setAttribute('name', 'description');
+			document.head.appendChild(descriptionTag);
+			createdTag = true;
+		}
+
+		descriptionTag.setAttribute('content', description || DEFAULT_DESCRIPTION);
+
+		return () => {
+			document.title = previousTitle || DEFAULT_TITLE;
+			if (descriptionTag) {
+				if (createdTag) {
+					document.head.removeChild(descriptionTag);
+				} else {
+					descriptionTag.setAttribute('content', previousDescription || DEFAULT_DESCRIPTION);
+				}
+			}
+		};
+	}, [title, description]);
+
+	return <ProjectComponent {...routeProps} />;
+}
 
 function App() {
 	return (
@@ -65,7 +106,18 @@ function App() {
 					<Route path="/about" component={About} />
 					<Route path="/contactform" component={ContactForm} />
 					{projectRoutes.map(route => (
-						<Route key={route.id} path={route.path} component={route.component} />
+						<Route
+							key={route.id}
+							path={route.path}
+							render={routeProps => (
+								<ProjectRoutePage
+									{...routeProps}
+									component={route.component}
+									title={route.title}
+									description={route.description}
+								/>
+							)}
+						/>
 					))}
 					<Route
 						path="/archive"

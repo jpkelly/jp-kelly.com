@@ -7,3 +7,4 @@
 .dropdown-menu li a{font-size:.85rem!important;line-height:1.1!important;padding-top:0!important;padding-bottom:0!important}
 .dropdown-menu .link.px-3{font-size:.75rem!important;line-height:1.05!important;padding-top:.1rem!important;padding-bottom:.1rem!important}
 .dropdown-menu .link.px-3{font-size:.9rem!important;line-height:1.15!important;padding-top:.1rem!important;padding-bottom:.1rem!important}
+.dropdown-menu .link.px-3{font-size:1.25rem!important;line-height:1.75rem!important;padding-top:.1rem!important;padding-bottom:.1rem!important}@media (min-width:1280px){.dropdown-menu .link.px-3{font-size:1.5rem!important;line-height:2rem!important}}

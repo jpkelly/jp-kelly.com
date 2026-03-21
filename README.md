@@ -81,6 +81,7 @@ Result: adding or editing a project in one file updates menu + gallery + routing
 - 2026-03-21: `660a6f99` - Refactored project data into a shared content model used by gallery cards, dropdown items, and route generation.
 - 2026-03-21: Tailwind upgraded from v3 to v4 (`tailwindcss` + `@tailwindcss/postcss`) with updated CSS entrypoint and build artifacts.
 - 2026-03-21: Added build-time content validation (`scripts/validate-content.mjs`) and wired it into `npm run build`.
+- 2026-03-21: Added explicit `seoTitle` and `seoDescription` values for all projects in `src/content/projects.json`.
 
 ## Content Editing Guide
 

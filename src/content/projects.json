@@ -6,6 +6,8 @@
     "routeKey": "NAC23VJ",
     "cardTitle": "TouchDesigner VJ Rig",
     "cardText": "NAC23 party VJ rig built in TouchDesigner",
+    "seoTitle": "NAC23 VJ Rig | JP Kelly",
+    "seoDescription": "TouchDesigner VJ rig created for the NAC23 party.",
     "thumbnails": [{ "src": "thumbnails/nac23vj.png", "alt": "NAC23 VJ Rig" }]
   },
   {
@@ -15,6 +17,8 @@
     "routeKey": "NotchIMAG",
     "cardTitle": "Live IMAG Effect, Notch",
     "cardText": "Demo of a live IMAG effect created in Notch. Uses Nvidia Broadcast background removal technology.",
+    "seoTitle": "Live IMAG Effect | JP Kelly",
+    "seoDescription": "Live IMAG effect in Notch using Nvidia Broadcast background removal.",
     "thumbnails": [{ "src": "thumbnails/NotchIMAG.jpg", "alt": "Live IMAG Effect" }]
   },
   {
@@ -24,6 +28,8 @@
     "routeKey": "JpIO",
     "cardTitle": "GPIO / OSC interface",
     "cardText": "Raspberry Pi based device for interfacing analog/digital, input/output to OSC Messaging. Includes POE, and integrated display.",
+    "seoTitle": "GPIO / OSC Interface | JP Kelly",
+    "seoDescription": "Raspberry Pi GPIO and OSC interface hardware with POE and integrated display.",
     "thumbnails": [
       { "src": "thumbnails/jPioBox.png", "alt": "GPIO/OSC interfate" },
       { "src": "thumbnails/jPioTest.png", "alt": "Tester for GPIO/OSC interface" },
@@ -37,6 +43,8 @@
     "routeKey": "Encoder",
     "cardTitle": "Encoder for Tracking Lens Data",
     "cardText": "3D printed enclosure and programming controller for sending lens data via OSC.",
+    "seoTitle": "Lens Data Encoder | JP Kelly",
+    "seoDescription": "Custom controller and enclosure for tracking lens data and sending OSC.",
     "thumbnails": [
       { "src": "thumbnails/encoder1.png", "alt": "Enclosure CAD Drawing" },
       { "src": "thumbnails/encoder2.png", "alt": "Enclosure Assembly" },
@@ -51,6 +59,8 @@
     "routeKey": "F8interactive",
     "cardTitle": "F8 Developers Interactive Installation",
     "cardText": "Attendees manipulate visuals in real time. Notch, TouchDesigner, LEAP Motion and StreamDeck controller.",
+    "seoTitle": "F8 Interactive Installation | JP Kelly",
+    "seoDescription": "Interactive F8 installation using Notch, TouchDesigner, LEAP Motion, and StreamDeck.",
     "thumbnails": [
       { "src": "thumbnails/F8interactive.png", "alt": "F8 Interactive Installation" },
       { "src": "thumbnails/F8interactive2.png", "alt": "F8 Interactive Installation User" }
@@ -63,6 +73,8 @@
     "routeKey": "Cranestory",
     "cardTitle": "鶴の恩返し (The Crane's Requital)",
     "cardText": "Made with Notch. Inspired by a story of a man who rescues a crane one cold winter night.",
+    "seoTitle": "The Crane's Requital | JP Kelly",
+    "seoDescription": "Notch artwork inspired by the Japanese folktale The Crane's Requital.",
     "thumbnails": [
       { "src": "thumbnails/CraneB+W.png", "alt": "Crane in Black and White" },
       { "src": "thumbnails/cranestory.png", "alt": "The Crane's Requital" }
@@ -75,6 +87,8 @@
     "routeKey": "Craneflock",
     "cardTitle": "Flock of Paper Cranes",
     "cardText": "Testing out the flocking node in Notch. Cloning 3D objects with randomized textures.",
+    "seoTitle": "Flock of Paper Cranes | JP Kelly",
+    "seoDescription": "Notch flocking study with cloned paper cranes and randomized textures.",
     "thumbnails": [
       { "src": "thumbnails/craneFlockWide.png", "alt": "Flock of paper cranes" },
       { "src": "thumbnails/craneflock.png", "alt": "Flock of paper cranes" }
@@ -88,6 +102,8 @@
     "routeKey": "PIWorks",
     "cardTitle": "PIWorks 2019 Opening Animation",
     "cardText": "Animation for opening of PIWorks 2019 conference. Created with Cinema4D.",
+    "seoTitle": "PIWorks 2019 Opening Animation | JP Kelly",
+    "seoDescription": "Cinema4D animation created for the opening of PIWorks 2019.",
     "thumbnails": [
       { "src": "thumbnails/PiWorksWireframe.png", "alt": "PIWorks Wireframe" },
       { "src": "thumbnails/PIWorks.png", "alt": "PIWorks Opening" }
@@ -100,6 +116,8 @@
     "routeKey": "Huds",
     "cardTitle": "Heads Up Displays",
     "cardText": "Futuristic data displays made with Notch.",
+    "seoTitle": "Heads Up Displays | JP Kelly",
+    "seoDescription": "Futuristic HUD visual concepts created in Notch.",
     "thumbnails": [
       { "src": "thumbnails/hud1.png", "alt": "Heads Up Displays" },
       { "src": "thumbnails/hud2.png", "alt": "Heads Up Displays" },
@@ -113,6 +131,8 @@
     "routeKey": "Saturn",
     "cardTitle": "Saturn Orbit Test",
     "cardText": "On screen visuals for an interactive game at a live event. Created with Notch.",
+    "seoTitle": "Saturn Orbit Test | JP Kelly",
+    "seoDescription": "Notch visuals for an interactive live-event game experience.",
     "thumbnails": [{ "src": "thumbnails/saturn.png", "alt": "Saturn Notch" }]
   },
   {
@@ -122,6 +142,8 @@
     "routeKey": "Nac18",
     "cardTitle": "NAC 2018 Opening Experience",
     "cardText": "2018 BMW National Aftersales Conference opening. Attendees use QR code to upload photos which are shown screen.",
+    "seoTitle": "NAC 2018 Opening Experience | JP Kelly",
+    "seoDescription": "BMW NAC 2018 opening experience with attendee photo uploads and live display.",
     "thumbnails": [
       { "src": "thumbnails/nac18.png", "alt": "NAC 2018 opening experience" },
       { "src": "thumbnails/NAClook.png", "alt": "NAC 2018 opening experience" }
@@ -134,6 +156,8 @@
     "routeKey": "Nac19",
     "cardTitle": "NAC 2019 Digital Ribbon",
     "cardText": "Screen look for BMW National Aftersales Conference. Created with Notch, Aftereffects, and disguise (d3).",
+    "seoTitle": "NAC 2019 Digital Ribbon | JP Kelly",
+    "seoDescription": "BMW NAC 2019 screen look built with Notch, After Effects, and disguise.",
     "thumbnails": [
       { "src": "thumbnails/NACribbon.png", "alt": "NAC 2019 Digital Ribbon" },
       { "src": "thumbnails/nac19.png", "alt": "NAC 2019 Screen Look" }
@@ -147,6 +171,8 @@
     "routeKey": "Houdini",
     "cardTitle": "Houdini Previz",
     "cardText": "Previsualization of smoke effect for a MINI show created in Houdini.",
+    "seoTitle": "Houdini Smoke Previz | JP Kelly",
+    "seoDescription": "Houdini previsualization of a smoke effect for a MINI show.",
     "thumbnails": [
       { "src": "thumbnails/Houdini.png", "alt": "Houdini Smoke" },
       { "src": "thumbnails/miniPreViz.png", "alt": "Houdini Smoke" }
@@ -160,6 +186,8 @@
     "routeKey": "TOTO",
     "cardTitle": "TOTO Hologram",
     "cardText": "This is a hologram (Pepper's Ghost) of an animated character for TOTO's San Francisco showroom.",
+    "seoTitle": "TOTO Hologram | JP Kelly",
+    "seoDescription": "Pepper's Ghost hologram project for TOTO's San Francisco showroom.",
     "thumbnails": [
       { "src": "thumbnails/TOTO.png", "alt": "TOTO Hologram" },
       { "src": "thumbnails/prototype.png", "alt": "Hologram Prototype" },
@@ -173,6 +201,8 @@
     "routeKey": "Manhole",
     "cardTitle": "Manhole Cover in Rain",
     "cardText": "Playing around with substances in Notch.",
+    "seoTitle": "Manhole Cover in Rain | JP Kelly",
+    "seoDescription": "Material and substance exploration in Notch featuring a rain-soaked manhole cover.",
     "thumbnails": [{ "src": "thumbnails/manhole.png", "alt": "manhole cover" }]
   }
 ]

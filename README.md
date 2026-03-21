@@ -109,6 +109,12 @@ MDX authoring note:
 - For non-autoplay pages, `VimeoEmbed` shows the play button, starts with sound when clicked, and plays once by default.
 - For autoplay pages, videos loop by default; set `loop={false}` to make an autoplay video play once.
 
+Build/prerender note:
+
+- `npm run build` now performs three steps: client build, SSR build, and prerender.
+- Canonical routes are emitted as static HTML in `build/` with route-specific title, description, OG, Twitter, and canonical tags already in the HTML.
+- The prerender step uses `SITE_URL` if provided; otherwise it defaults to `https://jp-kelly.com` for absolute social metadata URLs.
+
 
 If a project needs its own detail page component, add/import the component and map `routeKey` in `src/App.js`.
 

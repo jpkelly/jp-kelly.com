@@ -19,6 +19,9 @@ export default defineConfig(async () => {
         }
       }
     },
+    ssr: {
+      noExternal: true
+    },
     build: {
       outDir: 'build',
       emptyOutDir: true

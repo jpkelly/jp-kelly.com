@@ -26,7 +26,10 @@
     "dev": "vite",
     "start": "vite",
     "validate:content": "node scripts/validate-content.mjs",
-    "build": "npm run validate:content && vite build",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.jsx --outDir .prerender-tmp",
+    "prerender": "node scripts/prerender.mjs",
+    "build": "npm run validate:content && npm run build:client && npm run build:ssr && npm run prerender",
     "preview": "vite preview"
   },
   "browserslist": {

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
 import About from './components/About';
@@ -183,43 +183,49 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 	);
 }
 
+export function AppShell() {
+	return (
+		<div className="w-full mt-3 px-5 font-normal bg-black text-gray-300">
+			<Header />
+			<Switch>
+				<Route exact path="/" component={Gallery} />
+				<Route path="/gallery" component={Gallery} />
+				<Route path="/about" component={About} />
+				<Route path="/contactform" component={ContactForm} />
+				{projectRoutes.map(route => (
+					<Route
+						key={route.id}
+						path={route.path}
+						render={routeProps => (
+							<ProjectRoutePage
+								{...routeProps}
+								component={route.component}
+								title={route.title}
+								description={route.description}
+								imagePath={route.imagePath}
+								canonicalPath={route.canonicalPath}
+							/>
+						)}
+					/>
+				))}
+				<Route
+					path="/archive"
+					component={() => {
+						window.open('https://jpkelly.net');
+						window.location.href = '/about';
+
+						return null;
+					}}
+				/>
+			</Switch>
+		</div>
+	);
+}
+
 function App() {
 	return (
 		<BrowserRouter>
-			<div className="w-full mt-3 px-5 font-normal bg-black text-gray-300">
-				<Header />
-				<Switch>
-					<Route exact path="/" component={Gallery} />
-					<Route path="/gallery" component={Gallery} />
-					<Route path="/about" component={About} />
-					<Route path="/contactform" component={ContactForm} />
-					{projectRoutes.map(route => (
-						<Route
-							key={route.id}
-							path={route.path}
-							render={routeProps => (
-								<ProjectRoutePage
-									{...routeProps}
-									component={route.component}
-									title={route.title}
-									description={route.description}
-									imagePath={route.imagePath}
-									canonicalPath={route.canonicalPath}
-								/>
-							)}
-						/>
-					))}
-					<Route
-						path="/archive"
-						component={() => {
-							window.open('https://jpkelly.net');
-							window.location.href = '/about';
-
-							return null;
-						}}
-					/>
-				</Switch>
-			</div>
+			<AppShell />
 		</BrowserRouter>
 	);
 }

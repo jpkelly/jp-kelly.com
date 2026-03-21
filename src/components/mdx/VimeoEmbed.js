@@ -32,7 +32,7 @@ function VimeoEmbed({
         >
           <span style={{
             width: 72, height: 72, borderRadius: '50%',
-            background: 'rgba(23,107,135,0.9)',
+            background: 'rgba(30,58,138,0.9)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: '0 2px 12px rgba(0,0,0,0.5)',
           }}>

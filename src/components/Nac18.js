@@ -20,7 +20,6 @@ function Nac18(props) {
             video={563887969}
             autoplay
             muted
-            controls={false}
             background
           />
         </div>

@@ -9,7 +9,7 @@ function Gallery(props) {
 			{/* wrapper */}
 			<div className="container w-full mx-auto ">
 				{/* <div className="flex flex-wrap -mx-1 lg:-mx-4"> */}
-				<div className="md:masonry-2-col lg:masonry-3-col box-border mx-auto before:box-inherit after:box-inherit">
+				<div className="gallery-masonry box-border mx-auto before:box-inherit after:box-inherit">
 					{projects.map(project => (
 						<Card
 							key={project.id}

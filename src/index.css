@@ -74,6 +74,23 @@ a:hover {
   }
 }
 
+.gallery-masonry {
+  column-count: 1;
+  column-gap: 1.7em;
+}
+
+@media (min-width: 768px) {
+  .gallery-masonry {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-masonry {
+    column-count: 3;
+  }
+}
+
 /* .dropdown:hover .dropdown-menu {
   display: block;
 } */

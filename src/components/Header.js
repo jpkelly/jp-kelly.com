@@ -35,6 +35,46 @@ const Header = props => {
                   setToggleMenu(!toggleMenu);
                 }}
               >
+                <Link className="link px-3" to="/nac23vj">
+                  NAC23 VJ Rig
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
+                <Link className="link px-3" to="/notchimag">
+                  Live IMAG Effect
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
+                <Link className="link px-3" to="/jpio">
+                  GPIO / OSC Interface
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
+                <Link className="link px-3" to="/encoder">
+                  Lens Data Encoder
+                </Link>
+              </li>
+              <li
+                className="py-3 text-2xl"
+                onClick={() => {
+                  setToggleMenu(!toggleMenu);
+                }}
+              >
                 <Link className="link px-3" to="/F8interactive">
                   F8 Interactive
                 </Link>

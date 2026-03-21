@@ -10,6 +10,7 @@ This repository contains a React single-page portfolio showcasing projects, vide
 - React Router v5
 - Vite 5 (build/dev tooling)
 - Tailwind CSS 4 + PostCSS 8
+- MDX via `@mdx-js/rollup`
 
 Key files:
 
@@ -54,6 +55,8 @@ This content powers:
 - Route-level title/description metadata (`src/App.js`)
 - Route-level Open Graph/Twitter metadata (`src/App.js`)
 
+MDX project page content can live under `src/content/projects/*.mdx` and embed React components.
+
 ## SEO/Social Metadata
 
 ### Base defaults
@@ -96,6 +99,12 @@ Optional fields:
 - `seoDescription`
 - `seoImage`
 
+MDX authoring note:
+
+- Pilot page: `src/content/projects/notchimag.mdx`
+- Reusable embed component: `src/components/mdx/VimeoEmbed.js`
+- Current route wired to MDX content: `src/components/NotchIMAG.js`
+
 If a project needs its own detail page component, add/import the component and map `routeKey` in `src/App.js`.
 
 ## Changelog
@@ -108,3 +117,4 @@ If a project needs its own detail page component, add/import the component and m
 - 2026-03-21: Added Open Graph/Twitter metadata wiring from project content with base fallbacks in `index.html`.
 - 2026-03-21: Added explicit `seoImage` values across all project entries.
 - 2026-03-21: Added canonical URL management per project route and canonical fallback in `index.html`.
+- 2026-03-21: Added MDX support and converted the Notch IMAG project page to MDX with embedded React component rendering.

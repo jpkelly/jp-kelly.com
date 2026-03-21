@@ -23,8 +23,7 @@ function Nac18(props) {
             responsive="True"
             autoplay
             muted
-            controls={false}
-            background
+            controls
             autopause="False"
           />
         </div>

@@ -69,3 +69,16 @@ a:hover {
 /* .dropdown:hover .dropdown-menu {
   display: block;
 } */
+
+/* Compact projects dropdown so more items fit in the menu. */
+.dropdown-menu {
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+
+.dropdown-menu li {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  font-size: 1rem;
+  line-height: 1.2;
+}

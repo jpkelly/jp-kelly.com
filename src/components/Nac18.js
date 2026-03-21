@@ -16,11 +16,7 @@ function Nac18(props) {
             I was responsible for developing the on screen content and a web interface for attendees
             to upload photos. Made with TouchDesigner, After Effects, and a custom web application.
           </p>
-          <VimeoEmbed
-            video={563887969}
-            autoplay
-            muted
-          />
+          <VimeoEmbed video={563887969} />
         </div>
         <div className=" h-5 pr-3 text-right text-xs">A Studio Firefly Production</div>
         <h2 className="">About This Project</h2>

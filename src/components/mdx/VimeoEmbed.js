@@ -18,7 +18,7 @@ function VimeoEmbed({
 
   const [playing, setPlaying] = useState(autoplayEnabled);
   const iframeRef = useRef(null);
-  const durationRef = useRef(null);
+  const lastTimeRef = useRef(0);
 
   const params = new URLSearchParams({ autopause: 0 });
   if (playing) params.set('autoplay', 1);
@@ -68,19 +68,18 @@ function VimeoEmbed({
 
       if (data.event === 'ready') {
         postToPlayer('addEventListener', 'ended');
-        postToPlayer('getDuration');
+        postToPlayer('addEventListener', 'timeupdate');
         return;
       }
 
-      if (data.method === 'getDuration' && typeof data.value === 'number') {
-        durationRef.current = data.value;
+      if (data.event === 'timeupdate' && data.data && typeof data.data.seconds === 'number') {
+        lastTimeRef.current = data.data.seconds;
         return;
       }
 
       if (data.event === 'ended') {
-        const duration = durationRef.current;
-        if (typeof duration === 'number' && duration > 0) {
-          postToPlayer('setCurrentTime', Math.max(duration - 0.05, 0));
+        if (lastTimeRef.current > 0) {
+          postToPlayer('setCurrentTime', lastTimeRef.current);
         }
         postToPlayer('pause');
       }
@@ -89,7 +88,7 @@ function VimeoEmbed({
     window.addEventListener('message', onMessage);
     postToPlayer('addEventListener', 'ready');
     postToPlayer('addEventListener', 'ended');
-    postToPlayer('getDuration');
+    postToPlayer('addEventListener', 'timeupdate');
 
     return () => {
       window.removeEventListener('message', onMessage);

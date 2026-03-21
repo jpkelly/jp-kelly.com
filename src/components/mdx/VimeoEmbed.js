@@ -1,7 +1,14 @@
 import React from 'react';
 import Vimeo from '@u-wave/react-vimeo';
 
-function VimeoEmbed({ video, controls = true, autoplay = false, loop = false }) {
+function VimeoEmbed({
+  video,
+  controls = true,
+  autoplay = false,
+  loop = false,
+  muted = false,
+  background = false
+}) {
   return (
     <Vimeo
       className="z-0"
@@ -13,6 +20,8 @@ function VimeoEmbed({ video, controls = true, autoplay = false, loop = false }) 
       controls={controls ? 'True' : 'False'}
       autoplay={autoplay}
       loop={loop}
+      muted={muted}
+      background={background}
     />
   );
 }

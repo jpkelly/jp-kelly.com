@@ -1,5 +1,5 @@
 import React from 'react';
-import Vimeo from '@u-wave/react-vimeo';
+import VimeoEmbed from './mdx/VimeoEmbed';
 
 function Nac18(props) {
   return (
@@ -16,15 +16,12 @@ function Nac18(props) {
             I was responsible for developing the on screen content and a web interface for attendees
             to upload photos. Made with TouchDesigner, After Effects, and a custom web application.
           </p>
-          <Vimeo
+          <VimeoEmbed
             video={563887969}
-            width={1280}
-            height={720}
-            responsive="True"
             autoplay
             muted
-            controls
-            autopause="False"
+            controls={false}
+            background
           />
         </div>
         <div className=" h-5 pr-3 text-right text-xs">A Studio Firefly Production</div>

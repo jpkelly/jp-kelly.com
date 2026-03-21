@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 function VimeoEmbed({
   video,
@@ -14,8 +14,11 @@ function VimeoEmbed({
   const backgroundEnabled = background || (autoplayEnabled && loopEnabled);
   const mutedEnabled = muted || autoplayEnabled;
   const controlsEnabled = autoplayEnabled ? false : controls;
+  const holdLastFrame = autoplayEnabled && !loopEnabled;
 
   const [playing, setPlaying] = useState(autoplayEnabled);
+  const iframeRef = useRef(null);
+  const durationRef = useRef(null);
 
   const params = new URLSearchParams({ autopause: 0 });
   if (playing) params.set('autoplay', 1);
@@ -25,6 +28,73 @@ function VimeoEmbed({
   if (backgroundEnabled) params.set('background', 1);
 
   const paddingTop = portrait ? '177.78%' : '56.25%';
+
+  useEffect(() => {
+    if (!holdLastFrame || !playing) {
+      return undefined;
+    }
+
+    const iframe = iframeRef.current;
+    if (!iframe) {
+      return undefined;
+    }
+
+    const postToPlayer = (method, value) => {
+      const message = typeof value === 'undefined' ? { method } : { method, value };
+      iframe.contentWindow?.postMessage(JSON.stringify(message), '*');
+    };
+
+    const onMessage = (event) => {
+      if (event.origin !== 'https://player.vimeo.com') {
+        return;
+      }
+
+      if (event.source !== iframe.contentWindow) {
+        return;
+      }
+
+      let data = event.data;
+      if (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+        } catch {
+          return;
+        }
+      }
+
+      if (!data || typeof data !== 'object') {
+        return;
+      }
+
+      if (data.event === 'ready') {
+        postToPlayer('addEventListener', 'ended');
+        postToPlayer('getDuration');
+        return;
+      }
+
+      if (data.method === 'getDuration' && typeof data.value === 'number') {
+        durationRef.current = data.value;
+        return;
+      }
+
+      if (data.event === 'ended') {
+        const duration = durationRef.current;
+        if (typeof duration === 'number' && duration > 0) {
+          postToPlayer('setCurrentTime', Math.max(duration - 0.05, 0));
+        }
+        postToPlayer('pause');
+      }
+    };
+
+    window.addEventListener('message', onMessage);
+    postToPlayer('addEventListener', 'ready');
+    postToPlayer('addEventListener', 'ended');
+    postToPlayer('getDuration');
+
+    return () => {
+      window.removeEventListener('message', onMessage);
+    };
+  }, [holdLastFrame, playing, video]);
 
   return (
     <div style={{ padding: `${paddingTop} 0 0 0`, position: 'relative', background: '#111' }}>
@@ -52,6 +122,7 @@ function VimeoEmbed({
         </button>
       )}
       <iframe
+        ref={iframeRef}
         src={`https://player.vimeo.com/video/${video}?${params}`}
         frameBorder="0"
         allow="autoplay; fullscreen; picture-in-picture"

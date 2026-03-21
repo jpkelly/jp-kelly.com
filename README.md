@@ -9,7 +9,7 @@ This repository contains a React single-page site that showcases projects, video
 - React 17
 - React Router v5
 - Vite 5 (build and dev tooling)
-- Tailwind CSS 3 + PostCSS 8
+- Tailwind CSS 4 + PostCSS 8
 
 Key config files:
 
@@ -54,7 +54,7 @@ That setup made environment and dependency upgrades increasingly brittle, and lo
 
 ### 2) Tailwind and PostCSS Modernization
 
-- Upgraded to Tailwind CSS 3
+- Upgraded to Tailwind CSS 4
 - Upgraded to PostCSS 8 and Autoprefixer 10
 - Updated Tailwind config to use `content` scanning
 - Kept existing site styling and utilities intact
@@ -77,6 +77,7 @@ Result: adding or editing a project in one file updates menu + gallery + routing
 
 - 2026-03-21: `9e9fad80` - Migrated build system from CRA/CRACO to Vite, upgraded Tailwind/PostCSS, and preserved production output to `build/`.
 - 2026-03-21: `660a6f99` - Refactored project data into a shared content model used by gallery cards, dropdown items, and route generation.
+- 2026-03-21: Tailwind upgraded from v3 to v4 (`tailwindcss` + `@tailwindcss/postcss`) with updated CSS entrypoint and build artifacts.
 
 ## Content Editing Guide
 

@@ -10,10 +10,10 @@ function VimeoEmbed({
   portrait = false
 }) {
   const autoplayEnabled = autoplay || background;
-  const mutedEnabled = muted || autoplayEnabled;
   const loopEnabled = typeof loop === 'boolean' ? loop : autoplayEnabled;
+  const backgroundEnabled = background || (autoplayEnabled && loopEnabled);
+  const mutedEnabled = muted || autoplayEnabled;
   const controlsEnabled = autoplayEnabled ? false : controls;
-  const backgroundEnabled = autoplayEnabled;
 
   const [playing, setPlaying] = useState(autoplayEnabled);
 

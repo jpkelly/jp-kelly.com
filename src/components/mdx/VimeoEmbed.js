@@ -9,7 +9,7 @@ function VimeoEmbed({
   background = false,
   portrait = false
 }) {
-  const [playing, setPlaying] = useState(autoplay);
+  const [playing, setPlaying] = useState(autoplay || background);
 
   const params = new URLSearchParams({ autopause: 0 });
   if (playing) params.set('autoplay', 1);

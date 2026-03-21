@@ -15,9 +15,9 @@ function VimeoEmbed({
       video={video}
       width={1280}
       height={720}
-      responsive="True"
-      autopause="False"
-      controls={controls ? 'True' : 'False'}
+      responsive
+      autopause={false}
+      controls={controls}
       autoplay={autoplay}
       loop={loop}
       muted={muted}

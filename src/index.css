@@ -18,6 +18,16 @@ h2 {
   @apply mb-3 text-xl xl:text-2xl;
 }
 
+.card-title {
+  margin-bottom: 0.5rem;
+}
+
+.card-description {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  max-width: none;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

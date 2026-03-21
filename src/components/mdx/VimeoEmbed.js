@@ -7,19 +7,20 @@ function VimeoEmbed({
   loop,
   muted = false,
   background = false,
-  portrait = false
+  portrait = false,
+  endFrameImage = null
 }) {
   const autoplayEnabled = autoplay || background;
   const loopEnabled = typeof loop === 'boolean' ? loop : autoplayEnabled;
   const backgroundEnabled = background || (autoplayEnabled && loopEnabled);
   const mutedEnabled = muted || autoplayEnabled;
   const controlsEnabled = autoplayEnabled ? false : controls;
-  const holdLastFrame = autoplayEnabled && !loopEnabled;
+  const holdWithImage = autoplayEnabled && !loopEnabled && Boolean(endFrameImage);
 
   const [playing, setPlaying] = useState(autoplayEnabled);
+  const [showEndFrame, setShowEndFrame] = useState(false);
   const iframeRef = useRef(null);
-  const lastTimeRef = useRef(0);
-  const holdAppliedRef = useRef(false);
+  const freezeAppliedRef = useRef(false);
 
   const params = new URLSearchParams({ autopause: 0 });
   if (playing) params.set('autoplay', 1);
@@ -31,7 +32,8 @@ function VimeoEmbed({
   const paddingTop = portrait ? '177.78%' : '56.25%';
 
   useEffect(() => {
-    if (!holdLastFrame || !playing) {
+    setShowEndFrame(false);
+    if (!holdWithImage || !playing) {
       return undefined;
     }
 
@@ -75,22 +77,22 @@ function VimeoEmbed({
       if (data.event === 'timeupdate' && data.data && typeof data.data.seconds === 'number') {
         const seconds = data.data.seconds;
         const duration = typeof data.data.duration === 'number' ? data.data.duration : null;
-        lastTimeRef.current = seconds;
 
-        if (!holdAppliedRef.current && duration && duration > 0) {
+        if (!freezeAppliedRef.current && duration && duration > 0) {
           const remaining = duration - seconds;
-          // Pause just before the player enters the ended/replay state.
+          // Freeze before Vimeo enters the ended/replay state, then reveal static end frame.
           if (remaining <= 0.12) {
-            holdAppliedRef.current = true;
+            freezeAppliedRef.current = true;
             postToPlayer('pause');
             postToPlayer('setCurrentTime', Math.max(seconds, 0));
+            setShowEndFrame(true);
           }
         }
         return;
       }
     };
 
-    holdAppliedRef.current = false;
+    freezeAppliedRef.current = false;
     window.addEventListener('message', onMessage);
     postToPlayer('addEventListener', 'ready');
     postToPlayer('addEventListener', 'timeupdate');
@@ -98,7 +100,7 @@ function VimeoEmbed({
     return () => {
       window.removeEventListener('message', onMessage);
     };
-  }, [holdLastFrame, playing, video]);
+  }, [holdWithImage, playing, video]);
 
   return (
     <div style={{ padding: `${paddingTop} 0 0 0`, position: 'relative', background: '#111' }}>
@@ -130,9 +132,23 @@ function VimeoEmbed({
         src={`https://player.vimeo.com/video/${video}?${params}`}
         frameBorder="0"
         allow="autoplay; fullscreen; picture-in-picture"
-        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          visibility: showEndFrame ? 'hidden' : 'visible',
+        }}
         title={`Vimeo video ${video}`}
       />
+      {showEndFrame && endFrameImage && (
+        <img
+          src={endFrameImage}
+          alt="Video end frame"
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      )}
     </div>
   );
 }

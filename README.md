@@ -16,7 +16,7 @@ Key config files:
 - `vite.config.js`
 - `postcss.config.js`
 - `tailwind.config.js`
-- `src/content/projects.js`
+- `src/content/projects.json`
 
 ## Node Version
 
@@ -63,7 +63,7 @@ That setup made environment and dependency upgrades increasingly brittle, and lo
 
 Project metadata now lives in one place:
 
-- `src/content/projects.js`
+- `src/content/projects.json`
 
 The following are generated from that shared data:
 
@@ -81,7 +81,7 @@ Result: adding or editing a project in one file updates menu + gallery + routing
 
 ## Content Editing Guide
 
-To add a new project, update `src/content/projects.js` with:
+To add a new project, update `src/content/projects.json` with:
 
 - `id`: unique key
 - `path`: canonical route path

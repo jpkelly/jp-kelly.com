@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-import projects from '../content/projects';
+import projects from '../content/projects.json';
 
 function Gallery(props) {
 	return (

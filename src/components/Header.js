@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { BiHomeSmile } from 'react-icons/bi';
 import kamon from '../kamon.png';
-import projects from '../content/projects';
+import projects from '../content/projects.json';
 
 const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);

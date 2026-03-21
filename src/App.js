@@ -18,7 +18,7 @@ import Encoder from './components/Encoder';
 import JpIO from './components/JpIO';
 import NotchIMAG from './components/NotchIMAG';
 import NAC23VJ from './components/NAC23VJ';
-import projects from './content/projects';
+import projects from './content/projects.json';
 
 const projectRouteComponents = {
 	NAC23VJ,

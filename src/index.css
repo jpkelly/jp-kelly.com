@@ -77,8 +77,8 @@ a:hover {
 }
 
 .dropdown-menu li {
-  padding-top: 0.1rem !important;
-  padding-bottom: 0.1rem !important;
+  padding-top: 0.2rem !important;
+  padding-bottom: 0.2rem !important;
   font-size: 0.85rem !important;
   line-height: 1.1 !important;
 }
@@ -91,15 +91,15 @@ a:hover {
 }
 
 .dropdown-menu .link.px-3 {
-  font-size: 1.25rem !important;
-  line-height: 1.75rem !important;
-  padding-top: 0.1rem !important;
-  padding-bottom: 0.1rem !important;
+  font-size: 1.1rem !important;
+  line-height: 1.45rem !important;
+  padding-top: 0.2rem !important;
+  padding-bottom: 0.2rem !important;
 }
 
 @media (min-width: 1280px) {
   .dropdown-menu .link.px-3 {
-    font-size: 1.5rem !important;
-    line-height: 2rem !important;
+    font-size: 1.25rem !important;
+    line-height: 1.7rem !important;
   }
 }

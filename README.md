@@ -28,7 +28,8 @@ This repo is pinned to Node 18:
 ## Scripts
 
 - `npm start` or `npm run dev`: start Vite dev server
-- `npm run build`: create production build in `build/`
+- `npm run validate:content`: validate `src/content/projects.json` schema and route uniqueness
+- `npm run build`: validate content, then create production build in `build/`
 - `npm run preview`: preview production build locally
 
 ## Deployment Notes
@@ -78,6 +79,7 @@ Result: adding or editing a project in one file updates menu + gallery + routing
 - 2026-03-21: `9e9fad80` - Migrated build system from CRA/CRACO to Vite, upgraded Tailwind/PostCSS, and preserved production output to `build/`.
 - 2026-03-21: `660a6f99` - Refactored project data into a shared content model used by gallery cards, dropdown items, and route generation.
 - 2026-03-21: Tailwind upgraded from v3 to v4 (`tailwindcss` + `@tailwindcss/postcss`) with updated CSS entrypoint and build artifacts.
+- 2026-03-21: Added build-time content validation (`scripts/validate-content.mjs`) and wired it into `npm run build`.
 
 ## Content Editing Guide
 
@@ -91,6 +93,8 @@ To add a new project, update `src/content/projects.json` with:
 - optional `aliases`: additional legacy or alternate paths
 
 If a project needs its own detail page component, add/import that component and map its `routeKey` in `src/App.js`.
+
+Before commit/push for deploy, run `npm run build` so both content validation and production build pass.
 
 ## Future Plans
 

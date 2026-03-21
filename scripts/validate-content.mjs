@@ -83,6 +83,10 @@ for (let index = 0; index < projects.length; index += 1) {
     fail(`project "${project.id}" has invalid optional "seoDescription"`);
   }
 
+  if ('seoImage' in project && !isNonEmptyString(project.seoImage)) {
+    fail(`project "${project.id}" has invalid optional "seoImage"`);
+  }
+
   if (!Array.isArray(project.thumbnails) || project.thumbnails.length === 0) {
     fail(`project "${project.id}" must include at least one thumbnail`);
   }

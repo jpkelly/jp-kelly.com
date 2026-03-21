@@ -87,26 +87,15 @@ Result: adding or editing a project in one file updates menu + gallery + routing
 
 To add a new project, update `src/content/projects.json` with:
 
-- `id`: unique key
-- `path`: canonical route path
-- `menuLabel`: dropdown label
-- `routeKey`: page component mapping key used in `src/App.js`
-- `cardTitle`, `cardText`, `thumbnails`: gallery card content
-- optional `aliases`: additional legacy or alternate paths
-- optional `seoTitle`: browser tab title for the project page
-- optional `seoDescription`: meta description for the project page
+- optional `seoImage`: social sharing image path/URL for project Open Graph/Twitter tags
 
 If a project needs its own detail page component, add/import that component and map its `routeKey` in `src/App.js`.
 
-Before commit/push for deploy, run `npm run build` so both content validation and production build pass.
-
-## Future Plans
-
+- Project Open Graph + Twitter meta tags (`src/App.js` and `index.html`)
 ### Near-Term
 
 - Keep hardening deployment consistency around `build/` artifact publishing
-- Add small regression checks for routing and project list rendering
-
+- 2026-03-21: Added Open Graph/Twitter metadata wiring from project content with default fallback tags in `index.html`.
 ### Content and CMS Direction
 
 - Evolve from in-code project objects to file-based content (Markdown/MDX or JSON content files)

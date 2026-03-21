@@ -49,48 +49,101 @@ const projectRoutes = projects
 		const paths = [project.path, ...(project.aliases || [])];
 		const title = project.seoTitle || `${project.cardTitle} | JP Kelly`;
 		const description = project.seoDescription || project.cardText;
+		const imagePath = project.seoImage || project.thumbnails?.[0]?.src || '/thumbnails/nac23vj.png';
 		return paths.map(path => ({
 			id: `${project.id}-${path}`,
 			path,
 			component,
 			title,
-			description
+			description,
+			imagePath,
+			canonicalPath: project.path
 		}));
 	})
 	.flat();
 
-const DEFAULT_TITLE = 'JP Kelly';
+const DEFAULT_TITLE = 'JP Kelly | Portfolio';
 const DEFAULT_DESCRIPTION = 'Portfolio site for JP Kelly.';
+const DEFAULT_IMAGE_PATH = '/thumbnails/nac23vj.png';
 
-function ProjectRoutePage({ component: ProjectComponent, title, description, ...routeProps }) {
+function normalizeImagePath(imagePath) {
+	if (!imagePath) {
+		return DEFAULT_IMAGE_PATH;
+	}
+
+	if (/^https?:\/\//i.test(imagePath)) {
+		return imagePath;
+	}
+
+	return imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+}
+
+function upsertMetaTag({ name, property, content }) {
+	const selector = name ? `meta[name="${name}"]` : `meta[property="${property}"]`;
+	let tag = document.querySelector(selector);
+	let createdTag = false;
+	const previousContent = tag?.getAttribute('content') || '';
+
+	if (!tag) {
+		tag = document.createElement('meta');
+		if (name) {
+			tag.setAttribute('name', name);
+		}
+		if (property) {
+			tag.setAttribute('property', property);
+		}
+		document.head.appendChild(tag);
+		createdTag = true;
+	}
+
+	tag.setAttribute('content', content);
+
+	return () => {
+		if (!tag) {
+			return;
+		}
+
+		if (createdTag) {
+			document.head.removeChild(tag);
+		} else {
+			tag.setAttribute('content', previousContent);
+		}
+	};
+}
+
+function ProjectRoutePage({ component: ProjectComponent, title, description, imagePath, canonicalPath, ...routeProps }) {
 	useEffect(() => {
 		const previousTitle = document.title;
 		document.title = title || DEFAULT_TITLE;
 
-		let descriptionTag = document.querySelector('meta[name="description"]');
-		let createdTag = false;
-		const previousDescription = descriptionTag?.getAttribute('content') || '';
+		const effectiveDescription = description || DEFAULT_DESCRIPTION;
+		const origin = window.location.origin;
+		const effectiveCanonicalPath = canonicalPath || routeProps.location?.pathname || '/';
+		const effectiveUrl = `${origin}${effectiveCanonicalPath}`;
+		const normalizedImagePath = normalizeImagePath(imagePath);
+		const effectiveImage = /^https?:\/\//i.test(normalizedImagePath)
+			? normalizedImagePath
+			: `${origin}${normalizedImagePath}`;
 
-		if (!descriptionTag) {
-			descriptionTag = document.createElement('meta');
-			descriptionTag.setAttribute('name', 'description');
-			document.head.appendChild(descriptionTag);
-			createdTag = true;
-		}
-
-		descriptionTag.setAttribute('content', description || DEFAULT_DESCRIPTION);
+		const restoreMetaTags = [
+			upsertMetaTag({ name: 'description', content: effectiveDescription }),
+			upsertMetaTag({ property: 'og:type', content: 'website' }),
+			upsertMetaTag({ property: 'og:site_name', content: 'JP Kelly' }),
+			upsertMetaTag({ property: 'og:title', content: title || DEFAULT_TITLE }),
+			upsertMetaTag({ property: 'og:description', content: effectiveDescription }),
+			upsertMetaTag({ property: 'og:url', content: effectiveUrl }),
+			upsertMetaTag({ property: 'og:image', content: effectiveImage }),
+			upsertMetaTag({ name: 'twitter:card', content: 'summary_large_image' }),
+			upsertMetaTag({ name: 'twitter:title', content: title || DEFAULT_TITLE }),
+			upsertMetaTag({ name: 'twitter:description', content: effectiveDescription }),
+			upsertMetaTag({ name: 'twitter:image', content: effectiveImage })
+		];
 
 		return () => {
 			document.title = previousTitle || DEFAULT_TITLE;
-			if (descriptionTag) {
-				if (createdTag) {
-					document.head.removeChild(descriptionTag);
-				} else {
-					descriptionTag.setAttribute('content', previousDescription || DEFAULT_DESCRIPTION);
-				}
-			}
+			restoreMetaTags.forEach(restore => restore());
 		};
-	}, [title, description]);
+	}, [title, description, imagePath, canonicalPath, routeProps.location]);
 
 	return <ProjectComponent {...routeProps} />;
 }
@@ -115,6 +168,8 @@ function App() {
 									component={route.component}
 									title={route.title}
 									description={route.description}
+									imagePath={route.imagePath}
+									canonicalPath={route.canonicalPath}
 								/>
 							)}
 						/>

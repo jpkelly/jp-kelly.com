@@ -6,7 +6,8 @@ function VimeoEmbed({
   autoplay = false,
   loop = false,
   muted = false,
-  background = false
+  background = false,
+  portrait = false
 }) {
   const [playing, setPlaying] = useState(autoplay);
 
@@ -17,8 +18,10 @@ function VimeoEmbed({
   if (!controls) params.set('controls', 0);
   if (background) params.set('background', 1);
 
+  const paddingTop = portrait ? '177.78%' : '56.25%';
+
   return (
-    <div style={{ padding: '56.25% 0 0 0', position: 'relative', background: '#111' }}>
+    <div style={{ padding: `${paddingTop} 0 0 0`, position: 'relative', background: '#111' }}>
       {!playing && (
         <button
           onClick={() => setPlaying(true)}

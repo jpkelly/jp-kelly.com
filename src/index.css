@@ -61,18 +61,18 @@ a:hover {
 
 /* From https://stackoverflow.com/questions/66914169/can-i-create-a-masonry-layout-using-tailwind-css-utility-classes */
 @layer utilities {
-  @variants responsive {
-    .masonry-3-col {
-      column-count: 3;
-      column-gap: 1.7em;
-    }
-    .masonry-2-col {
-      column-count: 2;
-      column-gap: 1.7em;
-    }
-    .break-inside {
-      break-inside: avoid;
-    }
+  .masonry-3-col {
+    column-count: 3;
+    column-gap: 1.7em;
+  }
+
+  .masonry-2-col {
+    column-count: 2;
+    column-gap: 1.7em;
+  }
+
+  .break-inside {
+    break-inside: avoid;
   }
 }
 

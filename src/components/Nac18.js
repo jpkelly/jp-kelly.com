@@ -21,7 +21,10 @@ function Nac18(props) {
             width={1280}
             height={720}
             responsive="True"
-            autoplay="True"
+            autoplay
+            muted
+            controls={false}
+            background
             autopause="False"
           />
         </div>

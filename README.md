@@ -103,7 +103,8 @@ MDX authoring note:
 
 - Pilot page: `src/content/projects/notchimag.mdx`
 - Reusable embed component: `src/components/mdx/VimeoEmbed.js`
-- For silent autoplay, loop, and no controls on Vimeo Plus, use `background={true}` in `VimeoEmbed`.
+- Use `background={true}` only for the silent autoplay pages that should loop without controls.
+- All other project videos should use the default `VimeoEmbed` behavior so they start from the play button with sound.
 - Current route wired to MDX content: `src/components/NotchIMAG.js`
 - Additional routes wired to MDX content:
 	- `src/components/NAC23VJ.js` -> `src/content/projects/nac23vj.mdx`

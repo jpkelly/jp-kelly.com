@@ -107,7 +107,6 @@ MDX authoring note:
 - Current approved autoplay pages: Heads-up Displays, F-8 Interactive, Saturn Orbit Test, Houdini Smoke, NAC 2019 Digital Ribbon, and TOTO Hologram/Immersive Experience.
 - For non-autoplay pages, `VimeoEmbed` shows the play button, starts with sound when clicked, and plays once by default.
 - For autoplay pages, videos loop by default; set `loop={false}` to make an autoplay video play once.
-- For autoplay-once videos, use `endFrameImage="path/to/image.png"` to guarantee a stable final frame display.
 - Current route wired to MDX content: `src/components/NotchIMAG.js`
 - Additional routes wired to MDX content:
 	- `src/components/NAC23VJ.js` -> `src/content/projects/nac23vj.mdx`

@@ -54,9 +54,33 @@ a:hover {
 }
 
 .kamon {
-  height: 45px;
-  width: 45px;
-  @apply inline-block align-middle mx-0 my-0 transform scale-50 xl:scale-75 2xl:scale-100 -mr-2 xl:mr-1 2xl:mr-4 2xl:ml-2.5;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  min-height: 22px;
+  display: block;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  @apply align-middle mx-0 my-0 -mr-2 xl:mr-1 2xl:mr-4 2xl:ml-2.5;
+}
+
+@media (min-width: 1280px) {
+  .kamon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .kamon {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    min-height: 45px;
+  }
 }
 
 /* From https://stackoverflow.com/questions/66914169/can-i-create-a-masonry-layout-using-tailwind-css-utility-classes */

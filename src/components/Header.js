@@ -8,11 +8,11 @@ import projects from '../content/projects.json';
 const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);
   return (
-    <h1 className="xl:text-2xl 2xl:text-4xl">
+    <h1 className="flex items-center xl:text-2xl 2xl:text-4xl">
       <Link to="/about">
         <img src={kamon} className="kamon" alt="logo" />
       </Link>
-      <div className="inline-block divide-x-2 mt-2.5 xl:mt-1 2xl:mt-3">
+      <div className="inline-flex items-center divide-x-2 ml-1 xl:ml-2">
         <Link className="px-3" to="/gallery">
           Gallery
         </Link>

@@ -9,20 +9,26 @@ function VimeoEmbed({
   background = false,
   portrait = false
 }) {
-  const [playing, setPlaying] = useState(autoplay || background);
+  const autoplayEnabled = autoplay || background;
+  const mutedEnabled = muted || autoplayEnabled;
+  const loopEnabled = loop || autoplayEnabled;
+  const controlsEnabled = autoplayEnabled ? false : controls;
+  const backgroundEnabled = autoplayEnabled;
+
+  const [playing, setPlaying] = useState(autoplayEnabled);
 
   const params = new URLSearchParams({ autopause: 0 });
   if (playing) params.set('autoplay', 1);
-  if (muted) params.set('muted', 1);
-  if (loop) params.set('loop', 1);
-  if (!controls) params.set('controls', 0);
-  if (background) params.set('background', 1);
+  if (mutedEnabled) params.set('muted', 1);
+  if (loopEnabled) params.set('loop', 1);
+  if (!controlsEnabled) params.set('controls', 0);
+  if (backgroundEnabled) params.set('background', 1);
 
   const paddingTop = portrait ? '177.78%' : '56.25%';
 
   return (
     <div style={{ padding: `${paddingTop} 0 0 0`, position: 'relative', background: '#111' }}>
-      {!playing && (
+      {!autoplayEnabled && !playing && (
         <button
           onClick={() => setPlaying(true)}
           aria-label="Play video"

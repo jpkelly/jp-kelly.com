@@ -104,6 +104,10 @@ MDX authoring note:
 - Pilot page: `src/content/projects/notchimag.mdx`
 - Reusable embed component: `src/components/mdx/VimeoEmbed.js`
 - Current route wired to MDX content: `src/components/NotchIMAG.js`
+- Additional routes wired to MDX content:
+	- `src/components/NAC23VJ.js` -> `src/content/projects/nac23vj.mdx`
+	- `src/components/Huds.js` -> `src/content/projects/huds.mdx`
+	- `src/components/Saturn.js` -> `src/content/projects/saturn.mdx`
 
 If a project needs its own detail page component, add/import the component and map `routeKey` in `src/App.js`.
 
@@ -118,3 +122,4 @@ If a project needs its own detail page component, add/import the component and m
 - 2026-03-21: Added explicit `seoImage` values across all project entries.
 - 2026-03-21: Added canonical URL management per project route and canonical fallback in `index.html`.
 - 2026-03-21: Added MDX support and converted the Notch IMAG project page to MDX with embedded React component rendering.
+- 2026-03-21: Converted NAC23 VJ, Heads-up Displays, and Saturn project pages to MDX content files.

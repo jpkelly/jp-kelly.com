@@ -1,70 +1,115 @@
-# jp-kelly.com Portfolio Site
+# jp-kelly.com
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Portfolio site for JP Kelly.
 
-## Available Scripts
+This repository contains a React single-page site that showcases projects, videos, and portfolio pages.
 
-In the project directory, you can run:
+## Current Stack
 
-### `npm start`
+- React 17
+- React Router v5
+- Vite 5 (build and dev tooling)
+- Tailwind CSS 3 + PostCSS 8
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Key config files:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- `vite.config.js`
+- `postcss.config.js`
+- `tailwind.config.js`
+- `src/content/projects.js`
 
-### `npm test`
+## Node Version
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This repo is pinned to Node 18:
 
-### `npm run build`
+- `.nvmrc` is `18.20.8`
+- `package.json` engines require `node: 18.x` and `npm: >=9 <11`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Scripts
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- `npm start` or `npm run dev`: start Vite dev server
+- `npm run build`: create production build in `build/`
+- `npm run preview`: preview production build locally
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deployment Notes
 
-### `npm run eject`
+Production output is generated into `build/`.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Important: this project currently deploys build artifacts from the repository. If you deploy through a git pull workflow, run `npm run build` before commit/push so `build/` reflects source changes.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## What The Original Build Was
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The site originally used Create React App + CRACO with the older Tailwind PostCSS 7 compatibility stack.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+That setup made environment and dependency upgrades increasingly brittle, and local builds became harder to keep stable.
 
-## Learn More
+## What Was Changed
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 1) Build Tooling Migration
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Replaced CRA/CRACO with Vite
+- Removed CRA-specific entry files and template wiring
+- Kept production output path as `build/` to avoid changing deployment document-root assumptions
+- Preserved support for legacy environment variable names via Vite env prefix config
 
-### Code Splitting
+### 2) Tailwind and PostCSS Modernization
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Upgraded to Tailwind CSS 3
+- Upgraded to PostCSS 8 and Autoprefixer 10
+- Updated Tailwind config to use `content` scanning
+- Kept existing site styling and utilities intact
 
-### Analyzing the Bundle Size
+### 3) Content Model Refactor (Single Source of Truth)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Project metadata now lives in one place:
 
-### Making a Progressive Web App
+- `src/content/projects.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The following are generated from that shared data:
 
-### Advanced Configuration
+- Gallery cards (`src/components/Gallery.js`)
+- Header dropdown project list (`src/components/Header.js`)
+- Project routes and aliases (`src/App.js`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Result: adding or editing a project in one file updates menu + gallery + routing consistently.
 
-### Deployment
+## Changelog
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- 2026-03-21: `9e9fad80` - Migrated build system from CRA/CRACO to Vite, upgraded Tailwind/PostCSS, and preserved production output to `build/`.
+- 2026-03-21: `660a6f99` - Refactored project data into a shared content model used by gallery cards, dropdown items, and route generation.
 
-### `npm run build` fails to minify
+## Content Editing Guide
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To add a new project, update `src/content/projects.js` with:
+
+- `id`: unique key
+- `path`: canonical route path
+- `menuLabel`: dropdown label
+- `routeKey`: page component mapping key used in `src/App.js`
+- `cardTitle`, `cardText`, `thumbnails`: gallery card content
+- optional `aliases`: additional legacy or alternate paths
+
+If a project needs its own detail page component, add/import that component and map its `routeKey` in `src/App.js`.
+
+## Future Plans
+
+### Near-Term
+
+- Keep hardening deployment consistency around `build/` artifact publishing
+- Add small regression checks for routing and project list rendering
+
+### Content and CMS Direction
+
+- Evolve from in-code project objects to file-based content (Markdown/MDX or JSON content files)
+- Keep a single content schema that powers:
+	- gallery cards
+	- dropdown navigation
+	- route registration
+	- page metadata
+- Add a lightweight authoring workflow so new cards/pages can be added without editing multiple components
+
+### Later Improvements
+
+- Introduce automated build/deploy checks in CI
+- Improve type safety around content schema
+- Incrementally modernize route architecture when appropriate

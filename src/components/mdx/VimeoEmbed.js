@@ -19,6 +19,7 @@ function VimeoEmbed({
   const [playing, setPlaying] = useState(autoplayEnabled);
   const iframeRef = useRef(null);
   const lastTimeRef = useRef(0);
+  const holdAppliedRef = useRef(false);
 
   const params = new URLSearchParams({ autopause: 0 });
   if (playing) params.set('autoplay', 1);
@@ -67,27 +68,31 @@ function VimeoEmbed({
       }
 
       if (data.event === 'ready') {
-        postToPlayer('addEventListener', 'ended');
         postToPlayer('addEventListener', 'timeupdate');
         return;
       }
 
       if (data.event === 'timeupdate' && data.data && typeof data.data.seconds === 'number') {
-        lastTimeRef.current = data.data.seconds;
-        return;
-      }
+        const seconds = data.data.seconds;
+        const duration = typeof data.data.duration === 'number' ? data.data.duration : null;
+        lastTimeRef.current = seconds;
 
-      if (data.event === 'ended') {
-        if (lastTimeRef.current > 0) {
-          postToPlayer('setCurrentTime', lastTimeRef.current);
+        if (!holdAppliedRef.current && duration && duration > 0) {
+          const remaining = duration - seconds;
+          // Pause just before the player enters the ended/replay state.
+          if (remaining <= 0.12) {
+            holdAppliedRef.current = true;
+            postToPlayer('pause');
+            postToPlayer('setCurrentTime', Math.max(seconds, 0));
+          }
         }
-        postToPlayer('pause');
+        return;
       }
     };
 
+    holdAppliedRef.current = false;
     window.addEventListener('message', onMessage);
     postToPlayer('addEventListener', 'ready');
-    postToPlayer('addEventListener', 'ended');
     postToPlayer('addEventListener', 'timeupdate');
 
     return () => {

@@ -111,6 +111,33 @@ function upsertMetaTag({ name, property, content }) {
 	};
 }
 
+function upsertCanonicalTag(href) {
+	let tag = document.querySelector('link[rel="canonical"]');
+	let createdTag = false;
+	const previousHref = tag?.getAttribute('href') || '';
+
+	if (!tag) {
+		tag = document.createElement('link');
+		tag.setAttribute('rel', 'canonical');
+		document.head.appendChild(tag);
+		createdTag = true;
+	}
+
+	tag.setAttribute('href', href);
+
+	return () => {
+		if (!tag) {
+			return;
+		}
+
+		if (createdTag) {
+			document.head.removeChild(tag);
+		} else {
+			tag.setAttribute('href', previousHref);
+		}
+	};
+}
+
 function ProjectRoutePage({ component: ProjectComponent, title, description, imagePath, canonicalPath, ...routeProps }) {
 	useEffect(() => {
 		const previousTitle = document.title;
@@ -138,10 +165,12 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 			upsertMetaTag({ name: 'twitter:description', content: effectiveDescription }),
 			upsertMetaTag({ name: 'twitter:image', content: effectiveImage })
 		];
+		const restoreCanonicalTag = upsertCanonicalTag(effectiveUrl);
 
 		return () => {
 			document.title = previousTitle || DEFAULT_TITLE;
 			restoreMetaTags.forEach(restore => restore());
+			restoreCanonicalTag();
 		};
 	}, [title, description, imagePath, canonicalPath, routeProps.location]);
 

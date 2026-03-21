@@ -2,107 +2,109 @@
 
 Portfolio site for JP Kelly.
 
-This repository contains a React single-page site that showcases projects, videos, and portfolio pages.
+This repository contains a React single-page portfolio showcasing projects, videos, and supporting pages.
 
 ## Current Stack
 
 - React 17
 - React Router v5
-- Vite 5 (build and dev tooling)
+- Vite 5 (build/dev tooling)
 - Tailwind CSS 4 + PostCSS 8
 
-Key config files:
+Key files:
 
+- `index.html`
 - `vite.config.js`
 - `postcss.config.js`
 - `tailwind.config.js`
 - `src/content/projects.json`
+- `scripts/validate-content.mjs`
 
 ## Node Version
 
 This repo is pinned to Node 18:
 
-- `.nvmrc` is `18.20.8`
-- `package.json` engines require `node: 18.x` and `npm: >=9 <11`
+- `.nvmrc`: `18.20.8`
+- `package.json` engines: `node: 18.x`, `npm: >=9 <11`
 
 ## Scripts
 
 - `npm start` or `npm run dev`: start Vite dev server
 - `npm run validate:content`: validate `src/content/projects.json` schema and route uniqueness
-- `npm run build`: validate content, then create production build in `build/`
+- `npm run build`: run content validation, then build production assets into `build/`
 - `npm run preview`: preview production build locally
 
 ## Deployment Notes
 
-Production output is generated into `build/`.
+Production artifacts are committed under `build/`.
 
-Important: this project currently deploys build artifacts from the repository. If you deploy through a git pull workflow, run `npm run build` before commit/push so `build/` reflects source changes.
+If deploying by git pull (for example via Plesk), run `npm run build` before commit/push so `build/` matches source changes.
 
-## What The Original Build Was
+## Content Model
 
-The site originally used Create React App + CRACO with the older Tailwind PostCSS 7 compatibility stack.
-
-That setup made environment and dependency upgrades increasingly brittle, and local builds became harder to keep stable.
-
-## What Was Changed
-
-### 1) Build Tooling Migration
-
-- Replaced CRA/CRACO with Vite
-- Removed CRA-specific entry files and template wiring
-- Kept production output path as `build/` to avoid changing deployment document-root assumptions
-- Preserved support for legacy environment variable names via Vite env prefix config
-
-### 2) Tailwind and PostCSS Modernization
-
-- Upgraded to Tailwind CSS 4
-- Upgraded to PostCSS 8 and Autoprefixer 10
-- Updated Tailwind config to use `content` scanning
-- Kept existing site styling and utilities intact
-
-### 3) Content Model Refactor (Single Source of Truth)
-
-Project metadata now lives in one place:
+Project metadata is stored in one source:
 
 - `src/content/projects.json`
 
-The following are generated from that shared data:
+This content powers:
 
 - Gallery cards (`src/components/Gallery.js`)
-- Header dropdown project list (`src/components/Header.js`)
+- Header dropdown (`src/components/Header.js`)
 - Project routes and aliases (`src/App.js`)
-- Project page document title + meta description (`src/App.js`)
+- Route-level title/description metadata (`src/App.js`)
+- Route-level Open Graph/Twitter metadata (`src/App.js`)
 
-Result: adding or editing a project in one file updates menu + gallery + routing consistently.
+## SEO/Social Metadata
+
+### Base defaults
+
+`index.html` includes fallback metadata for:
+
+- `description`
+- Open Graph (`og:*`)
+- Twitter (`twitter:*`)
+- canonical link (`rel="canonical"`)
+
+### Route-level overrides
+
+For project pages, `src/App.js` updates metadata at runtime using `projects.json` values:
+
+- `seoTitle`
+- `seoDescription`
+- `seoImage`
+
+`og:url` and canonical URL are aligned from each project's canonical path.
+
+## Content Editing Guide
+
+When adding/editing a project in `src/content/projects.json`:
+
+Required fields:
+
+- `id`
+- `path`
+- `menuLabel`
+- `routeKey`
+- `cardTitle`
+- `cardText`
+- `thumbnails`
+
+Optional fields:
+
+- `aliases`
+- `seoTitle`
+- `seoDescription`
+- `seoImage`
+
+If a project needs its own detail page component, add/import the component and map `routeKey` in `src/App.js`.
 
 ## Changelog
 
-- 2026-03-21: Added explicit `seoImage` values for all project entries to curate social preview images.
-## Content Editing Guide
-
-To add a new project, update `src/content/projects.json` with:
-
-- optional `seoImage`: social sharing image path/URL for project Open Graph/Twitter tags
-
-If a project needs its own detail page component, add/import that component and map its `routeKey` in `src/App.js`.
-
-- Project Open Graph + Twitter meta tags (`src/App.js` and `index.html`)
-### Near-Term
-
-- Keep hardening deployment consistency around `build/` artifact publishing
-- 2026-03-21: Added Open Graph/Twitter metadata wiring from project content with default fallback tags in `index.html`.
-### Content and CMS Direction
-
-- Evolve from in-code project objects to file-based content (Markdown/MDX or JSON content files)
-- Keep a single content schema that powers:
-	- gallery cards
-	- dropdown navigation
-	- route registration
-	- page metadata
-- Add a lightweight authoring workflow so new cards/pages can be added without editing multiple components
-
-### Later Improvements
-
-- Introduce automated build/deploy checks in CI
-- Improve type safety around content schema
-- Incrementally modernize route architecture when appropriate
+- 2026-03-21: Migrated build tooling from CRA/CRACO to Vite while keeping production output at `build/`.
+- 2026-03-21: Refactored project data into shared content model used by gallery, dropdown, and routes.
+- 2026-03-21: Upgraded Tailwind to v4 and updated PostCSS integration.
+- 2026-03-21: Added build-time content validation (`scripts/validate-content.mjs`) to `npm run build`.
+- 2026-03-21: Added explicit `seoTitle` and `seoDescription` across all project entries.
+- 2026-03-21: Added Open Graph/Twitter metadata wiring from project content with base fallbacks in `index.html`.
+- 2026-03-21: Added explicit `seoImage` values across all project entries.
+- 2026-03-21: Added canonical URL management per project route and canonical fallback in `index.html`.

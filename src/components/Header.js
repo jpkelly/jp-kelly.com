@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { BiHomeSmile } from 'react-icons/bi';
 import kamon from '../kamon.png';
+import projects from '../content/projects';
 
 const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);
@@ -29,156 +30,19 @@ const Header = props => {
           <span className="px-3">Projects</span>
           {toggleMenu && (
             <ul className="z-50 dropdown-menu absolute rounded-b-lg text-gray-200 bg-black bg-opacity-80 py-3 ">
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/nac23vj">
-                  NAC23 VJ Rig
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/notchimag">
-                  Live IMAG Effect
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/jpio">
-                  GPIO / OSC Interface
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/encoder">
-                  Lens Data Encoder
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/F8interactive">
-                  F8 Interactive
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/cranestory">
-                  Crane Story
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/craneflock">
-                  Flock of Cranes
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/PIWorks">
-                  PIWorks 2019
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/huds">
-                  Heads Up Displays
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/saturn">
-                  Saturn Orbit
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/nac18">
-                  NAC 2018 OEX
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/nac19">
-                  NAC 2019 Banner
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/houdini">
-                  Houdini Smoke
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/TOTO">
-                  TOTO Hologram
-                </Link>
-              </li>
-              <li
-                className="py-3 text-2xl"
-                onClick={() => {
-                  setToggleMenu(!toggleMenu);
-                }}
-              >
-                <Link className="link px-3" to="/manhole">
-                  Manhole Cover
-                </Link>
-              </li>
+              {projects.map(project => (
+                <li
+                  key={project.id}
+                  className="py-3 text-2xl"
+                  onClick={() => {
+                    setToggleMenu(!toggleMenu);
+                  }}
+                >
+                  <Link className="link px-3" to={project.path}>
+                    {project.menuLabel}
+                  </Link>
+                </li>
+              ))}
               <li
                 className="py-3 text-2xl"
                 onClick={() => {

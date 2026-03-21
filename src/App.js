@@ -18,6 +18,41 @@ import Encoder from './components/Encoder';
 import JpIO from './components/JpIO';
 import NotchIMAG from './components/NotchIMAG';
 import NAC23VJ from './components/NAC23VJ';
+import projects from './content/projects';
+
+const projectRouteComponents = {
+	NAC23VJ,
+	NotchIMAG,
+	JpIO,
+	Encoder,
+	F8interactive,
+	Cranestory,
+	Craneflock,
+	PIWorks,
+	Huds,
+	Saturn,
+	Nac18,
+	Nac19,
+	Houdini,
+	TOTO,
+	Manhole
+};
+
+const projectRoutes = projects
+	.map(project => {
+		const component = projectRouteComponents[project.routeKey];
+		if (!component) {
+			return [];
+		}
+
+		const paths = [project.path, ...(project.aliases || [])];
+		return paths.map(path => ({
+			id: `${project.id}-${path}`,
+			path,
+			component
+		}));
+	})
+	.flat();
 
 function App() {
 	return (
@@ -28,22 +63,10 @@ function App() {
 					<Route exact path="/" component={Gallery} />
 					<Route path="/gallery" component={Gallery} />
 					<Route path="/about" component={About} />
-					<Route path="/huds" component={Huds} />
-					<Route path="/cranestory" component={Cranestory} />
-					<Route path="/craneflock" component={Craneflock} />
-					<Route path="/nac18" component={Nac18} />
-					<Route path="/saturn" component={Saturn} />
-					<Route path="/F8interactive" component={F8interactive} />
-					<Route path="/Houdini" component={Houdini} />
 					<Route path="/contactform" component={ContactForm} />
-					<Route path="/nac19" component={Nac19} />
-					<Route path="/PIWorks" component={PIWorks} />
-					<Route path="/TOTO" component={TOTO} />
-					<Route path="/manhole" component={Manhole} />
-					<Route path="/encoder" component={Encoder} />
-					<Route path="/jpio" component={JpIO} />
-					<Route path="/notchimag" component={NotchIMAG} />
-					<Route path="/nac23vj" component={NAC23VJ} />
+					{projectRoutes.map(route => (
+						<Route key={route.id} path={route.path} component={route.component} />
+					))}
 					<Route
 						path="/archive"
 						component={() => {

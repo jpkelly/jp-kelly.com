@@ -64,6 +64,9 @@
 
 ## Security Notes
 
-- A Sanity write token was used for migration in this session. The token has been created with limited Canvas Editor permissions and is specific to this migration task.
-- For future migrations or imports, create fresh tokens with appropriate restricted permissions and revoke after use.
+- **Sanity write token**: Create one in Sanity Manage > API > Tokens with Canvas Editor permissions only.
+  - Copy `.sanity-token.example` to `.sanity-token` (gitignored, never commit).
+  - Paste your token into `.sanity-token`.
+  - Use in scripts: `SANITY_API_TOKEN=$(cat .sanity-token) npm run migrate:video-blocks`
 - Do NOT commit tokens to git or store in `.env` files without `.gitignore`.
+- Rotate/revoke tokens regularly.

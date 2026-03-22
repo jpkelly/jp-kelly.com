@@ -1,0 +1,12 @@
+# Sanity API Token for import/migration scripts
+# 
+# To use: 
+# 1. Create a write token in Sanity Manage > API > Tokens
+# 2. Copy this file: cp .sanity-token.example .sanity-token
+# 3. Paste your token on the line below (remove the # comment)
+# 4. Keep .sanity-token out of git (listed in .gitignore)
+# 5. Use in scripts: SANITY_API_TOKEN=$(cat .sanity-token) npm run migrate:video-blocks
+#
+# Token scope: Canvas Editor only (no SDK Apps, Media Library, Deploy Studios)
+
+SANITY_API_TOKEN=

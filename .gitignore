@@ -1,6 +1,8 @@
 .DS_Store
 /node_modules/
 .env*
+.sanity-token
+.sanity-token.local
 public/sanity-proxy.secret.php
 build/sanity-proxy.secret.php
 sanity-proxy.secret.php

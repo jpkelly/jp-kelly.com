@@ -36,7 +36,7 @@ function About(props) {
 					</p>
 				</div>
 			</div>
-			<button className="bg-transparant w-full md:w-1/6 mt-10 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded" onClick={() => window.open('contactform', '_self')}>
+			<button className="bg-transparant w-full md:w-1/6 mt-10 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded" onClick={() => window.open('/contactform', '_self')}>
 				Contact
 			</button>
 			<h2 className="mt-7 col-span-full">Here are a few of my favorie tools:</h2>

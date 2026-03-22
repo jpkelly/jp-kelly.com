@@ -26,6 +26,29 @@ function safe_json_encode($payload)
     return $json;
 }
 
+function read_setting($name, $defaultValue)
+{
+    $value = getenv($name);
+    if ($value !== false && $value !== '') {
+        return $value;
+    }
+
+    if (isset($_SERVER[$name]) && $_SERVER[$name] !== '') {
+        return $_SERVER[$name];
+    }
+
+    if (isset($_ENV[$name]) && $_ENV[$name] !== '') {
+        return $_ENV[$name];
+    }
+
+    $iniValue = ini_get($name);
+    if ($iniValue !== false && $iniValue !== '') {
+        return $iniValue;
+    }
+
+    return $defaultValue;
+}
+
 function sanity_proxy_shutdown_handler()
 {
     $lastError = error_get_last();
@@ -73,10 +96,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 }
 
 $action = isset($_GET['action']) ? (string) $_GET['action'] : '';
-$projectId = getenv('SANITY_PROJECT_ID') ?: 'tl4n7qut';
-$dataset = getenv('SANITY_DATASET') ?: 'production';
-$apiVersion = getenv('SANITY_API_VERSION') ?: '2024-03-13';
-$token = getenv('SANITY_READ_TOKEN');
+$projectId = read_setting('SANITY_PROJECT_ID', 'tl4n7qut');
+$dataset = read_setting('SANITY_DATASET', 'production');
+$apiVersion = read_setting('SANITY_API_VERSION', '2024-03-13');
+$token = read_setting('SANITY_READ_TOKEN', '');
 
 if (!$token) {
     send_json(500, [

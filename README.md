@@ -181,6 +181,7 @@ Projects dropdown links:
 
 - Preferred: manage links in Sanity Studio under singleton `Site Settings` -> `Projects Dropdown Links`.
 - Fallback: edit `src/content/menuLinks.json` if Sanity is unavailable.
+- First-time seed: new/empty `Site Settings` docs are pre-populated from `src/content/menuLinks.json`.
 - Link shape: `id`, `label`, `href`, optional `order` (number), optional `external` (boolean).
 - Links are sorted by `order` ascending. If `order` is omitted, they appear after ordered links.
 - Use `external: true` for links that should open in a new tab.
@@ -258,6 +259,8 @@ Build/prerender note:
 - 2026-03-22: Made `Site Settings` a singleton document in Studio and added optional `menuLinks[].order` for deterministic dropdown link ordering.
 
 - 2026-03-22: Added Sanity-managed Projects dropdown links via `siteSettings.menuLinks`, with local `src/content/menuLinks.json` fallback when Sanity is unavailable.
+
+- 2026-03-22: `Site Settings` now shows a stable document title in Studio and pre-seeds dropdown links from `src/content/menuLinks.json` for first-time setup.
 
 - 2026-03-22: Project routes now auto-discover MDX fallbacks by filename (no manual `src/App.js` import/mapping), and Projects dropdown now supports editable custom links via `src/content/menuLinks.json`.
 

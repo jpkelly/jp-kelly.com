@@ -1,12 +1,57 @@
+import defaultMenuLinks from '../../src/content/menuLinks.json'
+
+function buildSeedMenuLinks() {
+  if (!Array.isArray(defaultMenuLinks)) {
+    return []
+  }
+
+  return defaultMenuLinks
+    .map((link) => {
+      if (!link || typeof link !== 'object') {
+        return null
+      }
+
+      const id = typeof link.id === 'string' ? link.id.trim() : ''
+      const label = typeof link.label === 'string' ? link.label.trim() : ''
+      const href = typeof link.href === 'string' ? link.href.trim() : ''
+
+      if (!id || !label || !href) {
+        return null
+      }
+
+      return {
+        id,
+        label,
+        href,
+        order: Number.isFinite(Number(link.order)) ? Number(link.order) : null,
+        external: Boolean(link.external),
+      }
+    })
+    .filter(Boolean)
+}
+
+const seedMenuLinks = buildSeedMenuLinks()
+
 export default {
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
+  initialValue: () => ({
+    menuLinks: seedMenuLinks.map((link) => ({...link})),
+  }),
+  preview: {
+    prepare() {
+      return {
+        title: 'Site Settings',
+      }
+    },
+  },
   fields: [
     {
       name: 'menuLinks',
       title: 'Projects Dropdown Links',
       type: 'array',
+      initialValue: () => seedMenuLinks.map((link) => ({...link})),
       of: [
         {
           type: 'object',

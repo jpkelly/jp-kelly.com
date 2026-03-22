@@ -85,6 +85,82 @@ function paragraphToPortableText(text) {
   };
 }
 
+function headingToPortableText(text, style = 'h2') {
+  return {
+    _key: randomUUID(),
+    _type: 'block',
+    style,
+    children: [
+      {
+        _key: randomUUID(),
+        _type: 'span',
+        text,
+      },
+    ],
+  };
+}
+
+function extractPortableContentFromMdx(projectIdValue, fallbackText) {
+  const mdxPath = path.join(repoRoot, 'src', 'content', 'projects', `${projectIdValue}.mdx`);
+  if (!fileExists(mdxPath)) {
+    return [paragraphToPortableText(fallbackText)];
+  }
+
+  const mdx = fs.readFileSync(mdxPath, 'utf8');
+  const lines = mdx.split(/\r?\n/);
+  const blocks = [];
+  let paragraphBuffer = [];
+
+  const flushParagraph = () => {
+    const text = paragraphBuffer.join(' ').replace(/\s+/g, ' ').trim();
+    if (text) {
+      blocks.push(paragraphToPortableText(text));
+    }
+    paragraphBuffer = [];
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+
+    if (!line) {
+      flushParagraph();
+      continue;
+    }
+
+    if (line.startsWith('import ')) {
+      continue;
+    }
+
+    if (line.startsWith('## ')) {
+      flushParagraph();
+      blocks.push(headingToPortableText(line.replace(/^##\s+/, '').trim(), 'h2'));
+      continue;
+    }
+
+    if (line.startsWith('### ')) {
+      flushParagraph();
+      blocks.push(headingToPortableText(line.replace(/^###\s+/, '').trim(), 'h3'));
+      continue;
+    }
+
+    // Skip JSX/MDX component lines and wrapper tags.
+    if (line.startsWith('<') || line.includes('className=') || line.includes('VimeoEmbed')) {
+      flushParagraph();
+      continue;
+    }
+
+    paragraphBuffer.push(line);
+  }
+
+  flushParagraph();
+
+  if (!blocks.length) {
+    return [paragraphToPortableText(fallbackText)];
+  }
+
+  return blocks;
+}
+
 function extractVimeoVideosFromMdx(projectIdValue) {
   const mdxPath = path.join(repoRoot, 'src', 'content', 'projects', `${projectIdValue}.mdx`);
   if (!fileExists(mdxPath)) {
@@ -176,6 +252,7 @@ async function importProjects() {
 
     const seoImageId = await uploadImageIfExists(p.seoImage);
     const videos = extractVimeoVideosFromMdx(p.id);
+    const contentBlocks = extractPortableContentFromMdx(p.id, p.cardText);
 
     const doc = {
       _id: `project.${p.id}`,
@@ -191,7 +268,7 @@ async function importProjects() {
       seoTitle: p.seoTitle,
       seoDescription: p.seoDescription,
       videos,
-      content: [paragraphToPortableText(p.cardText)],
+      content: contentBlocks,
       thumbnails: thumbIds.map((assetId) => ({
         _key: randomUUID(),
         _type: 'image',

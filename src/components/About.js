@@ -7,9 +7,9 @@ const fallbackContent = {
 	heading: 'JP Kelly',
 	profileImageUrl: jpk,
 	bioParagraphs: [
-		'I have always loved technology and science. As a kid my first major purchase was a computer with a 6502 processor and 4k of RAM (upgradeable to 8k). Although that computer was only capable of displaying graphics composed of ASCII characters, I dreamed of combining video imagery and computer graphics. Later I had access to an Amiga computer which I used to merge graphics with video.',
-		'I have worked in the live events industry for many years as a video engineer and projectionist. I have a keen sense of what it takes to make imagery look great on screen. I found that I especially love to play video along with music as a VJ. Over the years I have had the opportunity to do live visuals for a number of musicians, events, and parties. I am constantly learning to use new software and equipment to create video art. I am a generalist by nature and am able to merge many disciplines. My background in electronics lends itself to the integration of sensors and other input devices to create interactive installations.',
-		'While at California College of the Arts I learned how to uniquely express my views of social issues through art that engages the viewer. My goal and vision is to provide a way for people to grow and learn by touching their hearts.'
+		{ text: 'I have always loved technology and science. As a kid my first major purchase was a computer with a 6502 processor and 4k of RAM (upgradeable to 8k). Although that computer was only capable of displaying graphics composed of ASCII characters, I dreamed of combining video imagery and computer graphics. Later I had access to an Amiga computer which I used to merge graphics with video.', isList: false },
+		{ text: 'I have worked in the live events industry for many years as a video engineer and projectionist. I have a keen sense of what it takes to make imagery look great on screen. I found that I especially love to play video along with music as a VJ. Over the years I have had the opportunity to do live visuals for a number of musicians, events, and parties. I am constantly learning to use new software and equipment to create video art. I am a generalist by nature and am able to merge many disciplines. My background in electronics lends itself to the integration of sensors and other input devices to create interactive installations.', isList: false },
+		{ text: 'While at California College of the Arts I learned how to uniquely express my views of social issues through art that engages the viewer. My goal and vision is to provide a way for people to grow and learn by touching their hearts.', isList: false }
 	],
 	builtByText: 'This site was originally built by hand using React',
 	copilotText: 'Complete refactoring done with Copilot.',
@@ -39,8 +39,8 @@ function mapSanityAboutDoc(doc) {
 	const bioParagraphs = Array.isArray(doc.bio)
 		? doc.bio
 				.filter(block => block?._type === 'block')
-				.map(portableBlockToText)
-				.filter(Boolean)
+				.map(block => ({ text: portableBlockToText(block), isList: !!block.listItem }))
+				.filter(item => item.text)
 		: [];
 
 	return {
@@ -101,9 +101,30 @@ function About(props) {
 					<img className="object-cover w-full h-auto" src={aboutContent.profileImageUrl} alt="JP Kelly" />
 				</div>
 				<div className="about-copy col-span-8 md:col-span-8 lg:col-span-5">
-					{aboutContent.bioParagraphs.map((paragraph, index) => (
-						<p key={`bio-${index}`}>{paragraph}</p>
-					))}
+					{(() => {
+						const result = [];
+						let i = 0;
+						while (i < aboutContent.bioParagraphs.length) {
+							if (aboutContent.bioParagraphs[i].isList) {
+								const listItems = [];
+								while (i < aboutContent.bioParagraphs.length && aboutContent.bioParagraphs[i].isList) {
+									listItems.push(aboutContent.bioParagraphs[i].text);
+									i++;
+								}
+								result.push(
+									<ul key={`list-${i}`} style={{listStyle:'none',paddingLeft:'1.5em',marginBottom:'1em'}}>
+										{listItems.map((item, j) => (
+											<li key={j} style={{margin:0,padding:0,lineHeight:'1.5'}}>{item}</li>
+										))}
+									</ul>
+								);
+							} else {
+								result.push(<p key={`bio-${i}`}>{aboutContent.bioParagraphs[i].text}</p>);
+								i++;
+							}
+						}
+						return result;
+					})()}
 					<button className="bg-transparant w-full md:w-1/3 mt-4 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded" onClick={() => window.open('/contactform', '_self')}>
 						Contact
 					</button>

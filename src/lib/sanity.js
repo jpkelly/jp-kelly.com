@@ -41,3 +41,12 @@ export async function getProjects() {
   const query = `*[_type == "project"] | order(order asc)`;
   return await sanityClient.fetch(query);
 }
+
+export async function getProjectById(projectIdValue) {
+  if (!sanityClient || !projectIdValue) {
+    return null;
+  }
+
+  const query = `*[_type == "project" && id == $projectId][0]`;
+  return await sanityClient.fetch(query, { projectId: projectIdValue });
+}

@@ -1,9 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
 import About from './components/About';
 import ContactForm from './components/ContactForm';
+import VimeoEmbed from './components/mdx/VimeoEmbed';
+import { getProjectById } from './lib/sanity';
 import projects from './content/projects.json';
 import NAC23VJContent from './content/projects/nac23vj.mdx';
 import NotchIMAGContent from './content/projects/notchimag.mdx';
@@ -52,6 +54,7 @@ const projectRoutes = projects
 		const imagePath = project.seoImage || project.thumbnails?.[0]?.src || '/thumbnails/nac23vj.png';
 		return paths.map(path => ({
 			id: `${project.id}-${path}`,
+			projectId: project.id,
 			path,
 			component,
 			title,
@@ -65,6 +68,7 @@ const projectRoutes = projects
 const DEFAULT_TITLE = 'JP Kelly | Portfolio';
 const DEFAULT_DESCRIPTION = 'Portfolio site for JP Kelly.';
 const DEFAULT_IMAGE_PATH = '/thumbnails/nac23vj.png';
+const mdxPagesWithoutEmbeddedVimeo = new Set(['encoder', 'jpio']);
 
 function normalizeImagePath(imagePath) {
 	if (!imagePath) {
@@ -138,7 +142,30 @@ function upsertCanonicalTag(href) {
 	};
 }
 
-function ProjectRoutePage({ component: ProjectComponent, title, description, imagePath, canonicalPath, ...routeProps }) {
+function ProjectRoutePage({ component: ProjectComponent, title, description, imagePath, canonicalPath, projectId, ...routeProps }) {
+	const [sanityProject, setSanityProject] = useState(null);
+
+	useEffect(() => {
+		let mounted = true;
+
+		(async () => {
+			try {
+				const projectDoc = await getProjectById(projectId);
+				if (mounted) {
+					setSanityProject(projectDoc || null);
+				}
+			} catch (_err) {
+				if (mounted) {
+					setSanityProject(null);
+				}
+			}
+		})();
+
+		return () => {
+			mounted = false;
+		};
+	}, [projectId]);
+
 	useEffect(() => {
 		const previousTitle = document.title;
 		document.title = title || DEFAULT_TITLE;
@@ -174,9 +201,25 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 		};
 	}, [title, description, imagePath, canonicalPath, routeProps.location]);
 
+	const sanityVideos = Array.isArray(sanityProject?.videos) ? sanityProject.videos : [];
+	const shouldRenderSanityVideos = mdxPagesWithoutEmbeddedVimeo.has(projectId) && sanityVideos.length > 0;
+
 	return (
 		<div className="content-rail my-5 py-5">
 			<div className="w-full">
+				{shouldRenderSanityVideos && (
+					<div className="mb-5 space-y-5">
+						{sanityVideos.map(video => (
+							<VimeoEmbed
+								key={video._key || `${projectId}-${video.vimeoId}`}
+								video={video.vimeoId}
+								autoplay={Boolean(video.autoplay)}
+								loop={Boolean(video.loop)}
+								portrait={Boolean(video.portrait)}
+							/>
+						))}
+					</div>
+				)}
 				<ProjectComponent />
 			</div>
 		</div>
@@ -241,6 +284,7 @@ export function AppShell() {
 								description={route.description}
 								imagePath={route.imagePath}
 								canonicalPath={route.canonicalPath}
+								projectId={route.projectId}
 							/>
 						)}
 					/>

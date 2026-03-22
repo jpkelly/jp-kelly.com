@@ -63,6 +63,10 @@ p > a {
   text-decoration: underline;
 }
 
+p > a.no-underline {
+  text-decoration: none;
+}
+
 a:hover {
   color: rgb(0, 173, 279);
 }

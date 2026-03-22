@@ -39,6 +39,8 @@ async function fetchViaProxy(action, params = {}) {
   try {
     const url = new URL(proxyPath, window.location.origin);
     url.searchParams.set('action', action);
+    // Bust intermediary/browser caches so recently published Sanity changes show up immediately.
+    url.searchParams.set('_ts', String(Date.now()));
 
     Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== '') {
@@ -49,6 +51,7 @@ async function fetchViaProxy(action, params = {}) {
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers: { Accept: 'application/json' },
+      cache: 'no-store',
     });
 
     if (!response.ok) {

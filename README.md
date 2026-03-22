@@ -41,6 +41,23 @@ Production artifacts are committed under `build/`.
 
 If deploying by git pull (for example via Plesk), run `npm run build` before commit/push so `build/` matches source changes.
 
+## CMS (Sanity)
+
+This repository includes a standalone Sanity Studio in `sanity-studio/`.
+
+- Website app remains on React 17
+- Sanity Studio runs independently (React 19) to avoid dependency conflicts
+
+Studio workflow:
+
+- `cd sanity-studio`
+- `npm install`
+- `npx sanity login`
+- `npm run dev` (local studio)
+- `npm run deploy` (hosted studio at `*.sanity.studio`)
+
+Runtime content fetch in the website uses `@sanity/client` via `src/lib/sanity.js`.
+
 ## Content Model
 
 Project metadata is stored in one source:

@@ -1,6 +1,6 @@
 # Sanity CMS Setup
 
-This project is integrated with Sanity CMS for managing content (About page, projects, images, etc.).
+This repository uses a standalone Sanity Studio in `sanity-studio/` so the website can stay on React 17 while the CMS uses React 19.
 
 ## Project Details
 
@@ -10,22 +10,20 @@ This project is integrated with Sanity CMS for managing content (About page, pro
 
 ## Quick Start
 
-### 1. Deploy Your Schema to Sanity
-
-Run this command to deploy the content schema to your Sanity project:
+### 1. Install and deploy from the Studio folder
 
 ```bash
-npx sanity deploy
+cd sanity-studio
+npm install
+npx sanity login
+npm run deploy
 ```
 
-This will:
-1. Build your Sanity studio
-2. Deploy it to your Sanity project
-3. Give you the studio URL
+This will build and deploy the Studio to Sanity-hosted `*.sanity.studio`.
 
 ### 2. Access Your Studio
 
-Once deployed, go to: https://tl4n7qut.sanity.studio
+After deployment, open the hostname you selected in deploy.
 
 You'll see two content types:
 - **About Page** - Edit your bio, tools list, profile image, etc.
@@ -89,14 +87,14 @@ VITE_SANITY_API_VERSION=2024-03-13
 ## Sanity CLI Commands
 
 ```bash
-# Deploy studio to your project
-npx sanity deploy
+# from repository root
+cd sanity-studio
 
-# Start local Sanity studio (optional, for testing)
-npx sanity start
+# Start local Sanity studio
+npm run dev
 
-# Manage project (web UI)
-npx sanity manage
+# Deploy studio
+npm run deploy
 ```
 
 ## API Access
@@ -111,7 +109,7 @@ https://tl4n7qut.api.sanity.io/v2024-03-13/data/query/production?query=*[_type =
 
 ## Next Steps
 
-1. ✅ Deploy this schema: `npx sanity deploy`
+1. ✅ Deploy this schema from `sanity-studio/`
 2. ✅ Create your About Page content in the studio
 3. ✅ Upload projects
 4. ✅ Test locally: `npm run dev`

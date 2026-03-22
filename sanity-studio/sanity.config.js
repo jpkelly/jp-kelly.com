@@ -1,14 +1,13 @@
 import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {schemaTypes} from './sanity/schemaTypes'
+import {deskTool} from 'sanity/desk'
+import {schemaTypes} from './schemaTypes'
 
 export default defineConfig({
   name: 'default',
-  title: 'JP Kelly Portfolio',
+  title: 'JP Kelly CMS',
   projectId: 'tl4n7qut',
   dataset: 'production',
-  basePath: '/studio',
-  plugins: [structureTool()],
+  plugins: [deskTool()],
   schema: {
     types: schemaTypes,
   },

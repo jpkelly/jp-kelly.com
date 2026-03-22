@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { randomUUID } from 'crypto';
 import { fileURLToPath } from 'url';
 import { createClient } from '@sanity/client';
 
@@ -71,10 +72,12 @@ async function uploadImageIfExists(mediaPath) {
 
 function paragraphToPortableText(text) {
   return {
+    _key: randomUUID(),
     _type: 'block',
     style: 'normal',
     children: [
       {
+        _key: randomUUID(),
         _type: 'span',
         text,
       },
@@ -149,6 +152,7 @@ async function importProjects() {
       seoDescription: p.seoDescription,
       content: [paragraphToPortableText(p.cardText)],
       thumbnails: thumbIds.map((assetId) => ({
+        _key: randomUUID(),
         _type: 'image',
         asset: { _type: 'reference', _ref: assetId },
       })),

@@ -107,12 +107,11 @@ function About(props) {
 					<button className="bg-transparant w-full md:w-1/3 mt-4 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded" onClick={() => window.open('/contactform', '_self')}>
 						Contact
 					</button>
-					<p>
+					<p className="mt-7">
 						{aboutContent.builtByText}
 						<DiReact className="inline ml-1 text-[1.35rem]" aria-hidden="true" />
 						. {aboutContent.copilotText}
-					</p>
-					<p>
+						<br />
 						<a href={aboutContent.codeLinkUrl} target="_blank" className="no-underline">
 							{aboutContent.codeLinkText}
 						</a>

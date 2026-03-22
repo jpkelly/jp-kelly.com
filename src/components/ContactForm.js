@@ -8,6 +8,19 @@ import 'react-toastify/dist/ReactToastify.min.css';
 const emailJsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || import.meta.env.REACT_APP_SERVICE_ID;
 const emailJsTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || import.meta.env.REACT_APP_TEMPLATE_ID;
 const emailJsUserId = import.meta.env.VITE_EMAILJS_USER_ID || import.meta.env.REACT_APP_USER_ID;
+const missingEmailJsConfig = [
+  ['VITE_EMAILJS_SERVICE_ID/REACT_APP_SERVICE_ID', emailJsServiceId],
+  ['VITE_EMAILJS_TEMPLATE_ID/REACT_APP_TEMPLATE_ID', emailJsTemplateId],
+  ['VITE_EMAILJS_USER_ID/REACT_APP_USER_ID', emailJsUserId]
+]
+  .filter(([, value]) => !value)
+  .map(([key]) => key);
+
+if (import.meta.env.DEV && missingEmailJsConfig.length > 0) {
+  console.warn(
+    `EmailJS contact form is missing env vars: ${missingEmailJsConfig.join(', ')}`
+  );
+}
 
 const toastifySuccess = () => {
   toast.success('Message sent!', {

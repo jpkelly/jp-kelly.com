@@ -114,7 +114,7 @@ function About(props) {
 								result.push(
 									<ul key={`list-${i}`} style={{listStyle:'none',paddingLeft:'1.5em',marginBottom:'1em'}}>
 										{listItems.map((item, j) => (
-											<li key={j} style={{margin:0,padding:0,lineHeight:'1.5'}}>{item}</li>
+											<li key={j} style={{margin:0,padding:0,lineHeight:'1.5',fontSize:'inherit'}}>{item}</li>
 										))}
 									</ul>
 								);

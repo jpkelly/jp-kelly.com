@@ -85,6 +85,45 @@ function paragraphToPortableText(text) {
   };
 }
 
+function extractVimeoVideosFromMdx(projectIdValue) {
+  const mdxPath = path.join(repoRoot, 'src', 'content', 'projects', `${projectIdValue}.mdx`);
+  if (!fileExists(mdxPath)) {
+    return [];
+  }
+
+  const mdx = fs.readFileSync(mdxPath, 'utf8');
+  const embedRegex = /<VimeoEmbed\s+([^>]*?)\/>/g;
+  const videos = [];
+
+  let match;
+  while ((match = embedRegex.exec(mdx)) !== null) {
+    const attrs = match[1] || '';
+    const idMatch = attrs.match(/video=\{(\d+)\}/);
+    if (!idMatch) {
+      continue;
+    }
+
+    const vimeoId = Number(idMatch[1]);
+    const autoplay = /autoplay=\{true\}/.test(attrs);
+    const loop = /loop=\{true\}/.test(attrs);
+    const portrait = /portrait=\{true\}/.test(attrs);
+    const url = `https://vimeo.com/${vimeoId}`;
+
+    videos.push({
+      _key: randomUUID(),
+      _type: 'vimeoVideo',
+      label: `Video ${videos.length + 1}`,
+      vimeoId,
+      url,
+      autoplay,
+      loop,
+      portrait,
+    });
+  }
+
+  return videos;
+}
+
 async function importAboutPage() {
   const profileImageId = await uploadImageIfExists('src/jpkelly.jpg');
 
@@ -136,6 +175,7 @@ async function importProjects() {
     }
 
     const seoImageId = await uploadImageIfExists(p.seoImage);
+    const videos = extractVimeoVideosFromMdx(p.id);
 
     const doc = {
       _id: `project.${p.id}`,
@@ -150,6 +190,7 @@ async function importProjects() {
       aliases: p.aliases || [],
       seoTitle: p.seoTitle,
       seoDescription: p.seoDescription,
+      videos,
       content: [paragraphToPortableText(p.cardText)],
       thumbnails: thumbIds.map((assetId) => ({
         _key: randomUUID(),

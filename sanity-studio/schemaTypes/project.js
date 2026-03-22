@@ -21,6 +21,45 @@ export default {
     { name: 'seoImage', title: 'SEO Image', type: 'image' },
     { name: 'aliases', title: 'URL Aliases', type: 'array', of: [{ type: 'string' }] },
     {
+      name: 'videos',
+      title: 'Vimeo Videos',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'vimeoVideo',
+          title: 'Vimeo Video',
+          fields: [
+            { name: 'label', title: 'Label', type: 'string' },
+            { name: 'vimeoId', title: 'Vimeo ID', type: 'number', validation: (Rule) => Rule.required() },
+            {
+              name: 'url',
+              title: 'Vimeo URL',
+              type: 'url',
+              validation: (Rule) => Rule.uri({ allowRelative: false, scheme: ['http', 'https'] }),
+            },
+            { name: 'autoplay', title: 'Autoplay', type: 'boolean', initialValue: false },
+            { name: 'loop', title: 'Loop', type: 'boolean', initialValue: false },
+            { name: 'portrait', title: 'Portrait', type: 'boolean', initialValue: false },
+          ],
+          preview: {
+            select: {
+              title: 'label',
+              subtitle: 'url',
+            },
+            prepare(selection) {
+              const title = selection.title || 'Vimeo Video';
+              return {
+                title,
+                subtitle: selection.subtitle,
+              };
+            },
+          },
+        },
+      ],
+      description: 'Reference Vimeo videos used in this project page',
+    },
+    {
       name: 'content',
       title: 'Page Content',
       type: 'array',

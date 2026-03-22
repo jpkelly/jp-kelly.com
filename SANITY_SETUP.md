@@ -38,6 +38,7 @@ Notes:
 
 - Create a write token in Sanity Manage -> API -> Tokens
 - The script uploads local images from `public/thumbnails` and `src/jpkelly.jpg`
+- The script also parses each project's MDX file for `<VimeoEmbed ... />` and seeds `Vimeo Videos` entries
 - It uses `createOrReplace`, so rerunning updates existing seeded docs
 
 You'll see two content types:

@@ -30,7 +30,7 @@ function VimeoEmbed({
     <div
       style={{
         width: '100%',
-        maxWidth: '65ch',
+        maxWidth: '100%',
         position: 'relative',
         background: '#111',
         overflow: 'hidden',

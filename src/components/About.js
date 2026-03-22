@@ -28,7 +28,7 @@ function About(props) {
 					</p>
 					<p>
 						This site was built by hand using React
-						<DiReact className="inline ml-1 align-[-0.125em] text-2xl" aria-hidden="true" />
+						<DiReact className="inline ml-1 text-[1.35rem] relative top-[3px]" aria-hidden="true" />
 						.&nbsp;
 						<a href="https://github.com/jpkelly/jp-kelly.com" target="_blank">
 							Here is the code.

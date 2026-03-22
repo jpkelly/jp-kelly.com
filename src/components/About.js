@@ -89,8 +89,7 @@ function About(props) {
 		return tools
 			.split(',')
 			.map(item => item.trim())
-			.filter(Boolean)
-			.join(', ');
+			.filter(Boolean);
 	}, [aboutContent.toolsList]);
 
 	return (
@@ -119,8 +118,10 @@ function About(props) {
 					{aboutContent.showTools && (
 						<>
 							<h2 className="mt-7">{aboutContent.toolsHeading}</h2>
-							<ul className="">
-								<li>{toolItems}</li>
+							<ul className="pl-5 list-disc">
+								{toolItems.map((tool, index) => (
+									<li key={index} className="mb-0">{tool}</li>
+								))}
 							</ul>
 						</>
 					)}

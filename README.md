@@ -84,6 +84,8 @@ Studio workflow:
 - `npm run dev` (local studio)
 - `npm run deploy` (hosted studio at `*.sanity.studio`)
 
+Hosted studio: https://www.sanity.io/@ohaQRXW3y/studio/ar6oya1gj4hps3tav50fg85r/
+
 Runtime content fetch in the website uses `@sanity/client` via `src/lib/sanity.js`.
 
 In production, `src/lib/sanity.js` prefers a same-origin proxy endpoint at `public/sanity-proxy.php` and falls back to direct reads when running locally.

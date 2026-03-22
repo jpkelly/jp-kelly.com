@@ -1,3 +1,9 @@
+---
+tools:
+  allowAll: true
+  run_in_terminal: true
+---
+
 # Repository Rules
 
 ## Documentation Maintenance

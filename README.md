@@ -163,6 +163,15 @@ Sanity project page authoring:
 - Two portrait videos in one project render side by side automatically; all other videos stack vertically
 - Inline hyperlinks in rich text are rendered on the site
 
+Image sizing guide (recommended):
+
+- Thumbnails (`thumbnails[]`): 1600-2000 px wide, usually 3:2 or 16:9, target 200-500 KB per image
+- Project page images (`content[]` image blocks): 2000-2800 px on the long edge, target 400 KB-1.5 MB depending on detail
+- Image Gallery items (`imageGallery.items[]`): 1600-2200 px on the long edge; keep aspect ratios consistent within one gallery
+- SEO image (`seoImage`): 1200x630, target under 500 KB
+- Use JPG for photography and PNG only when transparency or UI/text sharpness is required
+- Use sRGB color profile and avoid uploading very small source images (generally under 1200 px wide)
+
 Creating a new project in Studio:
 
 1. Add the project's route metadata to `src/content/projects.json`:
@@ -217,6 +226,7 @@ If a project needs its own detail page component, add/import the component and m
 - 2026-03-21: Enhanced `scripts/import-to-sanity.mjs` to migrate MDX links, image grids/captions, and complete Vimeo video flags into Sanity project docs.
 - 2026-03-21: Added `scripts/verify-sanity-import.mjs` and `npm run verify:sanity` for post-import completeness checks.
 - 2026-03-21: Switched gallery and header project ordering to use Sanity `order` with `projects.json` as the fallback when Sanity is unavailable.
+- 2026-03-21: Added image sizing recommendations to the Studio authoring guide in README.
 
 - 2026-03-22: Added `public/sanity-proxy.php` and frontend proxy-first Sanity reads for environments where anonymous Content Lake reads are restricted.
 

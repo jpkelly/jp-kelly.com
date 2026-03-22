@@ -44,6 +44,7 @@ This repo is pinned to Node 18:
 
 - `npm start` or `npm run dev`: start Vite dev server
 - `npm run import:sanity`: import `projects.json` + MDX content into Sanity (requires `SANITY_API_TOKEN` write token)
+- `npm run migrate:video-blocks`: move legacy project `videos[]` into orderable `content[]` video blocks and unset `videos[]`
 - `npm run verify:sanity`: verify imported Sanity project docs against `projects.json`
 - `npm run validate:content`: validate `src/content/projects.json` schema and route uniqueness
 - `npm run build`: run content validation, then build production assets into `build/`
@@ -155,7 +156,7 @@ Project drag-and-drop ordering in Studio:
 Project detail pages are Sanity-first:
 
 - `src/App.js` fetches a matching Sanity `project` document for every project route
-- If Sanity returns `videos` or `content`, route content is rendered by `src/components/SanityProjectTemplate.js`
+- If Sanity returns `content`, route content is rendered by `src/components/SanityProjectTemplate.js`
 - If no Sanity content exists yet, the route falls back to `src/content/projects/*.mdx` when a matching file exists (auto-discovered by filename, no manual import/map required)
 
 ## SEO/Social Metadata
@@ -211,11 +212,10 @@ Projects dropdown links:
 
 Sanity project page authoring:
 
-- `videos[]` supports multiple Vimeo entries per project
-- Per-video options: `autoplay`, `loop`, `show controls`, `portrait`
-- `content[]` supports rich text, standalone images (with optional alt/caption), and `Image Gallery` blocks
+- `content[]` is fully orderable and supports rich text, standalone images (with optional alt/caption), `Image Gallery` blocks, and Vimeo video blocks
+- Vimeo block options: `autoplay`, `loop`, `show controls`, `portrait`
 - `Image Gallery` supports 1-6 images with per-image alt text and caption
-- Two portrait videos in one project render side by side automatically; all other videos stack vertically
+- Videos follow exact `content[]` order, so they can be interleaved between images/text/galleries
 - Inline hyperlinks in rich text are rendered on the site
 
 Image sizing guide (recommended):
@@ -250,7 +250,7 @@ Creating a new project in Studio:
 	- rich text blocks for headings and paragraphs
 	- standalone images for single full-width images
 	- `Image Gallery` blocks for grouped images with captions
-8. Add Vimeo entries in `videos[]` if the page needs video embeds.
+8. Add `Vimeo Video` blocks in `content[]` wherever the videos should appear.
 9. Publish the document.
 10. For content-only updates, verify on the live site (no Plesk Git deploy required).
 11. If you changed repo code (frontend/proxy/schema/studio config), run `npm run build`, commit, push, and deploy with the usual Plesk Git deploy button workflow.
@@ -266,7 +266,8 @@ MDX fallback note:
 - Project content lives in `src/content/projects/<project-id>.mdx`.
 - Routes are rendered through a single project template in `src/App.js`; MDX fallbacks are auto-discovered from `src/content/projects/*.mdx` by filename.
 - Keep MDX files only as temporary fallback while migrating project bodies into Sanity.
-- `scripts/import-to-sanity.mjs` now migrates Markdown links, Vimeo props (`autoplay`, `loop`, `portrait`, `controls`), standalone images, and multi-image grids into `Image Gallery` blocks where possible.
+- `scripts/import-to-sanity.mjs` now migrates Markdown links, Vimeo props (`autoplay`, `loop`, `portrait`, `controls`), standalone images, and multi-image grids into `Image Gallery` blocks where possible, and writes Vimeo embeds as orderable `content[]` video blocks.
+- Run `npm run migrate:video-blocks` once to convert legacy Sanity `videos[]` data into orderable `content[]` video blocks.
 - Run `npm run verify:sanity` after import to report missing project docs, required field gaps, alias mismatches, projects that still have no Sanity body content, and broken image asset references.
 
 Build/prerender note:
@@ -288,6 +289,8 @@ Build/prerender note:
 - 2026-03-22: Consolidated Studio back to a single `Projects` list after enabling thumbnail previews in the orderable view.
 
 - 2026-03-22: Project routes now auto-discover MDX fallbacks by filename (no manual `src/App.js` import/mapping), and Projects dropdown now supports editable custom links via `src/content/menuLinks.json`.
+
+- 2026-03-22: Migrated project video authoring to orderable `content[]` blocks (`vimeoVideoBlock`) with a legacy `videos[]` migration script.
 
 - 2026-03-21: Added Sanity `Image Gallery` content blocks, per-video `Show Controls`, and Sanity-first project rendering for all routes with MDX fallback when Sanity content is missing.
 - 2026-03-21: Enhanced `scripts/import-to-sanity.mjs` to migrate MDX links, image grids/captions, and complete Vimeo video flags into Sanity project docs.

@@ -450,6 +450,20 @@ function extractVimeoVideosFromMdx(projectIdValue) {
   return videos;
 }
 
+function videoToContentBlock(video) {
+  return {
+    _key: randomUUID(),
+    _type: 'vimeoVideoBlock',
+    label: video?.label || '',
+    vimeoId: video?.vimeoId,
+    url: video?.url,
+    autoplay: Boolean(video?.autoplay),
+    loop: Boolean(video?.loop),
+    controls: Boolean(video?.controls ?? true),
+    portrait: Boolean(video?.portrait),
+  };
+}
+
 async function importAboutPage() {
   const profileImageId = await uploadImageIfExists('src/jpkelly.jpg');
 
@@ -503,6 +517,10 @@ async function importProjects() {
     const seoImageId = await uploadImageIfExists(p.seoImage);
     const videos = extractVimeoVideosFromMdx(p.id);
     const contentBlocks = await extractPortableContentFromMdx(p.id, p.cardText);
+    const contentWithVideos = [
+      ...contentBlocks,
+      ...videos.map((video) => videoToContentBlock(video)),
+    ];
 
     const doc = {
       _id: `project.${p.id}`,
@@ -517,8 +535,7 @@ async function importProjects() {
       aliases: p.aliases || [],
       seoTitle: p.seoTitle,
       seoDescription: p.seoDescription,
-      videos,
-      content: contentBlocks,
+      content: contentWithVideos,
       thumbnails: thumbIds.map((assetId) => ({
         _key: randomUUID(),
         _type: 'image',

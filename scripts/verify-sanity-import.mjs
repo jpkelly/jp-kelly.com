@@ -73,8 +73,14 @@ function checkWarnings(doc) {
 
   const videos = Array.isArray(doc.videos) ? doc.videos : [];
   const content = Array.isArray(doc.content) ? doc.content : [];
-  if (videos.length === 0 && content.length === 0) {
-    warnings.push('has no videos and no content (will fall back to MDX)');
+  const videoBlocks = content.filter((block) => block && block._type === 'vimeoVideoBlock');
+
+  if (videos.length === 0 && content.length === 0 && videoBlocks.length === 0) {
+    warnings.push('has no orderable content blocks (will fall back to MDX)');
+  }
+
+  if (videos.length > 0) {
+    warnings.push('still uses legacy videos[] field (run migrate:video-blocks)');
   }
 
   if (content.some((block) => block && block._type === 'imageGallery')) {

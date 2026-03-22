@@ -28,6 +28,7 @@
     "dev": "vite",
     "start": "vite",
     "import:sanity": "node scripts/import-to-sanity.mjs",
+    "migrate:video-blocks": "node scripts/migrate-video-blocks.mjs",
     "verify:sanity": "node scripts/verify-sanity-import.mjs",
     "validate:content": "node scripts/validate-content.mjs",
     "build:client": "vite build",

@@ -102,6 +102,24 @@ function renderImageGallery(block, index) {
 	);
 }
 
+function renderVideoBlock(block, index) {
+	if (!Number.isFinite(Number(block?.vimeoId))) {
+		return null;
+	}
+
+	return (
+		<div key={block._key || `video-${index}`} className="my-4 w-full">
+			<VimeoEmbed
+				video={block.vimeoId}
+				autoplay={Boolean(block.autoplay)}
+				loop={Boolean(block.loop)}
+				controls={Boolean(block.controls ?? true)}
+				portrait={Boolean(block.portrait)}
+			/>
+		</div>
+	);
+}
+
 function renderContentBlock(block, index) {
 	if (!block) {
 		return null;
@@ -132,61 +150,34 @@ function renderContentBlock(block, index) {
 		return renderImageGallery(block, index);
 	}
 
+	if (block._type === 'vimeoVideoBlock') {
+		return renderVideoBlock(block, index);
+	}
+
 	return null;
 }
 
-function renderVideos(videos) {
-	if (!videos.length) {
-		return null;
-	}
+function SanityProjectTemplate({ project }) {
+	const contentBlocks = Array.isArray(project?.content) ? [...project.content] : [];
+	const legacyVideos = Array.isArray(project?.videos)
+		? project.videos.filter(video => Number.isFinite(Number(video?.vimeoId)))
+		: [];
+	const hasVideoBlocks = contentBlocks.some(block => block?._type === 'vimeoVideoBlock');
 
-	const twoPortrait = videos.length === 2 && videos.every(video => Boolean(video?.portrait));
-
-	if (twoPortrait) {
-		return (
-			<div className="flex flex-wrap w-full mx-auto mt-4">
-				{videos.map((video, index) => (
-					<div key={video._key || `video-${index}`} className="my-1 w-full md:w-full lg:my-4 lg:w-1/2 lg:pr-5 xl:pr-10">
-						<VimeoEmbed
-							video={video.vimeoId}
-							autoplay={Boolean(video.autoplay)}
-							loop={Boolean(video.loop)}
-							controls={Boolean(video.controls ?? true)}
-							portrait={Boolean(video.portrait)}
-						/>
-					</div>
-				))}
-			</div>
+	// Temporary compatibility path while old docs still use the legacy videos[] field.
+	if (!hasVideoBlocks && legacyVideos.length > 0) {
+		contentBlocks.push(
+			...legacyVideos.map(video => ({
+				_key: video?._key,
+				_type: 'vimeoVideoBlock',
+				...video,
+			}))
 		);
 	}
 
 	return (
-		<div className="mt-4 space-y-5">
-			{videos.map((video, index) => (
-				<div key={video._key || `video-${index}`} className="w-full">
-					<VimeoEmbed
-						video={video.vimeoId}
-						autoplay={Boolean(video.autoplay)}
-						loop={Boolean(video.loop)}
-						controls={Boolean(video.controls ?? true)}
-						portrait={Boolean(video.portrait)}
-					/>
-				</div>
-			))}
-		</div>
-	);
-}
-
-function SanityProjectTemplate({ project }) {
-	const contentBlocks = Array.isArray(project?.content) ? project.content : [];
-	const videos = Array.isArray(project?.videos)
-		? project.videos.filter(video => Number.isFinite(Number(video?.vimeoId)))
-		: [];
-
-	return (
 		<div className="w-full">
 			{contentBlocks.map((block, index) => renderContentBlock(block, index))}
-			{renderVideos(videos)}
 		</div>
 	);
 }

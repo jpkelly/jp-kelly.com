@@ -119,8 +119,8 @@ function About(props) {
 					{aboutContent.showTools && (
 						<>
 							<h2 className="mt-7">{aboutContent.toolsHeading}</h2>
-							<ul className="">
-								<li>{toolItems}</li>
+							<ul className="list-none pl-6 leading-normal">
+								<li className="m-0 p-0">{toolItems}</li>
 							</ul>
 						</>
 					)}

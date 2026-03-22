@@ -8,7 +8,7 @@ import projects from '../content/projects.json';
 const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);
   return (
-    <h1 className="flex items-center xl:text-2xl 2xl:text-4xl">
+    <h1 className="relative z-20 flex items-center xl:text-2xl 2xl:text-4xl">
       <Link to="/about" className="logo-anchor">
         <img src={kamon} className="kamon" alt="logo" />
       </Link>

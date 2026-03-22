@@ -24,16 +24,16 @@ function VimeoEmbed({
   if (!controlsEnabled) params.set('controls', 0);
   if (backgroundEnabled) params.set('background', 1);
 
-  const paddingTop = portrait ? '177.78%' : '56.25%';
+  const aspectRatio = portrait ? '9 / 16' : '16 / 9';
 
   return (
     <div
       style={{
         width: '100%',
         maxWidth: '65ch',
-        padding: `${paddingTop} 0 0 0`,
         position: 'relative',
         background: '#111',
+        overflow: 'hidden',
       }}
     >
       {!autoplayEnabled && !playing && (
@@ -71,7 +71,7 @@ function VimeoEmbed({
         src={`https://player.vimeo.com/video/${video}?${params}`}
         frameBorder="0"
         allow="autoplay; fullscreen; picture-in-picture"
-        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+        style={{ width: '100%', aspectRatio, display: 'block' }}
         title={`Vimeo video ${video}`}
       />
     </div>

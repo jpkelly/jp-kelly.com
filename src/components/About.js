@@ -34,35 +34,26 @@ function About(props) {
 							Here is the code.
 						</a>
 					</p>
+					<button className="bg-transparant w-full md:w-1/3 mt-4 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded" onClick={() => window.open('/contactform', '_self')}>
+						Contact
+					</button>
+					<h2 className="mt-7">Here are a few of my favorie tools:</h2>
+					<ul className="">
+						<li>Photoshop, Illustrator, After Effects</li>
+						<li>Notch, TouchDesigner, MaxMSP, VDMX</li>
+						<li>Rhino, Grasshopper, Blender, Cinema 4D</li>
+						<li>disguise(d3), Watchout, Pixera</li>
+						<li>Barco Eventmaster (E2)</li>
+						<li>projectors, LED</li>
+						<li>Ableton</li>
+						<li>Unreal Engine</li>
+						<li>Graphic design & Typography</li>
+						<li>Arduino, Raspberry Pi, sensors, electronics tools</li>
+						<li>HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python</li>
+						<li>GitHub, stackoverflow, Google</li>
+					</ul>
 				</div>
 			</div>
-			<button className="bg-transparant w-full md:w-1/6 mt-10 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded" onClick={() => window.open('/contactform', '_self')}>
-				Contact
-			</button>
-			<h2 className="mt-7 col-span-full">Here are a few of my favorie tools:</h2>
-			<ul className="">
-				<li>Photoshop, Illustrator, After Effects</li>
-				<li>Notch, TouchDesigner, MaxMSP, VDMX</li>
-				<li>Rhino, Grasshopper, Blender, Cinema 4D</li>
-				<li>disguise(d3), Watchout, Pixera</li>
-				<li>Barco Eventmaster (E2)</li>
-				<li>projectors, LED</li>
-				<li>Ableton</li>
-				<li>Unreal Engine</li>
-				<li>Graphic design & Typography</li>
-				<li>Arduino, Raspberry Pi, sensors, electronics tools</li>
-				<li>HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python</li>
-				<li>GitHub, stackoverflow, Google</li>
-			</ul>
-
-			{/* <div className="col-span-full mt-12">
-        <button
-          className="bg-transparant w-full md:w-1/6 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded"
-          onClick={() => window.open('contactform', '_self')}
-        >
-          Contact
-        </button>
-      </div> */}
 		</div>
 	);
 }

@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { BiHomeSmile } from 'react-icons/bi';
 import kamon from '../kamon.png';
-import projects from '../content/projects.json';
+import { useSiteProjects } from '../lib/siteProjects';
 
 const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);
+  const projects = useSiteProjects();
+
   return (
     <h1 className="relative z-20 flex items-center xl:text-2xl 2xl:text-4xl" style={{ transform: 'translateY(15px)' }}>
       <Link to="/about" className="logo-anchor">

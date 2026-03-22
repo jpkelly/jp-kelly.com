@@ -94,11 +94,17 @@ Project metadata is stored in one source:
 
 This content powers:
 
-- Gallery cards (`src/components/Gallery.js`)
-- Header dropdown (`src/components/Header.js`)
+- Gallery cards (`src/components/Gallery.js`) using Sanity `order` when project docs are available
+- Header dropdown (`src/components/Header.js`) using Sanity `order` when project docs are available
 - Project routes and aliases (`src/App.js`)
 - Route-level title/description metadata (`src/App.js`)
 - Route-level Open Graph/Twitter metadata (`src/App.js`)
+
+Visible project ordering is controlled in Sanity:
+
+- `src/content/projects.json` still defines the canonical route list and fallback metadata
+- `src/components/Gallery.js` and `src/components/Header.js` reorder that list at runtime using Sanity `project.order`
+- If Sanity is unavailable or a project doc has not been created yet, the site falls back to the local JSON order
 
 Project detail pages are Sanity-first:
 
@@ -172,15 +178,16 @@ Creating a new project in Studio:
 	- `cardTitle`
 	- `cardText`
 	- `aliases` if any
-5. Upload thumbnails and optional SEO image in Studio.
-6. Add page content in `content[]`:
+5. Set the numeric `order` field in Studio to control where the project appears in the gallery and the Projects dropdown.
+6. Upload thumbnails and optional SEO image in Studio.
+7. Add page content in `content[]`:
 	- rich text blocks for headings and paragraphs
 	- standalone images for single full-width images
 	- `Image Gallery` blocks for grouped images with captions
-7. Add Vimeo entries in `videos[]` if the page needs video embeds.
-8. Publish the document.
-9. Run `npm run build` so local validation and prerendered output stay current.
-10. Commit, push, and deploy with the usual Plesk Git deploy button workflow.
+8. Add Vimeo entries in `videos[]` if the page needs video embeds.
+9. Publish the document.
+10. Run `npm run build` so local validation and prerendered output stay current.
+11. Commit, push, and deploy with the usual Plesk Git deploy button workflow.
 
 Important note:
 
@@ -209,6 +216,7 @@ If a project needs its own detail page component, add/import the component and m
 - 2026-03-21: Added Sanity `Image Gallery` content blocks, per-video `Show Controls`, and Sanity-first project rendering for all routes with MDX fallback when Sanity content is missing.
 - 2026-03-21: Enhanced `scripts/import-to-sanity.mjs` to migrate MDX links, image grids/captions, and complete Vimeo video flags into Sanity project docs.
 - 2026-03-21: Added `scripts/verify-sanity-import.mjs` and `npm run verify:sanity` for post-import completeness checks.
+- 2026-03-21: Switched gallery and header project ordering to use Sanity `order` with `projects.json` as the fallback when Sanity is unavailable.
 
 - 2026-03-22: Added `public/sanity-proxy.php` and frontend proxy-first Sanity reads for environments where anonymous Content Lake reads are restricted.
 

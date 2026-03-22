@@ -1,8 +1,10 @@
 import React from 'react';
 import Card from './Card';
-import projects from '../content/projects.json';
+import { useSiteProjects } from '../lib/siteProjects';
 
 function Gallery(props) {
+	const projects = useSiteProjects();
+
 	return (
 		<div className="content-rail my-5 py-5 ">
 			<h2>Here are a few of my projects.</h2>

@@ -104,6 +104,9 @@ function About(props) {
 					{aboutContent.bioParagraphs.map((paragraph, index) => (
 						<p key={`bio-${index}`}>{paragraph}</p>
 					))}
+					<button className="bg-transparant w-full md:w-1/3 mt-4 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded" onClick={() => window.open('/contactform', '_self')}>
+						Contact
+					</button>
 					<p>
 						{aboutContent.builtByText}
 						<DiReact className="inline ml-1 text-[1.35rem]" aria-hidden="true" />
@@ -114,9 +117,6 @@ function About(props) {
 							{aboutContent.codeLinkText}
 						</a>
 					</p>
-					<button className="bg-transparant w-full md:w-1/3 mt-4 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded" onClick={() => window.open('/contactform', '_self')}>
-						Contact
-					</button>
 					{aboutContent.showTools && (
 						<>
 							<h2 className="mt-7">{aboutContent.toolsHeading}</h2>

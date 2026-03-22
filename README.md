@@ -43,12 +43,16 @@ If deploying by git pull (for example via Plesk), run `npm run build` before com
 
 For Sanity reads in production, configure these PHP environment variables on the server:
 
-- `SANITY_READ_TOKEN` (required, read-only token)
-- `SANITY_PROJECT_ID` (optional, default: `tl4n7qut`)
-- `SANITY_DATASET` (optional, default: `production`)
-- `SANITY_API_VERSION` (optional, default: `2024-03-13`)
 
 Do not expose the token in frontend `VITE_` variables.
+
+If Plesk environment variable injection is unavailable, the proxy also supports a local server-side file fallback:
+
+- Create `sanity-proxy.secret.php` from `sanity-proxy.secret.php.example`
+- Place it in either:
+	- the same directory as `sanity-proxy.php`, or
+	- the parent directory of `sanity-proxy.php`
+- Keep this file out of git and out of any public file listing
 
 ## CMS (Sanity)
 

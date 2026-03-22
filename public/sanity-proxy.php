@@ -26,6 +26,36 @@ function safe_json_encode($payload)
     return $json;
 }
 
+function get_file_settings()
+{
+    static $loaded = false;
+    static $settings = array();
+
+    if ($loaded) {
+        return $settings;
+    }
+
+    $loaded = true;
+    $candidatePaths = array(
+        __DIR__ . '/sanity-proxy.secret.php',
+        dirname(__DIR__) . '/sanity-proxy.secret.php',
+    );
+
+    foreach ($candidatePaths as $path) {
+        if (!is_file($path) || !is_readable($path)) {
+            continue;
+        }
+
+        $loadedSettings = include $path;
+        if (is_array($loadedSettings)) {
+            $settings = $loadedSettings;
+            break;
+        }
+    }
+
+    return $settings;
+}
+
 function read_setting($name, $defaultValue)
 {
     $value = getenv($name);
@@ -44,6 +74,11 @@ function read_setting($name, $defaultValue)
     $iniValue = ini_get($name);
     if ($iniValue !== false && $iniValue !== '') {
         return $iniValue;
+    }
+
+    $fileSettings = get_file_settings();
+    if (isset($fileSettings[$name]) && $fileSettings[$name] !== '') {
+        return $fileSettings[$name];
     }
 
     return $defaultValue;
@@ -105,6 +140,7 @@ if (!$token) {
     send_json(500, [
         'ok' => false,
         'error' => 'missing_sanity_token',
+        'hint' => 'Set SANITY_READ_TOKEN in Plesk env vars or sanity-proxy.secret.php',
     ]);
 }
 

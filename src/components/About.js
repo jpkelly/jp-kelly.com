@@ -112,9 +112,9 @@ function About(props) {
 									i++;
 								}
 								result.push(
-									<ul key={`list-${i}`} style={{listStyle:'none',paddingLeft:'1.5em',marginBottom:'1em'}}>
+									<ul key={`list-${i}`} style={{listStyle:'none',paddingLeft:'1.5em',marginBottom:'1em'}} className="text-base xl:text-lg">
 										{listItems.map((item, j) => (
-											<li key={j} style={{margin:0,padding:0,lineHeight:'1.5',fontSize:'inherit'}}>{item}</li>
+											<li key={j} style={{margin:0,padding:0,lineHeight:'1.5'}}>{item}</li>
 										))}
 									</ul>
 								);

@@ -4,6 +4,18 @@ Portfolio site for JP Kelly.
 
 This repository contains a React single-page portfolio showcasing projects, videos, and supporting pages.
 
+## Table of Contents
+
+- [Current Stack](#current-stack)
+- [Node Version](#node-version)
+- [Scripts](#scripts)
+- [Deployment Notes](#deployment-notes)
+- [CMS (Sanity)](#cms-sanity)
+- [Content Model](#content-model)
+- [SEO/Social Metadata](#seosocial-metadata)
+- [Content Editing Guide](#content-editing-guide)
+- [Changelog](#changelog)
+
 ## Current Stack
 
 - React 17
@@ -42,6 +54,16 @@ This repo is pinned to Node 18:
 Production artifacts are committed under `build/`.
 
 If deploying by git pull (for example via Plesk), run `npm run build` before commit/push so `build/` matches source changes.
+
+### Content-Only Publishing (No Plesk Deploy)
+
+- Content changes published in Sanity Studio are served at runtime and do not require a Git pull/deploy in Plesk.
+- This includes adding/editing projects, reordering projects, editing About content, and updating Projects dropdown links.
+
+### When Plesk Deploy Is Still Required
+
+- Deploy from Git/Plesk when code changes are made in this repo.
+- Examples: React/frontend changes, proxy/PHP updates, build tooling changes, schema/Studio structure/plugin code changes.
 
 For Sanity reads in production, configure these PHP environment variables on the server:
 
@@ -230,8 +252,8 @@ Creating a new project in Studio:
 	- `Image Gallery` blocks for grouped images with captions
 8. Add Vimeo entries in `videos[]` if the page needs video embeds.
 9. Publish the document.
-10. Run `npm run build` so local validation and prerendered output stay current.
-11. Commit, push, and deploy with the usual Plesk Git deploy button workflow.
+10. For content-only updates, verify on the live site (no Plesk Git deploy required).
+11. If you changed repo code (frontend/proxy/schema/studio config), run `npm run build`, commit, push, and deploy with the usual Plesk Git deploy button workflow.
 
 Important note:
 

@@ -27,7 +27,15 @@ function VimeoEmbed({
   const paddingTop = portrait ? '177.78%' : '56.25%';
 
   return (
-    <div style={{ padding: `${paddingTop} 0 0 0`, position: 'relative', background: '#111' }}>
+    <div
+      style={{
+        width: '100%',
+        maxWidth: '65ch',
+        padding: `${paddingTop} 0 0 0`,
+        position: 'relative',
+        background: '#111',
+      }}
+    >
       {!autoplayEnabled && !playing && (
         <button
           onClick={() => setPlaying(true)}

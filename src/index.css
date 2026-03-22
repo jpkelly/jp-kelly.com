@@ -67,6 +67,17 @@ p > a.no-underline {
   text-decoration: none;
 }
 
+ul {
+  list-style: none;
+  padding-left: 1.5em;
+  line-height: 1.5;
+}
+
+ul li {
+  margin: 0;
+  padding: 0;
+}
+
 a:hover {
   color: rgb(0, 173, 279);
 }

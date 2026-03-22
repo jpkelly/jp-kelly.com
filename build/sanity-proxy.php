@@ -1,12 +1,50 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', '0');
+
+function safe_json_encode($payload)
+{
+    $json = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    if ($json === false) {
+        return '{"ok":false,"error":"json_encode_failed"}';
+    }
+    return $json;
+}
+
+register_shutdown_function(function () {
+    $lastError = error_get_last();
+    if (!$lastError) {
+        return;
+    }
+
+    $fatalTypes = array(E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR);
+    if (!in_array($lastError['type'], $fatalTypes, true)) {
+        return;
+    }
+
+    if (!headers_sent()) {
+        http_response_code(500);
+        header('Content-Type: application/json; charset=utf-8');
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    }
+
+    echo safe_json_encode(array(
+        'ok' => false,
+        'error' => 'php_fatal',
+        'message' => $lastError['message'],
+        'file' => basename($lastError['file']),
+        'line' => $lastError['line'],
+    ));
+});
+
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 function send_json($statusCode, $payload)
 {
     http_response_code($statusCode);
-    echo json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    echo safe_json_encode($payload);
     exit;
 }
 

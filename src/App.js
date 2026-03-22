@@ -4,7 +4,6 @@ import Header from './components/Header';
 import Gallery from './components/Gallery';
 import About from './components/About';
 import ContactForm from './components/ContactForm';
-import VimeoEmbed from './components/mdx/VimeoEmbed';
 import SanityProjectTemplate from './components/SanityProjectTemplate';
 import { getProjectById } from './lib/sanity';
 import projects from './content/projects.json';
@@ -69,8 +68,6 @@ const projectRoutes = projects
 const DEFAULT_TITLE = 'JP Kelly | Portfolio';
 const DEFAULT_DESCRIPTION = 'Portfolio site for JP Kelly.';
 const DEFAULT_IMAGE_PATH = '/thumbnails/nac23vj.png';
-const mdxPagesWithoutEmbeddedVimeo = new Set(['encoder', 'jpio']);
-const sanityTemplateProjectIds = new Set(['f8interactive']);
 
 function normalizeImagePath(imagePath) {
 	if (!imagePath) {
@@ -204,10 +201,8 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 	}, [title, description, imagePath, canonicalPath, routeProps.location]);
 
 	const sanityVideos = Array.isArray(sanityProject?.videos) ? sanityProject.videos : [];
-	const shouldRenderSanityVideos = mdxPagesWithoutEmbeddedVimeo.has(projectId) && sanityVideos.length > 0;
 	const sanityContent = Array.isArray(sanityProject?.content) ? sanityProject.content : [];
-	const shouldUseSanityTemplate =
-		sanityTemplateProjectIds.has(projectId) && (sanityVideos.length > 0 || sanityContent.length > 0);
+	const shouldUseSanityTemplate = sanityVideos.length > 0 || sanityContent.length > 0;
 
 	return (
 		<div className="content-rail my-5 py-5">
@@ -215,22 +210,7 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 				{shouldUseSanityTemplate ? (
 					<SanityProjectTemplate project={sanityProject} />
 				) : (
-					<>
-						{shouldRenderSanityVideos && (
-					<div className="mb-5 space-y-5">
-						{sanityVideos.map(video => (
-							<VimeoEmbed
-								key={video._key || `${projectId}-${video.vimeoId}`}
-								video={video.vimeoId}
-								autoplay={Boolean(video.autoplay)}
-								loop={Boolean(video.loop)}
-								portrait={Boolean(video.portrait)}
-							/>
-						))}
-					</div>
-						)}
-						<ProjectComponent />
-					</>
+					<ProjectComponent />
 				)}
 			</div>
 		</div>

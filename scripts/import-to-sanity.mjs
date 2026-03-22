@@ -29,6 +29,7 @@ const client = createClient({
 });
 
 const uploadCache = new Map();
+const markdownLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+|mailto:[^\s)]+)\)/g;
 
 function fileExists(filePath) {
   try {
@@ -56,7 +57,10 @@ function resolveMediaPath(mediaPath) {
 async function uploadImageIfExists(mediaPath) {
   const resolved = resolveMediaPath(mediaPath);
   if (!resolved) return null;
+  return uploadResolvedImage(resolved);
+}
 
+async function uploadResolvedImage(resolved) {
   if (uploadCache.has(resolved)) {
     return uploadCache.get(resolved);
   }
@@ -70,53 +74,270 @@ async function uploadImageIfExists(mediaPath) {
   return asset._id;
 }
 
-function paragraphToPortableText(text) {
-  return {
-    _key: randomUUID(),
-    _type: 'block',
-    style: 'normal',
-    children: [
-      {
-        _key: randomUUID(),
-        _type: 'span',
-        text,
-      },
-    ],
-  };
+function stripInlineHtml(text) {
+  return text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
-function headingToPortableText(text, style = 'h2') {
+function markdownTextToPortableSegments(text) {
+  const segments = [];
+  const markDefs = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = markdownLinkRegex.exec(text)) !== null) {
+    const [fullMatch, label, href] = match;
+    const textBefore = text.slice(lastIndex, match.index);
+    if (textBefore) {
+      segments.push({ text: textBefore, marks: [] });
+    }
+
+    const markKey = randomUUID();
+    markDefs.push({
+      _key: markKey,
+      _type: 'link',
+      href,
+    });
+
+    segments.push({
+      text: label,
+      marks: [markKey],
+    });
+
+    lastIndex = match.index + fullMatch.length;
+  }
+
+  const textAfter = text.slice(lastIndex);
+  if (textAfter) {
+    segments.push({ text: textAfter, marks: [] });
+  }
+
+  if (!segments.length) {
+    segments.push({ text, marks: [] });
+  }
+
+  return { segments, markDefs };
+}
+
+function paragraphToPortableText(text, style = 'normal') {
+  const cleaned = stripInlineHtml(text);
+  if (!cleaned) {
+    return null;
+  }
+
+  const { segments, markDefs } = markdownTextToPortableSegments(cleaned);
+
   return {
     _key: randomUUID(),
     _type: 'block',
     style,
-    children: [
-      {
+    children: segments
+      .filter((segment) => segment.text)
+      .map((segment) => ({
         _key: randomUUID(),
         _type: 'span',
-        text,
-      },
-    ],
+        text: segment.text,
+        marks: segment.marks,
+      })),
+    markDefs,
   };
 }
 
-function extractPortableContentFromMdx(projectIdValue, fallbackText) {
+function headingToPortableText(text, style = 'h2') {
+  return paragraphToPortableText(text, style);
+}
+
+function parseDefaultMdxImports(mdx) {
+  const importMap = new Map();
+  const importRegex = /^import\s+([A-Za-z0-9_$]+)\s+from\s+['"](.+?)['"];?$/gm;
+  let match;
+
+  while ((match = importRegex.exec(mdx)) !== null) {
+    importMap.set(match[1], match[2]);
+  }
+
+  return importMap;
+}
+
+function parseBooleanProp(attrs, propName) {
+  if (!attrs || !propName) return null;
+
+  const explicitBooleanRegex = new RegExp(`${propName}\\s*=\\s*\\{(true|false)\\}`);
+  const explicitStringRegex = new RegExp(`${propName}\\s*=\\s*["'](true|false)["']`);
+  const explicitBoolean = attrs.match(explicitBooleanRegex);
+  if (explicitBoolean) {
+    return explicitBoolean[1] === 'true';
+  }
+
+  const explicitString = attrs.match(explicitStringRegex);
+  if (explicitString) {
+    return explicitString[1] === 'true';
+  }
+
+  const bareRegex = new RegExp(`(?:^|\\s)${propName}(?:\\s|$)`);
+  if (bareRegex.test(attrs)) {
+    return true;
+  }
+
+  return null;
+}
+
+function extractMdxImageInfo(line) {
+  if (!line || !line.includes('<img')) {
+    return null;
+  }
+
+  const srcCurly = line.match(/src=\{([^}]+)\}/);
+  const srcQuoted = line.match(/src=['"]([^'"]+)['"]/);
+  const altQuoted = line.match(/alt=['"]([^'"]*)['"]/);
+
+  const srcSource = srcCurly ? srcCurly[1].trim() : (srcQuoted ? srcQuoted[1].trim() : null);
+  if (!srcSource) {
+    return null;
+  }
+
+  return {
+    srcSource,
+    alt: altQuoted ? altQuoted[1].trim() : '',
+    caption: '',
+  };
+}
+
+function extractInlineCaption(line) {
+  if (!line || !line.startsWith('<p')) {
+    return null;
+  }
+
+  const captionMatch = line.match(/^<p[^>]*>(.*?)<\/p>$/);
+  if (!captionMatch) {
+    return null;
+  }
+
+  return stripInlineHtml(captionMatch[1]);
+}
+
+async function uploadImageFromMdxSource(source, options = {}) {
+  if (!source) {
+    return null;
+  }
+
+  const { importMap = new Map(), mdxDir } = options;
+  const mappedSource = importMap.get(source) || source;
+
+  let resolved = null;
+  if (path.isAbsolute(mappedSource) && fileExists(mappedSource)) {
+    resolved = mappedSource;
+  } else if (mappedSource.startsWith('.')) {
+    const candidate = path.resolve(mdxDir, mappedSource);
+    if (fileExists(candidate)) {
+      resolved = candidate;
+    }
+  }
+
+  if (!resolved) {
+    resolved = resolveMediaPath(mappedSource);
+  }
+
+  if (!resolved) {
+    return null;
+  }
+
+  return uploadResolvedImage(resolved);
+}
+
+async function buildPortableImageBlock(imageInfo, uploadOptions) {
+  const assetId = await uploadImageFromMdxSource(imageInfo.srcSource, uploadOptions);
+  if (!assetId) {
+    return null;
+  }
+
+  return {
+    _key: randomUUID(),
+    _type: 'image',
+    asset: { _type: 'reference', _ref: assetId },
+    alt: imageInfo.alt || '',
+    caption: imageInfo.caption || '',
+  };
+}
+
+async function buildPortableGalleryBlock(images, uploadOptions) {
+  const items = [];
+
+  for (const imageInfo of images) {
+    const assetId = await uploadImageFromMdxSource(imageInfo.srcSource, uploadOptions);
+    if (!assetId) {
+      continue;
+    }
+
+    items.push({
+      _key: randomUUID(),
+      _type: 'galleryImage',
+      image: {
+        _type: 'image',
+        asset: { _type: 'reference', _ref: assetId },
+      },
+      alt: imageInfo.alt || '',
+      caption: imageInfo.caption || '',
+    });
+  }
+
+  if (!items.length) {
+    return null;
+  }
+
+  return {
+    _key: randomUUID(),
+    _type: 'imageGallery',
+    items,
+  };
+}
+
+async function extractPortableContentFromMdx(projectIdValue, fallbackText) {
   const mdxPath = path.join(repoRoot, 'src', 'content', 'projects', `${projectIdValue}.mdx`);
   if (!fileExists(mdxPath)) {
-    return [paragraphToPortableText(fallbackText)];
+    const fallbackBlock = paragraphToPortableText(fallbackText);
+    return fallbackBlock ? [fallbackBlock] : [];
   }
 
   const mdx = fs.readFileSync(mdxPath, 'utf8');
+  const importMap = parseDefaultMdxImports(mdx);
+  const uploadOptions = {
+    importMap,
+    mdxDir: path.dirname(mdxPath),
+  };
   const lines = mdx.split(/\r?\n/);
   const blocks = [];
   let paragraphBuffer = [];
+  let imageRun = [];
 
   const flushParagraph = () => {
-    const text = paragraphBuffer.join(' ').replace(/\s+/g, ' ').trim();
+    const text = stripInlineHtml(paragraphBuffer.join(' ').replace(/\s+/g, ' ').trim());
     if (text) {
-      blocks.push(paragraphToPortableText(text));
+      const paragraph = paragraphToPortableText(text);
+      if (paragraph) {
+        blocks.push(paragraph);
+      }
     }
     paragraphBuffer = [];
+  };
+
+  const flushImageRun = async () => {
+    if (!imageRun.length) {
+      return;
+    }
+
+    if (imageRun.length === 1) {
+      const imageBlock = await buildPortableImageBlock(imageRun[0], uploadOptions);
+      if (imageBlock) {
+        blocks.push(imageBlock);
+      }
+    } else {
+      const galleryBlock = await buildPortableGalleryBlock(imageRun, uploadOptions);
+      if (galleryBlock) {
+        blocks.push(galleryBlock);
+      }
+    }
+
+    imageRun = [];
   };
 
   for (const rawLine of lines) {
@@ -124,6 +345,7 @@ function extractPortableContentFromMdx(projectIdValue, fallbackText) {
 
     if (!line) {
       flushParagraph();
+      await flushImageRun();
       continue;
     }
 
@@ -133,29 +355,54 @@ function extractPortableContentFromMdx(projectIdValue, fallbackText) {
 
     if (line.startsWith('## ')) {
       flushParagraph();
+      await flushImageRun();
       blocks.push(headingToPortableText(line.replace(/^##\s+/, '').trim(), 'h2'));
       continue;
     }
 
     if (line.startsWith('### ')) {
       flushParagraph();
+      await flushImageRun();
       blocks.push(headingToPortableText(line.replace(/^###\s+/, '').trim(), 'h3'));
       continue;
     }
 
-    // Skip JSX/MDX component lines and wrapper tags.
-    if (line.startsWith('<') || line.includes('className=') || line.includes('VimeoEmbed')) {
+    if (line.includes('<VimeoEmbed')) {
       flushParagraph();
+      await flushImageRun();
       continue;
+    }
+
+    const imageInfo = extractMdxImageInfo(line);
+    if (imageInfo) {
+      flushParagraph();
+      imageRun.push(imageInfo);
+      continue;
+    }
+
+    const caption = extractInlineCaption(line);
+    if (caption && imageRun.length > 0) {
+      imageRun[imageRun.length - 1].caption = caption;
+      continue;
+    }
+
+    if (line.startsWith('<') && line.endsWith('>')) {
+      continue;
+    }
+
+    if (imageRun.length > 0) {
+      await flushImageRun();
     }
 
     paragraphBuffer.push(line);
   }
 
   flushParagraph();
+  await flushImageRun();
 
   if (!blocks.length) {
-    return [paragraphToPortableText(fallbackText)];
+    const fallbackBlock = paragraphToPortableText(fallbackText);
+    return fallbackBlock ? [fallbackBlock] : [];
   }
 
   return blocks;
@@ -180,9 +427,11 @@ function extractVimeoVideosFromMdx(projectIdValue) {
     }
 
     const vimeoId = Number(idMatch[1]);
-    const autoplay = /autoplay=\{true\}/.test(attrs);
-    const loop = /loop=\{true\}/.test(attrs);
-    const portrait = /portrait=\{true\}/.test(attrs);
+    const autoplay = parseBooleanProp(attrs, 'autoplay') ?? false;
+    const explicitLoop = parseBooleanProp(attrs, 'loop');
+    const loop = explicitLoop == null ? autoplay : explicitLoop;
+    const portrait = parseBooleanProp(attrs, 'portrait') ?? false;
+    const controls = parseBooleanProp(attrs, 'controls') ?? !autoplay;
     const url = `https://vimeo.com/${vimeoId}`;
 
     videos.push({
@@ -193,6 +442,7 @@ function extractVimeoVideosFromMdx(projectIdValue) {
       url,
       autoplay,
       loop,
+      controls,
       portrait,
     });
   }
@@ -252,7 +502,7 @@ async function importProjects() {
 
     const seoImageId = await uploadImageIfExists(p.seoImage);
     const videos = extractVimeoVideosFromMdx(p.id);
-    const contentBlocks = extractPortableContentFromMdx(p.id, p.cardText);
+    const contentBlocks = await extractPortableContentFromMdx(p.id, p.cardText);
 
     const doc = {
       _id: `project.${p.id}`,

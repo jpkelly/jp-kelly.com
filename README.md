@@ -31,6 +31,8 @@ This repo is pinned to Node 18:
 ## Scripts
 
 - `npm start` or `npm run dev`: start Vite dev server
+- `npm run import:sanity`: import `projects.json` + MDX content into Sanity (requires `SANITY_API_TOKEN` write token)
+- `npm run verify:sanity`: verify imported Sanity project docs against `projects.json`
 - `npm run validate:content`: validate `src/content/projects.json` schema and route uniqueness
 - `npm run build`: run content validation, then build production assets into `build/`
 - `npm run preview`: preview production build locally
@@ -98,7 +100,11 @@ This content powers:
 - Route-level title/description metadata (`src/App.js`)
 - Route-level Open Graph/Twitter metadata (`src/App.js`)
 
-MDX project page content can live under `src/content/projects/*.mdx` and embed React components.
+Project detail pages are Sanity-first:
+
+- `src/App.js` fetches a matching Sanity `project` document for every project route
+- If Sanity returns `videos` or `content`, route content is rendered by `src/components/SanityProjectTemplate.js`
+- If no Sanity content exists yet, the route falls back to `src/content/projects/*.mdx`
 
 ## SEO/Social Metadata
 
@@ -142,15 +148,22 @@ Optional fields:
 - `seoDescription`
 - `seoImage`
 
-MDX authoring note:
+Sanity project page authoring:
+
+- `videos[]` supports multiple Vimeo entries per project
+- Per-video options: `autoplay`, `loop`, `show controls`, `portrait`
+- `content[]` supports rich text, standalone images (with optional alt/caption), and `Image Gallery` blocks
+- `Image Gallery` supports 1-6 images with per-image alt text and caption
+- Two portrait videos in one project render side by side automatically; all other videos stack vertically
+- Inline hyperlinks in rich text are rendered on the site
+
+MDX fallback note:
 
 - Project content lives in `src/content/projects/<project-id>.mdx`.
 - Routes are rendered through a single project template in `src/App.js` and mapped by `project.id`.
-- Reusable embed component: `src/components/mdx/VimeoEmbed.js`
-- Use `autoplay={true}` for the approved silent autoplay pages. `VimeoEmbed` translates that into Vimeo background mode, mute, loop, and no controls.
-- Current approved autoplay pages: Heads-up Displays, F-8 Interactive, Saturn Orbit Test, Houdini Smoke, NAC 2019 Digital Ribbon, and TOTO Hologram/Immersive Experience.
-- For non-autoplay pages, `VimeoEmbed` shows the play button, starts with sound when clicked, and plays once by default.
-- For autoplay pages, videos loop by default; set `loop={false}` to make an autoplay video play once.
+- Keep MDX files only as temporary fallback while migrating project bodies into Sanity.
+- `scripts/import-to-sanity.mjs` now migrates Markdown links, Vimeo props (`autoplay`, `loop`, `portrait`, `controls`), standalone images, and multi-image grids into `Image Gallery` blocks where possible.
+- Run `npm run verify:sanity` after import to report missing project docs, required field gaps, alias mismatches, projects that still have no Sanity body content, and broken image asset references.
 
 Build/prerender note:
 
@@ -162,6 +175,10 @@ Build/prerender note:
 If a project needs its own detail page component, add/import the component and map `routeKey` in `src/App.js`.
 
 ## Changelog
+
+- 2026-03-21: Added Sanity `Image Gallery` content blocks, per-video `Show Controls`, and Sanity-first project rendering for all routes with MDX fallback when Sanity content is missing.
+- 2026-03-21: Enhanced `scripts/import-to-sanity.mjs` to migrate MDX links, image grids/captions, and complete Vimeo video flags into Sanity project docs.
+- 2026-03-21: Added `scripts/verify-sanity-import.mjs` and `npm run verify:sanity` for post-import completeness checks.
 
 - 2026-03-22: Added `public/sanity-proxy.php` and frontend proxy-first Sanity reads for environments where anonymous Content Lake reads are restricted.
 

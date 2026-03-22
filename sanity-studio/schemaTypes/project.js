@@ -40,6 +40,7 @@ export default {
             },
             { name: 'autoplay', title: 'Autoplay', type: 'boolean', initialValue: false },
             { name: 'loop', title: 'Loop', type: 'boolean', initialValue: false },
+            { name: 'controls', title: 'Show Controls', type: 'boolean', initialValue: true },
             { name: 'portrait', title: 'Portrait', type: 'boolean', initialValue: false },
           ],
           preview: {
@@ -84,7 +85,59 @@ export default {
             ],
           },
         },
-        { type: 'image', options: { hotspot: true } },
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            { name: 'alt', title: 'Alt Text', type: 'string' },
+            { name: 'caption', title: 'Caption', type: 'string' },
+          ],
+        },
+        {
+          type: 'object',
+          name: 'imageGallery',
+          title: 'Image Gallery',
+          fields: [
+            { name: 'title', title: 'Gallery Title', type: 'string' },
+            {
+              name: 'items',
+              title: 'Gallery Items',
+              type: 'array',
+              of: [
+                {
+                  type: 'object',
+                  name: 'galleryImage',
+                  title: 'Gallery Image',
+                  fields: [
+                    {
+                      name: 'image',
+                      title: 'Image',
+                      type: 'image',
+                      options: { hotspot: true },
+                      validation: (Rule) => Rule.required(),
+                    },
+                    { name: 'alt', title: 'Alt Text', type: 'string' },
+                    { name: 'caption', title: 'Caption', type: 'string' },
+                  ],
+                },
+              ],
+              validation: (Rule) => Rule.min(1).max(6),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              items: 'items',
+            },
+            prepare(selection) {
+              const count = Array.isArray(selection.items) ? selection.items.length : 0;
+              return {
+                title: selection.title || 'Image Gallery',
+                subtitle: `${count} image${count === 1 ? '' : 's'}`,
+              };
+            },
+          },
+        },
       ],
       description: 'Rich text and images for project detail page',
     },

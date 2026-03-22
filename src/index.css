@@ -67,14 +67,6 @@ p > a.no-underline {
   text-decoration: none;
 }
 
-ul.list-disc {
-  line-height: 1.5;
-}
-
-ul.list-disc li {
-  margin-bottom: 0;
-}
-
 a:hover {
   color: rgb(0, 173, 279);
 }

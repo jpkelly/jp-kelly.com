@@ -56,7 +56,7 @@ For contact form sending (EmailJS), configure frontend environment variables:
 - Preferred (Vite): `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_USER_ID`
 - Backward-compatible: `REACT_APP_SERVICE_ID`, `REACT_APP_TEMPLATE_ID`, `REACT_APP_USER_ID`
 
-The contact form uses `import.meta.env` and expects these values at build time.
+The contact form uses `import.meta.env` and expects these values at build time. They are baked into the JS bundle during `npm run build` — **if `.env.production.local` is missing when you rebuild, the contact form will silently fail in production.** Store these values in a password manager so they can be recreated if the machine changes.
 
 
 Do not expose the token in frontend `VITE_` variables.

@@ -17,7 +17,7 @@ const fallbackContent = {
 	codeLinkUrl: 'https://github.com/jpkelly/jp-kelly.com',
 	toolsHeading: 'Here are a few of my favorite tools:',
 	toolsList: 'Photoshop, Illustrator, After Effects, Notch, TouchDesigner, MaxMSP, VDMX, Rhino, Blender, Cinema 4D, disguise(d3), Watchout, Pixera, Barco Eventmaster (E2/3), projectors, LED screens, Ableton, Unreal Engine, graphic design & typography, Arduino, Raspberry Pi, ESP32, LiDAR, sensors, electronics theory and tools, 3D printing, GLSL, HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python, GitHub, Copilot, チャッピー',
-	showTools: true
+	showTools: false
 };
 
 function renderBlockChildren(block) {

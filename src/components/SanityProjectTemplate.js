@@ -102,13 +102,13 @@ function renderImageGallery(block, index) {
 	);
 }
 
-function renderVideoBlock(block, index) {
+function renderVideoBlock(block, index, containerClass = 'my-4 w-full') {
 	if (!Number.isFinite(Number(block?.vimeoId))) {
 		return null;
 	}
 
 	return (
-		<div key={block._key || `video-${index}`} className="my-4 w-full">
+		<div key={block._key || `video-${index}`} className={containerClass}>
 			<VimeoEmbed
 				video={block.vimeoId}
 				autoplay={Boolean(block.autoplay)}
@@ -120,7 +120,7 @@ function renderVideoBlock(block, index) {
 	);
 }
 
-function renderContentBlock(block, index) {
+function renderContentBlock(block, index, allBlocks) {
 	if (!block) {
 		return null;
 	}
@@ -151,10 +151,47 @@ function renderContentBlock(block, index) {
 	}
 
 	if (block._type === 'vimeoVideoBlock') {
-		return renderVideoBlock(block, index);
+		return renderVideoBlock(block, index, 'my-4 w-full');
 	}
 
 	return null;
+}
+
+function groupConsecutivePortraitVideos(blocks) {
+	const result = [];
+	let groupIndex = 0;
+
+	for (let i = 0; i < blocks.length; i++) {
+		const block = blocks[i];
+
+		if (block?._type === 'vimeoVideoBlock' && Boolean(block.portrait)) {
+			// Look ahead to find consecutive portrait videos
+			const groupStart = i;
+			const group = [{ block, index: i }];
+
+			while (i + 1 < blocks.length && blocks[i + 1]?._type === 'vimeoVideoBlock' && Boolean(blocks[i + 1].portrait)) {
+				i++;
+				group.push({ block: blocks[i], index: i });
+			}
+
+			// If this is a group (2+ consecutive portrait videos), wrap them
+			if (group.length > 1) {
+				result.push({
+					type: 'portraitVideoGroup',
+					groupId: `portrait-group-${groupIndex}`,
+					videos: group,
+				});
+				groupIndex++;
+			} else {
+				// Single portrait video, render normally
+				result.push({ type: 'block', block, index: groupStart });
+			}
+		} else {
+			result.push({ type: 'block', block, index: i });
+		}
+	}
+
+	return result;
 }
 
 function SanityProjectTemplate({ project }) {
@@ -175,9 +212,21 @@ function SanityProjectTemplate({ project }) {
 		);
 	}
 
+	const groupedBlocks = groupConsecutivePortraitVideos(contentBlocks);
+
 	return (
 		<div className="w-full">
-			{contentBlocks.map((block, index) => renderContentBlock(block, index))}
+			{groupedBlocks.map((item) => {
+				if (item.type === 'portraitVideoGroup') {
+					return (
+						<div key={item.groupId} className="flex flex-wrap w-full mx-auto my-4 gap-2">
+							{item.videos.map(({ block }) => renderVideoBlock(block, block._key, 'w-full md:w-1/2 lg:w-1/2 lg:max-w-sm'))}
+						</div>
+					);
+				}
+
+				return renderContentBlock(item.block, item.index, contentBlocks);
+			})}
 		</div>
 	);
 }

@@ -200,7 +200,7 @@ export function AppShell() {
 
 			const shellLeft = shell.getBoundingClientRect().left;
 			const logoLeft = logo.getBoundingClientRect().left;
-			const offset = Math.max(0, Math.round(logoLeft - shellLeft - 10));
+			const offset = Math.max(0, Math.round(logoLeft - shellLeft - 18));
 			shell.style.setProperty('--content-left-offset', `${offset}px`);
 		};
 

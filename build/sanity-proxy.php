@@ -36,10 +36,7 @@ function get_file_settings()
     }
 
     $loaded = true;
-    $candidatePaths = array(
-        __DIR__ . '/sanity-proxy.secret.php',
-        dirname(__DIR__) . '/sanity-proxy.secret.php',
-    );
+    $candidatePaths = get_secret_candidate_paths();
 
     foreach ($candidatePaths as $path) {
         if (!is_file($path) || !is_readable($path)) {
@@ -54,6 +51,14 @@ function get_file_settings()
     }
 
     return $settings;
+}
+
+function get_secret_candidate_paths()
+{
+    return array(
+        __DIR__ . '/sanity-proxy.secret.php',
+        dirname(__DIR__) . '/sanity-proxy.secret.php',
+    );
 }
 
 function read_setting($name, $defaultValue)
@@ -148,6 +153,24 @@ $query = '';
 $params = [];
 
 switch ($action) {
+    case 'debugPaths':
+        $paths = get_secret_candidate_paths();
+        $details = array();
+        foreach ($paths as $path) {
+            $details[] = array(
+                'path' => $path,
+                'exists' => is_file($path),
+                'readable' => is_readable($path),
+            );
+        }
+        send_json(200, array(
+            'ok' => true,
+            'phpVersion' => PHP_VERSION,
+            'scriptDir' => __DIR__,
+            'checkedPaths' => $details,
+        ));
+        break;
+
     case 'about':
         $query = '*[_type == "aboutPage"][0]';
         break;

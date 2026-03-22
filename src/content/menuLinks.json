@@ -1,0 +1,9 @@
+[
+  {
+    "id": "archive",
+    "label": "Archive",
+    "href": "https://jpkelly.net",
+    "order": 100,
+    "external": true
+  }
+]

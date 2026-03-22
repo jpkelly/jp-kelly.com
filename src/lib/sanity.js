@@ -101,8 +101,23 @@ export async function getProjects() {
     return [];
   }
 
-  const query = `*[_type == "project"] | order(order asc)`;
+  const query = `*[_type == "project"] | order(defined(orderRank) desc, orderRank asc, order asc)`;
   return await sanityClient.fetch(query);
+}
+
+export async function getMenuLinks() {
+  const proxyResponse = await fetchViaProxy('menuLinks');
+  if (proxyResponse.handled) {
+    return Array.isArray(proxyResponse.value) ? proxyResponse.value : [];
+  }
+
+  if (!sanityClient) {
+    return [];
+  }
+
+  const query = `*[_type == "siteSettings"][0].menuLinks`;
+  const result = await sanityClient.fetch(query);
+  return Array.isArray(result) ? result : [];
 }
 
 export async function getProjectById(projectIdValue) {

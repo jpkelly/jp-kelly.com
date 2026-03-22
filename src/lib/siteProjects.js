@@ -1,46 +1,126 @@
 import { useEffect, useState } from 'react';
 import localProjects from '../content/projects.json';
-import { getProjects } from './sanity';
+import { getProjects, sanityImageUrl } from './sanity';
 
-function mergeProjectMetadata(localProject, sanityProject) {
-	if (!sanityProject) {
-		return localProject;
+const DEFAULT_THUMBNAIL = { src: '/thumbnails/nac23vj.png', alt: 'Project thumbnail' };
+
+function normalizePath(pathValue) {
+	if (typeof pathValue !== 'string' || !pathValue.trim()) {
+		return '';
+	}
+
+	const trimmedPath = pathValue.trim();
+	if (/^https?:\/\//i.test(trimmedPath)) {
+		return trimmedPath;
+	}
+
+	return trimmedPath.startsWith('/') ? trimmedPath : `/${trimmedPath}`;
+}
+
+function normalizeThumbnailItem(thumbnail, fallbackAlt) {
+	if (!thumbnail) {
+		return null;
+	}
+
+	if (typeof thumbnail.src === 'string' && thumbnail.src.trim()) {
+		return {
+			src: normalizePath(thumbnail.src),
+			alt: thumbnail.alt || fallbackAlt || DEFAULT_THUMBNAIL.alt
+		};
+	}
+
+	const sanityImage = thumbnail.image || thumbnail;
+	const sanitySrc = sanityImageUrl(sanityImage);
+	if (!sanitySrc) {
+		return null;
 	}
 
 	return {
-		...localProject,
-		path: sanityProject.path || localProject.path,
-		aliases: Array.isArray(sanityProject.aliases) ? sanityProject.aliases : localProject.aliases,
-		menuLabel: sanityProject.menuLabel || localProject.menuLabel,
-		cardTitle: sanityProject.cardTitle || localProject.cardTitle,
-		cardText: sanityProject.cardText || localProject.cardText
+		src: sanitySrc,
+		alt: thumbnail.alt || fallbackAlt || DEFAULT_THUMBNAIL.alt
 	};
 }
 
+function normalizeThumbnails(project) {
+	const rawThumbnails = Array.isArray(project?.thumbnails) ? project.thumbnails : [];
+	const normalized = rawThumbnails
+		.map(thumbnail => normalizeThumbnailItem(thumbnail, project?.cardTitle))
+		.filter(Boolean);
+
+	if (normalized.length > 0) {
+		return normalized;
+	}
+
+	const fallbackImage = normalizeThumbnailItem(project?.seoImage, project?.cardTitle);
+	if (fallbackImage) {
+		return [fallbackImage];
+	}
+
+	return [DEFAULT_THUMBNAIL];
+}
+
+function normalizeProject(project) {
+	if (!project || typeof project !== 'object') {
+		return null;
+	}
+
+	const id = typeof project.id === 'string' ? project.id.trim() : '';
+	const path = normalizePath(project.path);
+	const menuLabel = typeof project.menuLabel === 'string' ? project.menuLabel.trim() : '';
+	const cardTitle = typeof project.cardTitle === 'string' ? project.cardTitle.trim() : '';
+	const cardText = typeof project.cardText === 'string' ? project.cardText.trim() : '';
+
+	if (!id || !path || !menuLabel || !cardTitle || !cardText) {
+		return null;
+	}
+
+	return {
+		...project,
+		id,
+		path,
+		menuLabel,
+		cardTitle,
+		cardText,
+		aliases: Array.isArray(project.aliases) ? project.aliases.map(normalizePath).filter(Boolean) : [],
+		thumbnails: normalizeThumbnails(project)
+	};
+}
+
+function mergeProjectMetadata(localProject, sanityProject) {
+	const merged = {
+		...(localProject || {}),
+		...(sanityProject || {})
+	};
+
+	return normalizeProject(merged);
+}
+
 export function orderProjectsBySanity(baseProjects, sanityProjects) {
-	if (!Array.isArray(baseProjects) || baseProjects.length === 0) {
+	if (!Array.isArray(baseProjects)) {
 		return [];
 	}
 
+	const normalizedBaseProjects = baseProjects.map(normalizeProject).filter(Boolean);
 	if (!Array.isArray(sanityProjects) || sanityProjects.length === 0) {
-		return baseProjects;
+		return normalizedBaseProjects;
 	}
 
-	const baseProjectMap = new Map(baseProjects.map(project => [project.id, project]));
+	const baseProjectMap = new Map(normalizedBaseProjects.map(project => [project.id, project]));
 	const seenProjectIds = new Set();
 	const orderedProjects = [];
 
 	sanityProjects.forEach(sanityProject => {
-		const localProject = baseProjectMap.get(sanityProject?.id);
-		if (!localProject || seenProjectIds.has(localProject.id)) {
+		const localProject = baseProjectMap.get(sanityProject?.id) || null;
+		const mergedProject = mergeProjectMetadata(localProject, sanityProject);
+		if (!mergedProject || seenProjectIds.has(mergedProject.id)) {
 			return;
 		}
 
-		orderedProjects.push(mergeProjectMetadata(localProject, sanityProject));
-		seenProjectIds.add(localProject.id);
+		orderedProjects.push(mergedProject);
+		seenProjectIds.add(mergedProject.id);
 	});
 
-	baseProjects.forEach(project => {
+	normalizedBaseProjects.forEach(project => {
 		if (!seenProjectIds.has(project.id)) {
 			orderedProjects.push(project);
 		}

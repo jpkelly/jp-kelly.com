@@ -186,7 +186,11 @@ switch ($action) {
         break;
 
     case 'projects':
-        $query = '*[_type == "project"] | order(order asc)';
+        $query = '*[_type == "project"] | order(defined(orderRank) desc, orderRank asc, order asc)';
+        break;
+
+    case 'menuLinks':
+        $query = '*[_type == "siteSettings"][0].menuLinks';
         break;
 
     case 'projectById':

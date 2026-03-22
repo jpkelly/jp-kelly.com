@@ -6,64 +6,53 @@ import About from './components/About';
 import ContactForm from './components/ContactForm';
 import SanityProjectTemplate from './components/SanityProjectTemplate';
 import { getProjectById } from './lib/sanity';
-import projects from './content/projects.json';
-import NAC23VJContent from './content/projects/nac23vj.mdx';
-import NotchIMAGContent from './content/projects/notchimag.mdx';
-import JpIOContent from './content/projects/jpio.mdx';
-import EncoderContent from './content/projects/encoder.mdx';
-import F8InteractiveContent from './content/projects/f8interactive.mdx';
-import CranestoryContent from './content/projects/cranestory.mdx';
-import CraneflockContent from './content/projects/craneflock.mdx';
-import PIWorksContent from './content/projects/piworks.mdx';
-import HudsContent from './content/projects/huds.mdx';
-import SaturnContent from './content/projects/saturn.mdx';
-import Nac18Content from './content/projects/nac18.mdx';
-import Nac19Content from './content/projects/nac19.mdx';
-import HoudiniContent from './content/projects/houdini.mdx';
-import TOTOContent from './content/projects/toto.mdx';
-import ManholeContent from './content/projects/manhole.mdx';
+import { useSiteProjects } from './lib/siteProjects';
+const projectMdxModules = import.meta.glob('./content/projects/*.mdx', { eager: true });
 
-const projectContentComponents = {
-	nac23vj: NAC23VJContent,
-	notchimag: NotchIMAGContent,
-	jpio: JpIOContent,
-	encoder: EncoderContent,
-	f8interactive: F8InteractiveContent,
-	cranestory: CranestoryContent,
-	craneflock: CraneflockContent,
-	piworks: PIWorksContent,
-	huds: HudsContent,
-	saturn: SaturnContent,
-	nac18: Nac18Content,
-	nac19: Nac19Content,
-	houdini: HoudiniContent,
-	toto: TOTOContent,
-	manhole: ManholeContent
-};
+function getProjectIdFromMdxPath(path) {
+	return path
+		.split('/')
+		.pop()
+		?.replace(/\.mdx$/i, '') || '';
+}
 
-const projectRoutes = projects
-	.map(project => {
-		const component = projectContentComponents[project.id];
-		if (!component) {
-			return [];
-		}
+const projectContentComponents = Object.entries(projectMdxModules).reduce((acc, [path, module]) => {
+	const projectId = getProjectIdFromMdxPath(path);
+	const mdxComponent = module?.default;
 
-		const paths = [project.path, ...(project.aliases || [])];
-		const title = project.seoTitle || `${project.cardTitle} | JP Kelly`;
-		const description = project.seoDescription || project.cardText;
-		const imagePath = project.seoImage || project.thumbnails?.[0]?.src || '/thumbnails/nac23vj.png';
-		return paths.map(path => ({
-			id: `${project.id}-${path}`,
-			projectId: project.id,
-			path,
-			component,
-			title,
-			description,
-			imagePath,
-			canonicalPath: project.path
-		}));
-	})
-	.flat();
+	if (projectId && mdxComponent) {
+		acc[projectId] = mdxComponent;
+	}
+
+	return acc;
+}, {});
+
+function buildProjectRoutes(projectList) {
+	return projectList
+		.map(project => {
+			if (!project?.id || !project?.path) {
+				return [];
+			}
+
+			const component = projectContentComponents[project.id] || null;
+			const paths = [project.path, ...(project.aliases || [])];
+			const title = project.seoTitle || `${project.cardTitle} | JP Kelly`;
+			const description = project.seoDescription || project.cardText;
+			const imagePath = project.seoImage || project.thumbnails?.[0]?.src || '/thumbnails/nac23vj.png';
+
+			return paths.map(path => ({
+				id: `${project.id}-${path}`,
+				projectId: project.id,
+				path,
+				component,
+				title,
+				description,
+				imagePath,
+				canonicalPath: project.path
+			}));
+		})
+		.flat();
+}
 
 const DEFAULT_TITLE = 'JP Kelly | Portfolio';
 const DEFAULT_DESCRIPTION = 'Portfolio site for JP Kelly.';
@@ -209,8 +198,10 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 			<div className="w-full">
 				{shouldUseSanityTemplate ? (
 					<SanityProjectTemplate project={sanityProject} />
-				) : (
+				) : ProjectComponent ? (
 					<ProjectComponent />
+				) : (
+					<p>Project details coming soon.</p>
 				)}
 			</div>
 		</div>
@@ -219,6 +210,8 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 
 export function AppShell() {
 	const shellRef = useRef(null);
+	const projects = useSiteProjects();
+	const projectRoutes = buildProjectRoutes(projects);
 
 	useEffect(() => {
 		const shell = shellRef.current;

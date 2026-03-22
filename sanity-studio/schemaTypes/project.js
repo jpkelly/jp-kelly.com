@@ -1,8 +1,34 @@
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
+
 export default {
   name: 'project',
   title: 'Project',
   type: 'document',
+  orderings: [orderRankOrdering],
+  preview: {
+    select: {
+      menuLabel: 'menuLabel',
+      cardTitle: 'cardTitle',
+      id: 'id',
+      path: 'path',
+      media: 'thumbnails.0',
+    },
+    prepare(selection) {
+      const title = selection.menuLabel || selection.cardTitle || selection.id || 'Untitled Project'
+      const subtitleBase = selection.cardTitle && selection.cardTitle !== title ? selection.cardTitle : selection.id
+      const subtitle = selection.path
+        ? `${subtitleBase ? `${subtitleBase} · ` : ''}${selection.path}`
+        : subtitleBase || ''
+
+      return {
+        title,
+        subtitle,
+        media: selection.media,
+      }
+    },
+  },
   fields: [
+    orderRankField({ type: 'project', hidden: true }),
     { name: 'id', title: 'ID', type: 'string', validation: (Rule) => Rule.required() },
     { name: 'path', title: 'Path', type: 'string', validation: (Rule) => Rule.required() },
     { name: 'menuLabel', title: 'Menu Label', type: 'string', validation: (Rule) => Rule.required() },

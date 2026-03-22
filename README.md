@@ -43,6 +43,12 @@ If deploying by git pull (for example via Plesk), run `npm run build` before com
 
 For Sanity reads in production, configure these PHP environment variables on the server:
 
+- `SANITY_READ_TOKEN` (required, read-only token)
+- `SANITY_PROJECT_ID` (optional, default: `tl4n7qut`)
+- `SANITY_DATASET` (optional, default: `production`)
+- `SANITY_API_VERSION` (optional, default: `2024-03-13`)
+- `SANITY_PROXY_DEBUG` (optional, default: `false`; set `true` only temporarily for proxy path diagnostics)
+
 
 Do not expose the token in frontend `VITE_` variables.
 

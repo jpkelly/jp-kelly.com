@@ -120,6 +120,9 @@ register_shutdown_function('sanity_proxy_shutdown_handler');
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('X-Content-Type-Options: nosniff');
+header('Referrer-Policy: no-referrer');
 
 function send_json($statusCode, $payload)
 {
@@ -140,6 +143,7 @@ $projectId = read_setting('SANITY_PROJECT_ID', 'tl4n7qut');
 $dataset = read_setting('SANITY_DATASET', 'production');
 $apiVersion = read_setting('SANITY_API_VERSION', '2024-03-13');
 $token = read_setting('SANITY_READ_TOKEN', '');
+$debugEnabled = in_array(strtolower(read_setting('SANITY_PROXY_DEBUG', 'false')), array('1', 'true', 'yes', 'on'), true);
 
 if (!$token) {
     send_json(500, [
@@ -154,6 +158,12 @@ $params = [];
 
 switch ($action) {
     case 'debugPaths':
+        if (!$debugEnabled) {
+            send_json(400, array(
+                'ok' => false,
+                'error' => 'debug_disabled',
+            ));
+        }
         $paths = get_secret_candidate_paths();
         $details = array();
         foreach ($paths as $path) {

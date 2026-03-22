@@ -67,15 +67,14 @@ p > a.no-underline {
   text-decoration: none;
 }
 
-ul {
-  list-style: none;
-  padding-left: 1.5em;
-  line-height: 1.5;
-}
+@layer components {
+  ul {
+    @apply list-none pl-6 leading-relaxed;
+  }
 
-ul li {
-  margin: 0;
-  padding: 0;
+  ul li {
+    @apply m-0 p-0;
+  }
 }
 
 a:hover {

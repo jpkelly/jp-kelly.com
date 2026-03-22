@@ -27,9 +27,9 @@ function About(props) {
 						to grow and learn by touching their hearts.
 					</p>
 					<p>
-						This site was built by hand using React
+						This site was originally built by hand using React
 						<DiReact className="inline ml-1 text-[1.35rem]" aria-hidden="true" />
-						.&nbsp;
+						. Complete refactoring done with Copilot.&nbsp;
 						<a href="https://github.com/jpkelly/jp-kelly.com" target="_blank">
 							Here is the code.
 						</a>

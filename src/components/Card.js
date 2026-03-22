@@ -1,13 +1,14 @@
 // from https://codepen.io/codetimeio/pen/RYMEJe
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ImageList from './ImageList';
 
 const Card = ({ title, text, imgsrc, link }) => {
   return (
     <div className="break-inside">
       <div className="pb-8">
-        <a href={link}>
+        <Link to={link}>
           <article className="group overflow-hidden border border-gray-300 rounded-lg">
             <header className=" items-center justify-between leading-tight p-2 md:p-4">
               <h3 className="card-title text-xl xl:text-2xl">
@@ -17,7 +18,7 @@ const Card = ({ title, text, imgsrc, link }) => {
             </header>
             <ImageList photo={imgsrc} />
           </article>
-        </a>
+        </Link>
       </div>
     </div>
   );

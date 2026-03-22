@@ -20,15 +20,25 @@ const fallbackContent = {
 	showTools: true
 };
 
+function renderBlockChildren(block) {
+	if (!block || !Array.isArray(block.children)) {
+		return null;
+	}
+	return block.children.map((child, i) => {
+		const text = child?.text || '';
+		if (!text) return null;
+		if (Array.isArray(child.marks) && child.marks.includes('strong')) {
+			return <strong key={i}>{text}</strong>;
+		}
+		return <React.Fragment key={i}>{text}</React.Fragment>;
+	});
+}
+
 function portableBlockToText(block) {
 	if (!block || !Array.isArray(block.children)) {
 		return '';
 	}
-
-	return block.children
-		.map(child => child?.text || '')
-		.join('')
-		.trim();
+	return block.children.map(child => child?.text || '').join('').trim();
 }
 
 function mapSanityAboutDoc(doc) {
@@ -39,7 +49,7 @@ function mapSanityAboutDoc(doc) {
 	const bioParagraphs = Array.isArray(doc.bio)
 		? doc.bio
 				.filter(block => block?._type === 'block')
-				.map(block => ({ text: portableBlockToText(block), isList: !!block.listItem }))
+				.map(block => ({ nodes: renderBlockChildren(block), text: portableBlockToText(block), isList: !!block.listItem }))
 				.filter(item => item.text)
 		: [];
 
@@ -108,18 +118,20 @@ function About(props) {
 							if (aboutContent.bioParagraphs[i].isList) {
 								const listItems = [];
 								while (i < aboutContent.bioParagraphs.length && aboutContent.bioParagraphs[i].isList) {
-									listItems.push(aboutContent.bioParagraphs[i].text);
+									listItems.push(aboutContent.bioParagraphs[i].nodes || aboutContent.bioParagraphs[i].text);
 									i++;
 								}
 								result.push(
-									<ul key={`list-${i}`} style={{listStyle:'none',paddingLeft:'1.5em',marginBottom:'1em'}} className="text-base xl:text-lg">
+									<ul key={`list-${i}`} style={{listStyle:'none',paddingLeft:'1.5em',marginTop:0,marginBottom:'1em'}} className="text-base xl:text-lg">
 										{listItems.map((item, j) => (
 											<li key={j} style={{margin:0,padding:0,lineHeight:'1.5'}}>{item}</li>
 										))}
 									</ul>
 								);
 							} else {
-								result.push(<p key={`bio-${i}`}>{aboutContent.bioParagraphs[i].text}</p>);
+								const nextIsList = i + 1 < aboutContent.bioParagraphs.length && aboutContent.bioParagraphs[i + 1].isList;
+								const item = aboutContent.bioParagraphs[i];
+								result.push(<p key={`bio-${i}`} style={nextIsList ? {marginBottom:0} : {}}>{item.nodes || item.text}</p>);
 								i++;
 							}
 						}

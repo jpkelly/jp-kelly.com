@@ -7,7 +7,7 @@ function Gallery(props) {
 
 	return (
 		<div className="content-rail my-5 py-5 ">
-			<h2>Here are a few of my projects.</h2>
+			<h2>Here are a few projects I have worked on.</h2>
 			{/* wrapper */}
 			<div className="w-full">
 				{/* <div className="flex flex-wrap -mx-1 lg:-mx-4"> */}

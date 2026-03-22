@@ -22,9 +22,16 @@ export default defineConfig({
                   .schemaType('siteSettings')
                   .documentId('siteSettings')
               ),
+            S.documentTypeListItem('project')
+              .title('Projects')
+              .child(
+                S.documentTypeList('project')
+                  .title('Projects')
+                  .defaultOrdering([{field: 'orderRank', direction: 'asc'}])
+              ),
             orderableDocumentListDeskItem({
               type: 'project',
-              title: 'Projects',
+              title: 'Reorder Projects',
               S,
               context,
             }),

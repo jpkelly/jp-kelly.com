@@ -125,7 +125,8 @@ Visible project ordering is controlled in Sanity:
 Project drag-and-drop ordering in Studio:
 
 - Studio includes the `@sanity/orderable-document-list` plugin for `project` documents.
-- Open the `Projects` list in Studio and drag documents to reorder.
+- Use `Reorder Projects` in Studio to drag documents and reorder.
+- Use `Projects` in Studio for normal editing with schema preview media (thumbnails).
 - On first use, choose `Reset Order` from the list menu to initialize `orderRank` values.
 - Frontend reads projects ordered by `orderRank` (legacy fallback: numeric `order`).
 
@@ -261,6 +262,8 @@ Build/prerender note:
 - 2026-03-22: Added Sanity-managed Projects dropdown links via `siteSettings.menuLinks`, with local `src/content/menuLinks.json` fallback when Sanity is unavailable.
 
 - 2026-03-22: `Site Settings` now shows a stable document title in Studio and pre-seeds dropdown links from `src/content/menuLinks.json` for first-time setup.
+
+- 2026-03-22: Split Studio `Projects` (thumbnail preview/editing) from `Reorder Projects` (drag-drop ordering), because the orderable plugin list does not include media fields in its query.
 
 - 2026-03-22: Project routes now auto-discover MDX fallbacks by filename (no manual `src/App.js` import/mapping), and Projects dropdown now supports editable custom links via `src/content/menuLinks.json`.
 

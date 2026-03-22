@@ -4,6 +4,8 @@ import { createImageUrlBuilder } from '@sanity/image-url';
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID || 'tl4n7qut';
 const dataset = import.meta.env.VITE_SANITY_DATASET || 'production';
 const apiVersion = import.meta.env.VITE_SANITY_API_VERSION || '2024-03-13';
+const proxyPath = import.meta.env.VITE_SANITY_PROXY_PATH || '/sanity-proxy.php';
+const forceProxy = (import.meta.env.VITE_SANITY_USE_PROXY || '').toLowerCase() === 'true';
 
 export const sanityClient = projectId && dataset
   ? createClient({
@@ -16,6 +18,57 @@ export const sanityClient = projectId && dataset
 
 const urlBuilder = sanityClient ? createImageUrlBuilder(sanityClient) : null;
 
+function shouldUseProxy() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  if (forceProxy) {
+    return true;
+  }
+
+  const host = window.location.hostname;
+  return host !== 'localhost' && host !== '127.0.0.1';
+}
+
+async function fetchViaProxy(action, params = {}) {
+  if (!shouldUseProxy()) {
+    return { handled: false, value: null };
+  }
+
+  try {
+    const url = new URL(proxyPath, window.location.origin);
+    url.searchParams.set('action', action);
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        url.searchParams.set(key, String(value));
+      }
+    });
+
+    const response = await fetch(url.toString(), {
+      method: 'GET',
+      headers: { Accept: 'application/json' },
+    });
+
+    if (!response.ok) {
+      return { handled: false, value: null };
+    }
+
+    const payload = await response.json();
+    if (!payload || payload.ok !== true) {
+      return { handled: false, value: null };
+    }
+
+    return {
+      handled: true,
+      value: payload.result ?? null,
+    };
+  } catch (_err) {
+    return { handled: false, value: null };
+  }
+}
+
 export function sanityImageUrl(source) {
   if (!urlBuilder || !source) {
     return null;
@@ -25,6 +78,11 @@ export function sanityImageUrl(source) {
 }
 
 export async function getAboutContent() {
+  const proxyResponse = await fetchViaProxy('about');
+  if (proxyResponse.handled) {
+    return proxyResponse.value;
+  }
+
   if (!sanityClient) {
     return null;
   }
@@ -34,6 +92,11 @@ export async function getAboutContent() {
 }
 
 export async function getProjects() {
+  const proxyResponse = await fetchViaProxy('projects');
+  if (proxyResponse.handled) {
+    return Array.isArray(proxyResponse.value) ? proxyResponse.value : [];
+  }
+
   if (!sanityClient) {
     return [];
   }
@@ -43,6 +106,11 @@ export async function getProjects() {
 }
 
 export async function getProjectById(projectIdValue) {
+  const proxyResponse = await fetchViaProxy('projectById', { projectId: projectIdValue });
+  if (proxyResponse.handled) {
+    return proxyResponse.value;
+  }
+
   if (!sanityClient || !projectIdValue) {
     return null;
   }

@@ -78,6 +78,21 @@ const about = await getAboutContent()
 const projects = await getProjects()
 ```
 
+Production note:
+
+- The website can read through `public/sanity-proxy.php` using a server-side token when anonymous Content Lake reads are not available on your Sanity plan.
+- Local development can continue using direct browser reads.
+
+Required server env var for proxy mode:
+
+- `SANITY_READ_TOKEN` (read-only token)
+
+Optional server env vars:
+
+- `SANITY_PROJECT_ID` (default `tl4n7qut`)
+- `SANITY_DATASET` (default `production`)
+- `SANITY_API_VERSION` (default `2024-03-13`)
+
 ### 5. Rebuild & Deploy
 
 After updating content in Sanity:
@@ -115,13 +130,9 @@ npm run deploy
 
 ## API Access
 
-Your Sanity data is publicly readable via the API:
-
-```
-https://tl4n7qut.api.sanity.io/v2024-03-13/data/query/production?query=*[_type == "aboutPage"]
-```
-
-(Images are also publicly accessible via Sanity's image CDN)
+- Studio publishing and website read access are configured separately.
+- If anonymous read is blocked, use the same-origin proxy endpoint (`public/sanity-proxy.php`) so the browser never sees your token.
+- Images remain served by Sanity's image CDN URLs.
 
 ## Next Steps
 

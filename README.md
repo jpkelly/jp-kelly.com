@@ -41,6 +41,15 @@ Production artifacts are committed under `build/`.
 
 If deploying by git pull (for example via Plesk), run `npm run build` before commit/push so `build/` matches source changes.
 
+For Sanity reads in production, configure these PHP environment variables on the server:
+
+- `SANITY_READ_TOKEN` (required, read-only token)
+- `SANITY_PROJECT_ID` (optional, default: `tl4n7qut`)
+- `SANITY_DATASET` (optional, default: `production`)
+- `SANITY_API_VERSION` (optional, default: `2024-03-13`)
+
+Do not expose the token in frontend `VITE_` variables.
+
 ## CMS (Sanity)
 
 This repository includes a standalone Sanity Studio in `sanity-studio/`.
@@ -57,6 +66,13 @@ Studio workflow:
 - `npm run deploy` (hosted studio at `*.sanity.studio`)
 
 Runtime content fetch in the website uses `@sanity/client` via `src/lib/sanity.js`.
+
+In production, `src/lib/sanity.js` prefers a same-origin proxy endpoint at `public/sanity-proxy.php` and falls back to direct reads when running locally.
+
+Optional frontend env controls:
+
+- `VITE_SANITY_PROXY_PATH` (default: `/sanity-proxy.php`)
+- `VITE_SANITY_USE_PROXY` (set `true` to force proxy even on localhost)
 
 ## Content Model
 
@@ -136,6 +152,8 @@ Build/prerender note:
 If a project needs its own detail page component, add/import the component and map `routeKey` in `src/App.js`.
 
 ## Changelog
+
+- 2026-03-22: Added `public/sanity-proxy.php` and frontend proxy-first Sanity reads for environments where anonymous Content Lake reads are restricted.
 
 - 2026-03-21: Migrated build tooling from CRA/CRACO to Vite while keeping production output at `build/`.
 - 2026-03-21: Refactored project data into shared content model used by gallery, dropdown, and routes.

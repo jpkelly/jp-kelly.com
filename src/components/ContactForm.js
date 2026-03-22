@@ -5,6 +5,10 @@ import emailjs from 'emailjs-com';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+const emailJsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || import.meta.env.REACT_APP_SERVICE_ID;
+const emailJsTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || import.meta.env.REACT_APP_TEMPLATE_ID;
+const emailJsUserId = import.meta.env.VITE_EMAILJS_USER_ID || import.meta.env.REACT_APP_USER_ID;
+
 const toastifySuccess = () => {
   toast.success('Message sent!', {
     position: 'bottom-left',
@@ -18,6 +22,19 @@ const toastifySuccess = () => {
   });
 };
 
+const toastifyError = message => {
+  toast.error(message, {
+    position: 'bottom-left',
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    className: 'submit-feedback error',
+    toastId: 'notifyToastError'
+  });
+};
+
 const ContactForm = () => {
   const {
     register,
@@ -28,6 +45,12 @@ const ContactForm = () => {
 
   const onSubmit = async data => {
     const { name, email, subject, message } = data;
+
+    if (!emailJsServiceId || !emailJsTemplateId || !emailJsUserId) {
+      toastifyError('Contact form is not configured yet. Please try again later.');
+      return;
+    }
+
     try {
       const templateParams = {
         name,
@@ -36,20 +59,17 @@ const ContactForm = () => {
         message
       };
       await emailjs.send(
-        process.env.REACT_APP_SERVICE_ID,
-        process.env.REACT_APP_TEMPLATE_ID,
+        emailJsServiceId,
+        emailJsTemplateId,
         templateParams,
-        process.env.REACT_APP_USER_ID
+        emailJsUserId
       );
       reset();
       toastifySuccess();
     } catch (e) {
-      console.log(e);
+      console.error('EmailJS send failed', e);
+      toastifyError('Message failed to send. Please try again.');
     }
-    console.log('Name: ', name);
-    console.log('Email: ', email);
-    console.log('Subject: ', subject);
-    console.log('Message: ', message);
   };
 
   return (

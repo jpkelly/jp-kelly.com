@@ -51,6 +51,13 @@ For Sanity reads in production, configure these PHP environment variables on the
 - `SANITY_API_VERSION` (optional, default: `2024-03-13`)
 - `SANITY_PROXY_DEBUG` (optional, default: `false`; set `true` only temporarily for proxy path diagnostics)
 
+For contact form sending (EmailJS), configure frontend environment variables:
+
+- Preferred (Vite): `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_USER_ID`
+- Backward-compatible: `REACT_APP_SERVICE_ID`, `REACT_APP_TEMPLATE_ID`, `REACT_APP_USER_ID`
+
+The contact form uses `import.meta.env` and expects these values at build time.
+
 
 Do not expose the token in frontend `VITE_` variables.
 

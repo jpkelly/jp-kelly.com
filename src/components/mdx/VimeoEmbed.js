@@ -45,9 +45,17 @@ function VimeoEmbed({
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: '0 2px 12px rgba(0,0,0,0.5)',
           }}>
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-              <polygon points="9,5 23,14 9,23" fill="white" />
-            </svg>
+            <span
+              aria-hidden="true"
+              style={{
+                width: 0,
+                height: 0,
+                borderTop: '10px solid transparent',
+                borderBottom: '10px solid transparent',
+                borderLeft: '16px solid white',
+                marginLeft: 3,
+              }}
+            />
           </span>
         </button>
       )}

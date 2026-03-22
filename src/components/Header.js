@@ -9,7 +9,7 @@ const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);
   return (
     <h1 className="flex items-center xl:text-2xl 2xl:text-4xl">
-      <Link to="/about">
+      <Link to="/about" className="logo-anchor">
         <img src={kamon} className="kamon" alt="logo" />
       </Link>
       <div className="inline-flex items-center divide-x-2 ml-1 xl:ml-2">

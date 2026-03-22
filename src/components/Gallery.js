@@ -4,7 +4,7 @@ import projects from '../content/projects.json';
 
 function Gallery(props) {
 	return (
-		<div className="w-full my-5 py-5 ">
+		<div className="content-rail my-5 py-5 ">
 			<h2>Here are a few of my projects.</h2>
 			{/* wrapper */}
 			<div className="w-full">

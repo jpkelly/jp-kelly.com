@@ -8,6 +8,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.content-rail {
+  margin-left: var(--content-left-offset, 0px);
+  width: min(72rem, calc(100% - var(--content-left-offset, 0px)));
+}
+
 p {
   @apply text-base xl:text-lg mb-3 max-w-prose;
 }
@@ -62,7 +68,7 @@ a:hover {
   flex-shrink: 0;
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  @apply align-middle mx-0 my-0 -mr-2 xl:mr-1 2xl:mr-4 2xl:ml-2.5;
+  @apply align-middle mx-0 my-0 -mr-2 xl:mr-1 2xl:mr-4;
 }
 
 @media (min-width: 1280px) {

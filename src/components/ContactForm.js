@@ -53,7 +53,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="w-full my-5 py-5">
+    <div className="content-rail my-5 py-5">
       <h2>Contact JP</h2>
       <div className="w-full">
         <div className="contactForm w-full xl:w-2/3">

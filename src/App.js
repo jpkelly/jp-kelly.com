@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
@@ -175,7 +175,7 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 	}, [title, description, imagePath, canonicalPath, routeProps.location]);
 
 	return (
-		<div className="w-full my-5 py-5">
+		<div className="content-rail my-5 py-5">
 			<div className="w-full">
 				<ProjectComponent />
 			</div>
@@ -184,8 +184,45 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 }
 
 export function AppShell() {
+	const shellRef = useRef(null);
+
+	useEffect(() => {
+		const shell = shellRef.current;
+		if (!shell || typeof window === 'undefined') {
+			return undefined;
+		}
+
+		const updateContentOffset = () => {
+			const logo = shell.querySelector('.logo-anchor');
+			if (!logo) {
+				return;
+			}
+
+			const shellLeft = shell.getBoundingClientRect().left;
+			const logoLeft = logo.getBoundingClientRect().left;
+			const offset = Math.max(0, Math.round(logoLeft - shellLeft));
+			shell.style.setProperty('--content-left-offset', `${offset}px`);
+		};
+
+		updateContentOffset();
+		window.addEventListener('resize', updateContentOffset);
+
+		let observer;
+		if ('ResizeObserver' in window) {
+			observer = new ResizeObserver(updateContentOffset);
+			observer.observe(shell);
+		}
+
+		return () => {
+			window.removeEventListener('resize', updateContentOffset);
+			if (observer) {
+				observer.disconnect();
+			}
+		};
+	}, []);
+
 	return (
-		<div className="w-full mt-3 px-5 font-normal bg-black text-gray-300">
+		<div ref={shellRef} className="w-full mt-3 px-5 font-normal bg-black text-gray-300">
 			<Header />
 			<Switch>
 				<Route exact path="/" component={Gallery} />

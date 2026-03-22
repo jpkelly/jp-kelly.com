@@ -41,7 +41,7 @@ function About(props) {
 					</button>
 					<h2 className="mt-7">Here are a few of my favorie tools:</h2>
 					<ul className="">
-						<li>Photoshop, Illustrator, After Effects, Notch, TouchDesigner, MaxMSP, VDMX, Rhino, Blender, Cinema 4D, disguise(d3), Watchout, Pixera, Barco Eventmaster (E2/3), projectors, LED screens, Ableton, Unreal Engine, graphic design & typography, Arduino, Raspberry Pi, ESP32, LiDAR, sensors, electronics theory and tools, 3D printing, HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python, GitHub, Copilot, チャッピー</li>
+						<li>Photoshop, Illustrator, After Effects, Notch, TouchDesigner, MaxMSP, VDMX, Rhino, Blender, Cinema 4D, disguise(d3), Watchout, Pixera, Barco Eventmaster (E2/3), projectors, LED screens, Ableton, Unreal Engine, graphic design & typography, Arduino, Raspberry Pi, ESP32, LiDAR, sensors, electronics theory and tools, 3D printing, GLSL, HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python, GitHub, Copilot, チャッピー</li>
 					</ul>
 				</div>
 			</div>

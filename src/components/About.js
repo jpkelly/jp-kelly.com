@@ -27,13 +27,12 @@ function About(props) {
 						to grow and learn by touching their hearts.
 					</p>
 					<p>
-						This site was built by hand using React.&nbsp;
+						This site was built by hand using React
+						<DiReact className="inline ml-1 align-[-0.125em] text-2xl" aria-hidden="true" />
+						.&nbsp;
 						<a href="https://github.com/jpkelly/jp-kelly.com" target="_blank">
 							Here is the code.
 						</a>
-					</p>
-					<p>
-						<DiReact />
 					</p>
 				</div>
 			</div>

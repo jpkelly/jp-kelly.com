@@ -3,7 +3,7 @@ export default {
   title: 'Project',
   type: 'document',
   fields: [
-    { name: 'id', title: 'ID', type: 'string', validation: (Rule) => Rule.required().unique() },
+    { name: 'id', title: 'ID', type: 'string', validation: (Rule) => Rule.required() },
     { name: 'path', title: 'Path', type: 'string', validation: (Rule) => Rule.required() },
     { name: 'menuLabel', title: 'Menu Label', type: 'string', validation: (Rule) => Rule.required() },
     { name: 'routeKey', title: 'Route Key', type: 'string', validation: (Rule) => Rule.required() },

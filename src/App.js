@@ -175,8 +175,8 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 	}, [title, description, imagePath, canonicalPath, routeProps.location]);
 
 	return (
-		<div className="container mx-auto flex items-center my-5 py-5">
-			<div className="container mx-auto">
+		<div className="w-full my-5 py-5">
+			<div className="w-full">
 				<ProjectComponent />
 			</div>
 		</div>

@@ -53,9 +53,9 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="container mx-auto my-5 py-5">
+    <div className="w-full my-5 py-5">
       <h2>Contact JP</h2>
-      <div className="container w-full mx-auto">
+      <div className="w-full">
         <div className="contactForm w-full xl:w-2/3">
           <form className="w-full" id="contact-form" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="lg:pr-10 pb-5 inline-block w-full md:w-full lg:w-1/2">

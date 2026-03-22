@@ -4,7 +4,7 @@ import {DiReact} from 'react-icons/di';
 
 function About(props) {
 	return (
-		<div className="container mx-auto my-5 py-5">
+		<div className="w-full my-5 py-5">
 			<h2>JP Kelly</h2>
 			<div className="grid grid-cols-1 md:grid-cols-8 grid-rows-1 gap-10">
 				<div className="col-span-8 md:col-span-8 lg:col-span-3">

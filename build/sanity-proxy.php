@@ -3,28 +3,43 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '0');
 
+function set_status_code($statusCode)
+{
+    $statusTexts = array(
+        200 => 'OK',
+        400 => 'Bad Request',
+        405 => 'Method Not Allowed',
+        500 => 'Internal Server Error',
+        502 => 'Bad Gateway',
+    );
+    $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
+    $text = isset($statusTexts[$statusCode]) ? $statusTexts[$statusCode] : 'OK';
+    header($protocol . ' ' . $statusCode . ' ' . $text, true, $statusCode);
+}
+
 function safe_json_encode($payload)
 {
-    $json = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $json = json_encode($payload);
     if ($json === false) {
         return '{"ok":false,"error":"json_encode_failed"}';
     }
     return $json;
 }
 
-register_shutdown_function(function () {
+function sanity_proxy_shutdown_handler()
+{
     $lastError = error_get_last();
     if (!$lastError) {
         return;
     }
 
-    $fatalTypes = array(E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR);
+    $fatalTypes = array(1, 4, 16, 64, 256);
     if (!in_array($lastError['type'], $fatalTypes, true)) {
         return;
     }
 
     if (!headers_sent()) {
-        http_response_code(500);
+        set_status_code(500);
         header('Content-Type: application/json; charset=utf-8');
         header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
     }
@@ -36,14 +51,16 @@ register_shutdown_function(function () {
         'file' => basename($lastError['file']),
         'line' => $lastError['line'],
     ));
-});
+}
+
+register_shutdown_function('sanity_proxy_shutdown_handler');
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 function send_json($statusCode, $payload)
 {
-    http_response_code($statusCode);
+    set_status_code($statusCode);
     echo safe_json_encode($payload);
     exit;
 }

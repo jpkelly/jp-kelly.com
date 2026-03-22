@@ -25,6 +25,21 @@ This will build and deploy the Studio to Sanity-hosted `*.sanity.studio`.
 
 After deployment, open the hostname you selected in deploy.
 
+### 2.5 Import existing site content (one-time)
+
+You can seed Sanity from current site content (`src/content/projects.json` and About defaults):
+
+```bash
+cd ..
+SANITY_API_TOKEN=your_write_token npm run import:sanity
+```
+
+Notes:
+
+- Create a write token in Sanity Manage -> API -> Tokens
+- The script uploads local images from `public/thumbnails` and `src/jpkelly.jpg`
+- It uses `createOrReplace`, so rerunning updates existing seeded docs
+
 You'll see two content types:
 - **About Page** - Edit your bio, tools list, profile image, etc.
 - **Project** - Add/edit portfolio projects with images and descriptions

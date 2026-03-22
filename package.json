@@ -27,6 +27,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
+    "import:sanity": "node scripts/import-to-sanity.mjs",
     "validate:content": "node scripts/validate-content.mjs",
     "build:client": "vite build",
     "build:ssr": "vite build --ssr src/entry-server.jsx --outDir .prerender-tmp",

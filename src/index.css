@@ -11,7 +11,7 @@ body {
 
 .content-rail {
   margin-left: var(--content-left-offset, 0px);
-  width: min(72rem, calc(100% - var(--content-left-offset, 0px)));
+  width: calc(100% - var(--content-left-offset, 0px));
 }
 
 p {

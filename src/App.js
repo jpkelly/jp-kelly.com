@@ -5,6 +5,7 @@ import Gallery from './components/Gallery';
 import About from './components/About';
 import ContactForm from './components/ContactForm';
 import VimeoEmbed from './components/mdx/VimeoEmbed';
+import SanityProjectTemplate from './components/SanityProjectTemplate';
 import { getProjectById } from './lib/sanity';
 import projects from './content/projects.json';
 import NAC23VJContent from './content/projects/nac23vj.mdx';
@@ -69,6 +70,7 @@ const DEFAULT_TITLE = 'JP Kelly | Portfolio';
 const DEFAULT_DESCRIPTION = 'Portfolio site for JP Kelly.';
 const DEFAULT_IMAGE_PATH = '/thumbnails/nac23vj.png';
 const mdxPagesWithoutEmbeddedVimeo = new Set(['encoder', 'jpio']);
+const sanityTemplateProjectIds = new Set(['f8interactive']);
 
 function normalizeImagePath(imagePath) {
 	if (!imagePath) {
@@ -203,11 +205,18 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 
 	const sanityVideos = Array.isArray(sanityProject?.videos) ? sanityProject.videos : [];
 	const shouldRenderSanityVideos = mdxPagesWithoutEmbeddedVimeo.has(projectId) && sanityVideos.length > 0;
+	const sanityContent = Array.isArray(sanityProject?.content) ? sanityProject.content : [];
+	const shouldUseSanityTemplate =
+		sanityTemplateProjectIds.has(projectId) && (sanityVideos.length > 0 || sanityContent.length > 0);
 
 	return (
 		<div className="content-rail my-5 py-5">
 			<div className="w-full">
-				{shouldRenderSanityVideos && (
+				{shouldUseSanityTemplate ? (
+					<SanityProjectTemplate project={sanityProject} />
+				) : (
+					<>
+						{shouldRenderSanityVideos && (
 					<div className="mb-5 space-y-5">
 						{sanityVideos.map(video => (
 							<VimeoEmbed
@@ -219,8 +228,10 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 							/>
 						))}
 					</div>
+						)}
+						<ProjectComponent />
+					</>
 				)}
-				<ProjectComponent />
 			</div>
 		</div>
 	);

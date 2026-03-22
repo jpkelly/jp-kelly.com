@@ -10,7 +10,7 @@ function About(props) {
 				<div className="col-span-8 md:col-span-8 lg:col-span-3">
 					<img className="object-cover h-full w-full" src={jpk} alt="JP Kelly" />
 				</div>
-				<div className=" -mt-1.5 col-span-8 md:col-span-8 lg:col-span-5 max-w-prose">
+				<div className="about-copy -mt-1.5 col-span-8 md:col-span-8 lg:col-span-5">
 					<p>
 						I have always loved technology and science. As a kid my first major purchase was a computer with a 6502 processor and 4k of RAM (upgradeable to 8k). Although that computer was only capable
 						of displaying graphics composed of ASCII characters, I dreamed of combining video imagery and computer graphics. Later I had access to an Amiga computer which I used to merge graphics with

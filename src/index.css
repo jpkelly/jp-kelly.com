@@ -14,6 +14,14 @@ body {
   width: calc(100% - var(--content-left-offset, 0px));
 }
 
+.about-copy {
+  max-width: min(100%, calc(65ch + 200px));
+}
+
+.about-copy p {
+  max-width: none;
+}
+
 p {
   @apply text-base xl:text-lg mb-3 max-w-prose;
 }

@@ -11,7 +11,8 @@ export default {
       cardTitle: 'cardTitle',
       id: 'id',
       path: 'path',
-      media: 'thumbnails.0',
+      thumbnails: 'thumbnails',
+      seoImage: 'seoImage',
     },
     prepare(selection) {
       const title = selection.menuLabel || selection.cardTitle || selection.id || 'Untitled Project'
@@ -19,11 +20,14 @@ export default {
       const subtitle = selection.path
         ? `${subtitleBase ? `${subtitleBase} · ` : ''}${selection.path}`
         : subtitleBase || ''
+      const firstThumbnail = Array.isArray(selection.thumbnails)
+        ? selection.thumbnails.find((item) => item && typeof item === 'object')
+        : null
 
       return {
         title,
         subtitle,
-        media: selection.media,
+        media: firstThumbnail || selection.seoImage,
       }
     },
   },

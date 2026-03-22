@@ -16,7 +16,8 @@ const fallbackContent = {
 	codeLinkText: 'Here is the code.',
 	codeLinkUrl: 'https://github.com/jpkelly/jp-kelly.com',
 	toolsHeading: 'Here are a few of my favorite tools:',
-	toolsList: 'Photoshop, Illustrator, After Effects, Notch, TouchDesigner, MaxMSP, VDMX, Rhino, Blender, Cinema 4D, disguise(d3), Watchout, Pixera, Barco Eventmaster (E2/3), projectors, LED screens, Ableton, Unreal Engine, graphic design & typography, Arduino, Raspberry Pi, ESP32, LiDAR, sensors, electronics theory and tools, 3D printing, GLSL, HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python, GitHub, Copilot, チャッピー'
+	toolsList: 'Photoshop, Illustrator, After Effects, Notch, TouchDesigner, MaxMSP, VDMX, Rhino, Blender, Cinema 4D, disguise(d3), Watchout, Pixera, Barco Eventmaster (E2/3), projectors, LED screens, Ableton, Unreal Engine, graphic design & typography, Arduino, Raspberry Pi, ESP32, LiDAR, sensors, electronics theory and tools, 3D printing, GLSL, HTML, CSS, Javascript, JSX, React, PHP, MySQL, bash, Python, GitHub, Copilot, チャッピー',
+	showTools: true
 };
 
 function portableBlockToText(block) {
@@ -52,6 +53,7 @@ function mapSanityAboutDoc(doc) {
 		codeLinkUrl: doc.codeLinkUrl || fallbackContent.codeLinkUrl,
 		toolsHeading: doc.toolsHeading || fallbackContent.toolsHeading,
 		toolsList: doc.toolsList || fallbackContent.toolsList,
+		showTools: doc.showTools !== undefined ? doc.showTools : fallbackContent.showTools,
 	};
 }
 
@@ -115,10 +117,14 @@ function About(props) {
 					<button className="bg-transparant w-full md:w-1/3 mt-4 border border-blue-500 hover:bg-blue-900 text-white font-normal py-2 px-4 rounded" onClick={() => window.open('/contactform', '_self')}>
 						Contact
 					</button>
-					<h2 className="mt-7">{aboutContent.toolsHeading}</h2>
-					<ul className="">
-						<li>{toolItems}</li>
-					</ul>
+					{aboutContent.showTools && (
+						<>
+							<h2 className="mt-7">{aboutContent.toolsHeading}</h2>
+							<ul className="">
+								<li>{toolItems}</li>
+							</ul>
+						</>
+					)}
 				</div>
 			</div>
 		</div>

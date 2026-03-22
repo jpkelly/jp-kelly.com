@@ -80,5 +80,12 @@ export default {
       type: 'text',
       description: 'Comma-separated tools list',
     },
+    {
+      name: 'showTools',
+      title: 'Show Tools Section',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Toggle to show or hide the tools section',
+    },
   ],
 }

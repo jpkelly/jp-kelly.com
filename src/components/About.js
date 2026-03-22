@@ -108,7 +108,7 @@ function About(props) {
 						. {aboutContent.copilotText}
 					</p>
 					<p>
-						<a href={aboutContent.codeLinkUrl} target="_blank">
+						<a href={aboutContent.codeLinkUrl} target="_blank" className="no-underline">
 							{aboutContent.codeLinkText}
 						</a>
 					</p>

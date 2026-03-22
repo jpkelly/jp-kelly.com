@@ -22,23 +22,27 @@ function normalizeThumbnailItem(thumbnail, fallbackAlt) {
 		return null;
 	}
 
-	if (typeof thumbnail.src === 'string' && thumbnail.src.trim()) {
+	try {
+		if (typeof thumbnail.src === 'string' && thumbnail.src.trim()) {
+			return {
+				src: normalizePath(thumbnail.src),
+				alt: thumbnail.alt || fallbackAlt || DEFAULT_THUMBNAIL.alt
+			};
+		}
+
+		const sanityImage = thumbnail.image || thumbnail;
+		const sanitySrc = sanityImageUrl(sanityImage);
+		if (!sanitySrc) {
+			return null;
+		}
+
 		return {
-			src: normalizePath(thumbnail.src),
+			src: sanitySrc,
 			alt: thumbnail.alt || fallbackAlt || DEFAULT_THUMBNAIL.alt
 		};
-	}
-
-	const sanityImage = thumbnail.image || thumbnail;
-	const sanitySrc = sanityImageUrl(sanityImage);
-	if (!sanitySrc) {
+	} catch (_err) {
 		return null;
 	}
-
-	return {
-		src: sanitySrc,
-		alt: thumbnail.alt || fallbackAlt || DEFAULT_THUMBNAIL.alt
-	};
 }
 
 function normalizeThumbnails(project) {
@@ -60,32 +64,36 @@ function normalizeThumbnails(project) {
 }
 
 function normalizeProject(project) {
-	if (!project || typeof project !== 'object') {
+	try {
+		if (!project || typeof project !== 'object') {
+			return null;
+		}
+
+		const id = typeof project.id === 'string' ? project.id.trim() : '';
+		const path = normalizePath(project.path);
+		const menuLabel = typeof project.menuLabel === 'string' ? project.menuLabel.trim() : '';
+		const cardTitle = typeof project.cardTitle === 'string' ? project.cardTitle.trim() : '';
+		const cardText = typeof project.cardText === 'string' ? project.cardText.trim() : '';
+		const normalizedSeoImage = normalizeThumbnailItem(project.seoImage, cardTitle)?.src || null;
+
+		if (!id || !path || !menuLabel || !cardTitle || !cardText) {
+			return null;
+		}
+
+		return {
+			...project,
+			id,
+			path,
+			menuLabel,
+			cardTitle,
+			cardText,
+			seoImage: normalizedSeoImage,
+			aliases: Array.isArray(project.aliases) ? project.aliases.map(normalizePath).filter(Boolean) : [],
+			thumbnails: normalizeThumbnails(project)
+		};
+	} catch (_err) {
 		return null;
 	}
-
-	const id = typeof project.id === 'string' ? project.id.trim() : '';
-	const path = normalizePath(project.path);
-	const menuLabel = typeof project.menuLabel === 'string' ? project.menuLabel.trim() : '';
-	const cardTitle = typeof project.cardTitle === 'string' ? project.cardTitle.trim() : '';
-	const cardText = typeof project.cardText === 'string' ? project.cardText.trim() : '';
-	const normalizedSeoImage = normalizeThumbnailItem(project.seoImage, cardTitle)?.src || null;
-
-	if (!id || !path || !menuLabel || !cardTitle || !cardText) {
-		return null;
-	}
-
-	return {
-		...project,
-		id,
-		path,
-		menuLabel,
-		cardTitle,
-		cardText,
-		seoImage: normalizedSeoImage,
-		aliases: Array.isArray(project.aliases) ? project.aliases.map(normalizePath).filter(Boolean) : [],
-		thumbnails: normalizeThumbnails(project)
-	};
 }
 
 function mergeProjectMetadata(localProject, sanityProject) {
@@ -113,7 +121,12 @@ export function orderProjectsBySanity(baseProjects, sanityProjects) {
 
 	sanityProjects.forEach(sanityProject => {
 		const localProject = baseProjectMap.get(sanityProject?.id) || null;
-		const mergedProject = mergeProjectMetadata(localProject, sanityProject);
+		let mergedProject = null;
+		try {
+			mergedProject = mergeProjectMetadata(localProject, sanityProject);
+		} catch (_err) {
+			mergedProject = null;
+		}
 		if (!mergedProject || seenProjectIds.has(mergedProject.id)) {
 			return;
 		}

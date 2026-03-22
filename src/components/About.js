@@ -8,7 +8,7 @@ function About(props) {
 			<div className="grid grid-cols-1 md:grid-cols-8 grid-rows-1 gap-10">
 				<div className="col-span-8 md:col-span-8 lg:col-span-3">
 					<h2>JP Kelly</h2>
-					<img className="object-cover h-full w-full" src={jpk} alt="JP Kelly" />
+					<img className="object-cover w-full max-h-96" src={jpk} alt="JP Kelly" />
 				</div>
 				<div className="about-copy col-span-8 md:col-span-8 lg:col-span-5">
 					<p>

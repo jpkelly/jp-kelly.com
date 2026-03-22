@@ -157,6 +157,36 @@ Sanity project page authoring:
 - Two portrait videos in one project render side by side automatically; all other videos stack vertically
 - Inline hyperlinks in rich text are rendered on the site
 
+Creating a new project in Studio:
+
+1. Add the project's route metadata to `src/content/projects.json`:
+	- required: `id`, `path`, `menuLabel`, `routeKey`, `cardTitle`, `cardText`, `thumbnails`
+	- optional: `aliases`, `seoTitle`, `seoDescription`, `seoImage`
+2. If the project is brand new and you still want a fallback page before Sanity content is published, add `src/content/projects/<project-id>.mdx`.
+3. Open Sanity Studio and create a new `Project` document.
+4. Set the Studio fields to match `src/content/projects.json` exactly for:
+	- `id`
+	- `path`
+	- `menuLabel`
+	- `routeKey`
+	- `cardTitle`
+	- `cardText`
+	- `aliases` if any
+5. Upload thumbnails and optional SEO image in Studio.
+6. Add page content in `content[]`:
+	- rich text blocks for headings and paragraphs
+	- standalone images for single full-width images
+	- `Image Gallery` blocks for grouped images with captions
+7. Add Vimeo entries in `videos[]` if the page needs video embeds.
+8. Publish the document.
+9. Run `npm run build` so local validation and prerendered output stay current.
+10. Commit, push, and deploy with the usual Plesk Git deploy button workflow.
+
+Important note:
+
+- The route exists because of `src/content/projects.json`; the page body comes from the Sanity `Project` document.
+- The `id` in Studio must exactly match the `id` in `src/content/projects.json` or the frontend will not find the document.
+
 MDX fallback note:
 
 - Project content lives in `src/content/projects/<project-id>.mdx`.

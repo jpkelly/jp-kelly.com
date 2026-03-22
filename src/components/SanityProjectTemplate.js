@@ -219,8 +219,8 @@ function SanityProjectTemplate({ project }) {
 			{groupedBlocks.map((item) => {
 				if (item.type === 'portraitVideoGroup') {
 					return (
-						<div key={item.groupId} className="flex flex-wrap w-full mx-auto my-4 gap-2">
-							{item.videos.map(({ block }) => renderVideoBlock(block, block._key, 'w-full md:w-1/2 lg:w-1/2 lg:max-w-sm'))}
+						<div key={item.groupId} className="flex flex-wrap w-full mx-auto my-4 gap-4">
+							{item.videos.map(({ block }) => renderVideoBlock(block, block._key, 'w-full md:w-1/2 lg:w-1/2 lg:max-w-2xl'))}
 						</div>
 					);
 				}

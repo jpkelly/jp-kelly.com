@@ -69,6 +69,7 @@ function normalizeProject(project) {
 	const menuLabel = typeof project.menuLabel === 'string' ? project.menuLabel.trim() : '';
 	const cardTitle = typeof project.cardTitle === 'string' ? project.cardTitle.trim() : '';
 	const cardText = typeof project.cardText === 'string' ? project.cardText.trim() : '';
+	const normalizedSeoImage = normalizeThumbnailItem(project.seoImage, cardTitle)?.src || null;
 
 	if (!id || !path || !menuLabel || !cardTitle || !cardText) {
 		return null;
@@ -81,6 +82,7 @@ function normalizeProject(project) {
 		menuLabel,
 		cardTitle,
 		cardText,
+		seoImage: normalizedSeoImage,
 		aliases: Array.isArray(project.aliases) ? project.aliases.map(normalizePath).filter(Boolean) : [],
 		thumbnails: normalizeThumbnails(project)
 	};

@@ -1,17 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
+function send_json($statusCode, $payload)
+{
+    http_response_code($statusCode);
+    echo json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    http_response_code(405);
-    echo json_encode([
+    send_json(405, [
         'ok' => false,
         'error' => 'method_not_allowed',
     ]);
-    exit;
 }
 
 $action = isset($_GET['action']) ? (string) $_GET['action'] : '';
@@ -21,12 +24,10 @@ $apiVersion = getenv('SANITY_API_VERSION') ?: '2024-03-13';
 $token = getenv('SANITY_READ_TOKEN');
 
 if (!$token) {
-    http_response_code(500);
-    echo json_encode([
+    send_json(500, [
         'ok' => false,
         'error' => 'missing_sanity_token',
     ]);
-    exit;
 }
 
 $query = '';
@@ -44,12 +45,10 @@ switch ($action) {
     case 'projectById':
         $requestedId = isset($_GET['projectId']) ? (string) $_GET['projectId'] : '';
         if (!preg_match('/^[a-zA-Z0-9_-]+$/', $requestedId)) {
-            http_response_code(400);
-            echo json_encode([
+            send_json(400, [
                 'ok' => false,
                 'error' => 'invalid_project_id',
             ]);
-            exit;
         }
 
         $query = '*[_type == "project" && id == $projectId][0]';
@@ -57,12 +56,10 @@ switch ($action) {
         break;
 
     default:
-        http_response_code(400);
-        echo json_encode([
+        send_json(400, [
             'ok' => false,
             'error' => 'invalid_action',
         ]);
-        exit;
 }
 
 $baseUrl = sprintf(
@@ -92,25 +89,21 @@ $context = stream_context_create([
 $response = @file_get_contents($endpoint, false, $context);
 
 if ($response === false) {
-    http_response_code(502);
-    echo json_encode([
+    send_json(502, [
         'ok' => false,
         'error' => 'sanity_request_failed',
     ]);
-    exit;
 }
 
 $decoded = json_decode($response, true);
 if (!is_array($decoded) || !array_key_exists('result', $decoded)) {
-    http_response_code(502);
-    echo json_encode([
+    send_json(502, [
         'ok' => false,
         'error' => 'invalid_sanity_response',
     ]);
-    exit;
 }
 
-echo json_encode([
+send_json(200, [
     'ok' => true,
     'result' => $decoded['result'],
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+]);

@@ -108,7 +108,12 @@ function renderImageGallery(block, index) {
 		return null;
 	}
 
-	const columnsClass = items.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2';
+	let columnsClass = '';
+	if (items.length === 2) {
+		columnsClass = 'md:grid-cols-2';
+	} else if (items.length >= 3) {
+		columnsClass = 'md:grid-cols-3';
+	}
 
 	return (
 		<div key={block._key || `gallery-${index}`} className={`my-6 grid grid-cols-1 gap-4 ${columnsClass}`}>

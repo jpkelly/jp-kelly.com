@@ -62,9 +62,23 @@ code {
   @apply text-red-400;
 }
 
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none !important;
+}
+
+a .underline,
+a.underline,
+a * {
+  text-decoration: none !important;
+}
+
 p > a {
   color: white;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 p > a.no-underline {

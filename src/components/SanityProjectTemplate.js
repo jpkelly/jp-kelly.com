@@ -39,7 +39,6 @@ function renderSpanWithMarks(span, markDefs = []) {
 					href={markDef.href}
 					target={isExternal ? '_blank' : undefined}
 					rel={isExternal ? 'noopener noreferrer' : undefined}
-					className="underline"
 				>
 					{node}
 				</a>

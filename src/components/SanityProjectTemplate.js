@@ -2,12 +2,28 @@ import React from 'react';
 import VimeoEmbed from './mdx/VimeoEmbed';
 import { sanityImageUrl } from '../lib/sanity';
 
+function renderTextWithLineBreaks(text, keyPrefix) {
+	if (!text.includes('\n')) {
+		return text;
+	}
+
+	return text.split('\n').flatMap((line, index, lines) => {
+		if (index === lines.length - 1) {
+			return line;
+		}
+
+		return [line, <br key={`${keyPrefix}-br-${index}`} />];
+	});
+}
+
 function renderSpanWithMarks(span, markDefs = []) {
 	const text = span?.text || '';
 	const marks = Array.isArray(span?.marks) ? span.marks : [];
 	if (!text) {
 		return null;
 	}
+
+	const nodeWithBreaks = renderTextWithLineBreaks(text, span?._key || text);
 
 	return marks.reduce((node, mark) => {
 		if (mark === 'strong') {
@@ -46,7 +62,7 @@ function renderSpanWithMarks(span, markDefs = []) {
 		}
 
 		return node;
-	}, text);
+	}, nodeWithBreaks);
 }
 
 function renderPortableTextChildren(block) {

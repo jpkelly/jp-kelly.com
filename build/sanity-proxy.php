@@ -206,6 +206,19 @@ switch ($action) {
         $params['$projectId'] = json_encode($requestedId, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         break;
 
+    case 'projectByPath':
+        $requestedPath = isset($_GET['projectPath']) ? trim((string) $_GET['projectPath']) : '';
+        if (!preg_match('/^\/[a-zA-Z0-9_\/-]*$/', $requestedPath)) {
+            send_json(400, [
+                'ok' => false,
+                'error' => 'invalid_project_path',
+            ]);
+        }
+
+        $query = '*[_type == "project" && path == $projectPath][0]';
+        $params['$projectPath'] = json_encode($requestedPath, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        break;
+
     default:
         send_json(400, [
             'ok' => false,

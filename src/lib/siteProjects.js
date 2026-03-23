@@ -116,7 +116,7 @@ export function orderProjectsBySanity(baseProjects, sanityProjects) {
 	}
 
 	const baseProjectMap = new Map(normalizedBaseProjects.map(project => [project.id, project]));
-	const seenProjectIds = new Set();
+	const seenProjectKeys = new Set();
 	const orderedProjects = [];
 
 	sanityProjects.forEach(sanityProject => {
@@ -127,17 +127,20 @@ export function orderProjectsBySanity(baseProjects, sanityProjects) {
 		} catch (_err) {
 			mergedProject = null;
 		}
-		if (!mergedProject || seenProjectIds.has(mergedProject.id)) {
+		const dedupeKey = `${mergedProject?.id || ''}::${mergedProject?.path || ''}`;
+		if (!mergedProject || seenProjectKeys.has(dedupeKey)) {
 			return;
 		}
 
 		orderedProjects.push(mergedProject);
-		seenProjectIds.add(mergedProject.id);
+		seenProjectKeys.add(dedupeKey);
 	});
 
 	normalizedBaseProjects.forEach(project => {
-		if (!seenProjectIds.has(project.id)) {
+		const dedupeKey = `${project?.id || ''}::${project?.path || ''}`;
+		if (!seenProjectKeys.has(dedupeKey)) {
 			orderedProjects.push(project);
+			seenProjectKeys.add(dedupeKey);
 		}
 	});
 

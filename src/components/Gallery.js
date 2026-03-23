@@ -14,7 +14,7 @@ function Gallery(props) {
 				<div className="gallery-masonry box-border before:box-inherit after:box-inherit">
 					{projects.map(project => (
 						<Card
-							key={project.id}
+							key={`${project.id}-${project.path}`}
 							title={project.cardTitle}
 							text={project.cardText}
 							imgsrc={project.thumbnails}

@@ -5,7 +5,7 @@ import Gallery from './components/Gallery';
 import About from './components/About';
 import ContactForm from './components/ContactForm';
 import SanityProjectTemplate from './components/SanityProjectTemplate';
-import { getProjectById } from './lib/sanity';
+import { getProjectById, getProjectByPath } from './lib/sanity';
 import { useSiteProjects } from './lib/siteProjects';
 const projectMdxModules = import.meta.glob('./content/projects/*.mdx', { eager: true });
 
@@ -138,7 +138,10 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 
 		(async () => {
 			try {
-				const projectDoc = await getProjectById(projectId);
+				let projectDoc = await getProjectByPath(canonicalPath);
+				if (!projectDoc && projectId) {
+					projectDoc = await getProjectById(projectId);
+				}
 				if (mounted) {
 					setSanityProject(projectDoc || null);
 				}
@@ -152,7 +155,7 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 		return () => {
 			mounted = false;
 		};
-	}, [projectId]);
+	}, [canonicalPath, projectId]);
 
 	useEffect(() => {
 		const previousTitle = document.title;

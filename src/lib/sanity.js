@@ -136,3 +136,17 @@ export async function getProjectById(projectIdValue) {
   const query = `*[_type == "project" && id == $projectId][0]`;
   return await sanityClient.fetch(query, { projectId: projectIdValue });
 }
+
+export async function getProjectByPath(projectPathValue) {
+  const proxyResponse = await fetchViaProxy('projectByPath', { projectPath: projectPathValue });
+  if (proxyResponse.handled) {
+    return proxyResponse.value;
+  }
+
+  if (!sanityClient || !projectPathValue) {
+    return null;
+  }
+
+  const query = `*[_type == "project" && path == $projectPath][0]`;
+  return await sanityClient.fetch(query, { projectPath: projectPathValue });
+}

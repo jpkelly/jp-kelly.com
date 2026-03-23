@@ -108,7 +108,7 @@ const Header = props => {
             <ul className="z-50 dropdown-menu absolute rounded-b-lg text-gray-200 bg-black bg-opacity-80 py-3 ">
               {projects.map(project => (
                 <li
-                  key={project.id}
+                  key={`${project.id}-${project.path}`}
                   className="py-3 text-2xl"
                   onClick={() => {
                     setToggleMenu(!toggleMenu);

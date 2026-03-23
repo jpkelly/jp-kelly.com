@@ -156,6 +156,7 @@ Project drag-and-drop ordering in Studio:
 Project detail pages are Sanity-first:
 
 - `src/App.js` fetches a matching Sanity `project` document for every project route
+- Route content fetch now matches by canonical `path` first, then falls back to `id` for backward compatibility
 - If Sanity returns `content`, route content is rendered by `src/components/SanityProjectTemplate.js`
 - If no Sanity content exists yet, the route falls back to `src/content/projects/*.mdx` when a matching file exists (auto-discovered by filename, no manual import/map required)
 
@@ -242,6 +243,7 @@ Creating a new project in Studio:
 	- `cardTitle`
 	- `cardText`
 	- `aliases` if any
+	- `id`, `path`, and `routeKey` must each be unique across all Project docs (Studio now validates this)
 5. Set project placement in Studio:
 	- preferred: drag-reorder in the `Projects` orderable list (writes `orderRank`)
 	- optional fallback: set numeric `order` if needed for legacy docs
@@ -259,6 +261,7 @@ Important note:
 
 - The route exists because of `src/content/projects.json`; the page body comes from the Sanity `Project` document.
 - The `id` in Studio must exactly match the `id` in `src/content/projects.json` or the frontend will not find the document.
+- If you duplicate a project in Studio, always change at least `id`, `path`, and `routeKey` before publishing.
 - New projects can be published from Sanity Studio without adding MDX imports or route-component wiring in `src/App.js`.
 
 MDX fallback note:

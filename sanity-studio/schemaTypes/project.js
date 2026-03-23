@@ -1,5 +1,34 @@
 import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
+function uniqueProjectFieldValidation(fieldName, label) {
+  return (Rule) =>
+    Rule.required().custom(async (value, context) => {
+      if (!value) {
+        return true
+      }
+
+      const documentId = context?.document?._id
+      const getClient = context?.getClient
+      if (!documentId || typeof getClient !== 'function') {
+        return true
+      }
+
+      const canonicalId = documentId.replace(/^drafts\./, '')
+      const params = {
+        draftId: `drafts.${canonicalId}`,
+        publishedId: canonicalId,
+        value,
+      }
+
+      const query = `count(*[_type == "project" && !(_id in [$draftId, $publishedId]) && ${fieldName} == $value])`
+
+      const client = getClient({apiVersion: '2024-03-13'})
+      const duplicateCount = await client.fetch(query, params)
+
+      return duplicateCount === 0 || `${label} must be unique across projects.`
+    })
+}
+
 export default {
   name: 'project',
   title: 'Project',
@@ -33,10 +62,10 @@ export default {
   },
   fields: [
     orderRankField({ type: 'project', hidden: true }),
-    { name: 'id', title: 'ID', type: 'string', validation: (Rule) => Rule.required() },
-    { name: 'path', title: 'Path', type: 'string', validation: (Rule) => Rule.required() },
+    { name: 'id', title: 'ID', type: 'string', validation: uniqueProjectFieldValidation('id', 'ID') },
+    { name: 'path', title: 'Path', type: 'string', validation: uniqueProjectFieldValidation('path', 'Path') },
     { name: 'menuLabel', title: 'Menu Label', type: 'string', validation: (Rule) => Rule.required() },
-    { name: 'routeKey', title: 'Route Key', type: 'string', validation: (Rule) => Rule.required() },
+    { name: 'routeKey', title: 'Route Key', type: 'string', validation: uniqueProjectFieldValidation('routeKey', 'Route Key') },
     { name: 'cardTitle', title: 'Card Title', type: 'string', validation: (Rule) => Rule.required() },
     { name: 'cardText', title: 'Card Text', type: 'text', validation: (Rule) => Rule.required() },
     { name: 'order', title: 'Display Order', type: 'number' },

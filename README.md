@@ -289,6 +289,8 @@ Build/prerender note:
 
 ## Changelog
 
+- 2026-03-25: About page footer now renders code/source link immediately after the React built line (removed trailing period and Copilot sentence), and Studio `aboutPage` schema no longer includes `copilotText`.
+
 - 2026-03-25: Added Studio controls for single portrait Vimeo layout (`singlePortraitWidth`, `singlePortraitAlignment`) and wired frontend rendering so only standalone portrait videos use those settings while consecutive portrait videos keep side-by-side layout.
 
 - 2026-03-25: Added repository-level npm rule (`.npmrc` with `legacy-peer-deps=true`) to avoid React 17 / Framer peer-dependency install conflicts.

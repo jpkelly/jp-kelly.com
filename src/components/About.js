@@ -12,7 +12,6 @@ const fallbackContent = {
 		{ text: 'While at California College of the Arts I learned how to uniquely express my views of social issues through art that engages the viewer. My goal and vision is to provide a way for people to grow and learn by touching their hearts.', isList: false }
 	],
 	builtByText: 'This site was originally built by hand using React',
-	copilotText: 'Complete refactoring done with Copilot.',
 	codeLinkText: 'Here is the code.',
 	codeLinkUrl: 'https://github.com/jpkelly/jp-kelly.com',
 	toolsHeading: 'Here are a few of my favorite tools:',
@@ -58,7 +57,6 @@ function mapSanityAboutDoc(doc) {
 		profileImageUrl: sanityImageUrl(doc.profileImage) || fallbackContent.profileImageUrl,
 		bioParagraphs: bioParagraphs.length ? bioParagraphs : fallbackContent.bioParagraphs,
 		builtByText: doc.builtByText || fallbackContent.builtByText,
-		copilotText: doc.copilotText || fallbackContent.copilotText,
 		codeLinkText: doc.codeLinkText || fallbackContent.codeLinkText,
 		codeLinkUrl: doc.codeLinkUrl || fallbackContent.codeLinkUrl,
 		toolsHeading: doc.toolsHeading || fallbackContent.toolsHeading,
@@ -143,7 +141,6 @@ function About(props) {
 					<p className="mt-7">
 						{aboutContent.builtByText}
 						<DiReact className="inline ml-1 text-[1.35rem]" aria-hidden="true" />
-						. {aboutContent.copilotText}
 						<br />
 						<a href={aboutContent.codeLinkUrl} target="_blank" className="no-underline">
 							{aboutContent.codeLinkText}

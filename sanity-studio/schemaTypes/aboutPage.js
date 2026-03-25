@@ -50,12 +50,6 @@ export default {
       initialValue: 'This site was originally built by hand using React',
     },
     {
-      name: 'copilotText',
-      title: 'Copilot Line',
-      type: 'string',
-      initialValue: 'Complete refactoring done with Copilot.',
-    },
-    {
       name: 'codeLinkText',
       title: 'Code Link Text',
       type: 'string',

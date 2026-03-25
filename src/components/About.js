@@ -141,7 +141,7 @@ function About(props) {
 					<p className="mt-7">
 						{aboutContent.builtByText}
 						<DiReact className="inline ml-1 text-[1.35rem]" aria-hidden="true" />
-						<br />
+						 {' '}
 						<a href={aboutContent.codeLinkUrl} target="_blank" className="no-underline">
 							{aboutContent.codeLinkText}
 						</a>

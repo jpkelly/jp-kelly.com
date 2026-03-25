@@ -28,3 +28,11 @@ tools:
   - current state highlights
   - prioritized phases
   - migration risks and validation gates
+
+## CMS Hydration UX Rules
+
+- For CMS-backed surfaces, prefer loading-first rendering over fallback-first rendering to avoid first-paint content swaps.
+- Only show local/hardcoded fallback content when CMS data is unavailable (error/timeout), not before initial fetch resolution.
+- Keep placeholders layout-stable (fixed dimensions/aspect ratios) to minimize visible layout shift.
+- For project routes, avoid rendering one content source first and swapping to another after fetch completion when CMS data is expected.
+- Track hydration/fallback UX work under Issue #5 and keep acceptance criteria aligned with that issue.

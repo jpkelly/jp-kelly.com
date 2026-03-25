@@ -140,6 +140,29 @@ function renderVideoBlock(block, index, containerClass = 'my-4 w-full') {
 	);
 }
 
+function getSinglePortraitVideoContainerClass(block) {
+	const widthPreset = typeof block?.singlePortraitWidth === 'string' ? block.singlePortraitWidth : 'medium';
+	const alignment = typeof block?.singlePortraitAlignment === 'string' ? block.singlePortraitAlignment : 'center';
+
+	const widthClassByPreset = {
+		small: 'md:max-w-[420px]',
+		medium: 'md:max-w-[560px]',
+		large: 'md:max-w-[680px]',
+		full: 'md:max-w-none',
+	};
+
+	const alignmentClassByValue = {
+		left: 'mx-auto md:mx-0 md:mr-auto',
+		center: 'mx-auto',
+		right: 'mx-auto md:mx-0 md:ml-auto',
+	};
+
+	const widthClass = widthClassByPreset[widthPreset] || widthClassByPreset.medium;
+	const alignmentClass = alignmentClassByValue[alignment] || alignmentClassByValue.center;
+
+	return `my-4 w-full ${widthClass} ${alignmentClass}`;
+}
+
 function renderContentBlock(block, index, allBlocks) {
 	if (!block) {
 		return null;
@@ -203,8 +226,8 @@ function groupConsecutivePortraitVideos(blocks) {
 				});
 				groupIndex++;
 			} else {
-				// Single portrait video, render normally
-				result.push({ type: 'block', block, index: groupStart });
+				// Single portrait video: keep mobile full-width, but constrain desktop width.
+				result.push({ type: 'singlePortraitVideo', block, index: groupStart });
 			}
 		} else {
 			result.push({ type: 'block', block, index: i });
@@ -243,6 +266,10 @@ function SanityProjectTemplate({ project }) {
 							{item.videos.map(({ block }) => renderVideoBlock(block, block._key, 'w-full flex-1'))}
 						</div>
 					);
+				}
+
+				if (item.type === 'singlePortraitVideo') {
+					return renderVideoBlock(item.block, item.index, getSinglePortraitVideoContainerClass(item.block));
 				}
 
 				return renderContentBlock(item.block, item.index, contentBlocks);

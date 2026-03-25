@@ -174,6 +174,39 @@ export default {
             { name: 'loop', title: 'Loop', type: 'boolean', initialValue: false },
             { name: 'controls', title: 'Show Controls', type: 'boolean', initialValue: true },
             { name: 'portrait', title: 'Portrait', type: 'boolean', initialValue: false },
+            {
+              name: 'singlePortraitWidth',
+              title: 'Single Portrait Width',
+              type: 'string',
+              initialValue: 'medium',
+              options: {
+                list: [
+                  { title: 'Small', value: 'small' },
+                  { title: 'Medium', value: 'medium' },
+                  { title: 'Large', value: 'large' },
+                  { title: 'Full Width', value: 'full' },
+                ],
+                layout: 'radio',
+              },
+              hidden: ({ parent }) => !parent?.portrait,
+              description: 'Used when this is a single portrait video. Consecutive portrait pairs keep side-by-side layout.',
+            },
+            {
+              name: 'singlePortraitAlignment',
+              title: 'Single Portrait Alignment',
+              type: 'string',
+              initialValue: 'center',
+              options: {
+                list: [
+                  { title: 'Left', value: 'left' },
+                  { title: 'Center', value: 'center' },
+                  { title: 'Right', value: 'right' },
+                ],
+                layout: 'radio',
+              },
+              hidden: ({ parent }) => !parent?.portrait,
+              description: 'Used when this is a single portrait video. Consecutive portrait pairs keep side-by-side layout.',
+            },
           ],
           preview: {
             select: {

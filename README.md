@@ -221,6 +221,8 @@ Sanity project page authoring:
 
 - `content[]` is fully orderable and supports rich text, standalone images (with optional alt/caption), `Image Gallery` blocks, and Vimeo video blocks
 - Vimeo block options: `autoplay`, `loop`, `show controls`, `portrait`
+- Single portrait Vimeo controls: `single portrait width` (`small|medium|large|full`) and `single portrait alignment` (`left|center|right`)
+- Single portrait controls apply only when a portrait block is not part of a consecutive portrait pair
 - `Image Gallery` supports 1-6 images with per-image alt text and caption
 - Videos follow exact `content[]` order, so they can be interleaved between images/text/galleries
 - Inline hyperlinks in rich text are rendered on the site
@@ -286,6 +288,8 @@ Build/prerender note:
 - The prerender step uses `SITE_URL` if provided; otherwise it defaults to `https://jp-kelly.com` for absolute social metadata URLs.
 
 ## Changelog
+
+- 2026-03-25: Added Studio controls for single portrait Vimeo layout (`singlePortraitWidth`, `singlePortraitAlignment`) and wired frontend rendering so only standalone portrait videos use those settings while consecutive portrait videos keep side-by-side layout.
 
 - 2026-03-25: Added repository-level npm rule (`.npmrc` with `legacy-peer-deps=true`) to avoid React 17 / Framer peer-dependency install conflicts.
 

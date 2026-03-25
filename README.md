@@ -40,6 +40,12 @@ This repo is pinned to Node 18:
 - `.nvmrc`: `18.20.8`
 - `package.json` engines: `node: 18.x`, `npm: >=9 <11`
 
+Dependency install rule for this repository:
+
+- Repository-level `.npmrc` sets `legacy-peer-deps=true`.
+- Use plain `npm install` from the repo root; npm will automatically apply legacy peer resolution.
+- This avoids install failures caused by the known peer mismatch between `react@17` and `framer@1.2.9`.
+
 ## Scripts
 
 - `npm start` or `npm run dev`: start Vite dev server
@@ -280,6 +286,8 @@ Build/prerender note:
 - The prerender step uses `SITE_URL` if provided; otherwise it defaults to `https://jp-kelly.com` for absolute social metadata URLs.
 
 ## Changelog
+
+- 2026-03-25: Added repository-level npm rule (`.npmrc` with `legacy-peer-deps=true`) to avoid React 17 / Framer peer-dependency install conflicts.
 
 - 2026-03-22: Added `@sanity/orderable-document-list` for drag-and-drop project ordering in Studio and switched project queries to `orderRank` with `order` fallback.
 

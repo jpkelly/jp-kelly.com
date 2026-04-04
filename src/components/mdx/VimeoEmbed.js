@@ -7,7 +7,8 @@ function VimeoEmbed({
   loop,
   muted = false,
   background = false,
-  portrait = false
+  portrait = false,
+  aspectRatio,
 }) {
   const autoplayEnabled = autoplay || background;
   const loopEnabled = typeof loop === 'boolean' ? loop : autoplayEnabled;
@@ -24,7 +25,7 @@ function VimeoEmbed({
   if (!controlsEnabled) params.set('controls', 0);
   if (backgroundEnabled) params.set('background', 1);
 
-  const aspectRatio = portrait ? '9 / 16' : '16 / 9';
+  const resolvedAspectRatio = aspectRatio ?? (portrait ? '9 / 16' : '16 / 9');
 
   return (
     <div
@@ -71,7 +72,7 @@ function VimeoEmbed({
         src={`https://player.vimeo.com/video/${video}?${params}`}
         frameBorder="0"
         allow="autoplay; fullscreen; picture-in-picture"
-        style={{ width: '100%', aspectRatio, display: 'block' }}
+        style={{ width: '100%', aspectRatio: resolvedAspectRatio, display: 'block' }}
         title={`Vimeo video ${video}`}
       />
     </div>

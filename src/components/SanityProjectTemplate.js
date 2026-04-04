@@ -135,6 +135,9 @@ function renderVideoBlock(block, index, containerClass = 'my-4 w-full') {
 				loop={Boolean(block.loop)}
 				controls={Boolean(block.controls ?? true)}
 				portrait={Boolean(block.portrait)}
+				{...(Number.isFinite(block.aspectRatioWidth) && Number.isFinite(block.aspectRatioHeight)
+					? { aspectRatio: `${block.aspectRatioWidth} / ${block.aspectRatioHeight}` }
+					: {})}
 			/>
 		</div>
 	);

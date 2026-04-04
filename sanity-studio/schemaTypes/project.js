@@ -175,6 +175,18 @@ export default {
             { name: 'controls', title: 'Show Controls', type: 'boolean', initialValue: true },
             { name: 'portrait', title: 'Portrait', type: 'boolean', initialValue: false },
             {
+              name: 'aspectRatioWidth',
+              title: 'Custom Aspect Ratio Width',
+              type: 'number',
+              description: 'Optional. Set both width and height to override the default aspect ratio (e.g. 4160).',
+            },
+            {
+              name: 'aspectRatioHeight',
+              title: 'Custom Aspect Ratio Height',
+              type: 'number',
+              description: 'Optional. Set both width and height to override the default aspect ratio (e.g. 800).',
+            },
+            {
               name: 'singlePortraitWidth',
               title: 'Single Portrait Width',
               type: 'string',

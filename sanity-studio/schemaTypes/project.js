@@ -110,6 +110,20 @@ export default {
           fields: [
             { name: 'alt', title: 'Alt Text', type: 'string' },
             { name: 'caption', title: 'Caption', type: 'string' },
+            {
+              name: 'captionPosition',
+              title: 'Caption Position',
+              type: 'string',
+              initialValue: 'bottom',
+              options: {
+                list: [
+                  { title: 'Top', value: 'top' },
+                  { title: 'Bottom', value: 'bottom' },
+                ],
+                layout: 'radio',
+              },
+              hidden: ({ parent }) => !parent?.caption,
+            },
           ],
         },
         {

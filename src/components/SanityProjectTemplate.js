@@ -94,10 +94,12 @@ function renderSanityImage(source, key, className = 'my-4 w-full object-cover') 
 	const caption = typeof source?.caption === 'string' ? source.caption.trim() : '';
 	const captionPosition = source?.captionPosition === 'top' ? 'top' : 'bottom';
 	const alt = typeof source?.alt === 'string' && source.alt.trim() ? source.alt.trim() : 'Project media';
-	const figcaption = caption ? <figcaption className="text-base xl:text-lg text-gray-400">{caption}</figcaption> : null;
+	const figcaption = caption ? (
+		<figcaption className={`text-base xl:text-lg text-gray-400 ${captionPosition === 'top' ? 'mb-1' : 'mt-1'}`}>{caption}</figcaption>
+	) : null;
 
 	return (
-		<figure key={key} className="my-4">
+		<figure key={key} className="mt-10 mb-4">
 			{captionPosition === 'top' && figcaption}
 			<img src={imageUrl} alt={alt} className={className} />
 			{captionPosition === 'bottom' && figcaption}

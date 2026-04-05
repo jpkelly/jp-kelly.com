@@ -171,10 +171,22 @@ a:hover {
 .dropdown-menu {
   padding-top: 0.35rem;
   padding-bottom: 0.35rem;
-  background-color: rgba(0, 0, 0, 0.85) !important;
-  border-top: none !important;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 2.5rem);
-  mask-image: linear-gradient(to bottom, transparent 0, black 2.5rem);
+  background: transparent !important;
+  border: none !important;
+  position: relative;
+}
+
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 1px solid #D1D5DB;
+  border-radius: 0.5rem;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 50%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .dropdown-menu li {

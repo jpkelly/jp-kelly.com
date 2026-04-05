@@ -191,7 +191,7 @@ function MenuBorderSVG({ dims }) {
     >
       <defs>
         <linearGradient id="menu-border-grad" gradientUnits="userSpaceOnUse"
-          x1="0" y1="0" x2="0" y2="60">
+          x1="0" y1="0" x2="0" y2="40">
           <stop offset="0%" stopColor="transparent" />
           <stop offset="100%" stopColor="#D1D5DB" />
         </linearGradient>

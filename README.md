@@ -18,7 +18,7 @@ This repository contains a React single-page portfolio showcasing projects, vide
 
 ## Current Stack
 
-- React 17
+- React 17.0.2
 - React Router v5
 - Vite 5 (build/dev tooling)
 - Tailwind CSS 4 + PostCSS 8
@@ -35,16 +35,12 @@ Key files:
 
 ## Node Version
 
-This repo is pinned to Node 18:
+This repo targets Node 22 LTS:
 
-- `.nvmrc`: `18.20.8`
-- `package.json` engines: `node: 18.x`, `npm: >=9 <11`
+- `.nvmrc`: `22`
+- `package.json` engines: `node: >=22`, `npm: >=10`
 
-Dependency install rule for this repository:
-
-- Repository-level `.npmrc` sets `legacy-peer-deps=true`.
-- Use plain `npm install` from the repo root; npm will automatically apply legacy peer resolution.
-- This avoids install failures caused by the known peer mismatch between `react@17` and `framer@1.2.9`.
+Use plain `npm install` from the repo root. No `.npmrc` peer-dep workarounds are needed.
 
 ## Scripts
 
@@ -170,12 +166,16 @@ Project detail pages are Sanity-first:
 
 ### Base defaults
 
-`index.html` includes fallback metadata for:
+`scripts/prerender.mjs` owns the default OG metadata (`DEFAULT_DESCRIPTION`, `DEFAULT_IMAGE_PATH`) and overwrites whatever is in `index.html` at build time. **Edit the constants in `prerender.mjs`, not `index.html`, to change the default description or image.**
+
+`index.html` also includes the same tags as a pre-build fallback:
 
 - `description`
-- Open Graph (`og:*`)
+- Open Graph (`og:*`) — includes `og:url`
 - Twitter (`twitter:*`)
 - canonical link (`rel="canonical"`)
+
+All URLs are absolute (`https://jp-kelly.com/...`). Default OG image: `craneFlockWide.png`.
 
 ### Route-level overrides
 
@@ -293,7 +293,11 @@ Build/prerender note:
 
 - 2026-03-25: Added Studio controls for single portrait Vimeo layout (`singlePortraitWidth`, `singlePortraitAlignment`) and wired frontend rendering so only standalone portrait videos use those settings while consecutive portrait videos keep side-by-side layout.
 
-- 2026-03-25: Added repository-level npm rule (`.npmrc` with `legacy-peer-deps=true`) to avoid React 17 / Framer peer-dependency install conflicts.
+- 2026-04-05: Modernization Phase 0 + Phase 1 complete (Issue #4). Node target updated to 22 LTS. Removed unused dependencies: `framer`, `framer-motion`, `@u-wave/react-vimeo`, `grommet`, `grommet-icons`, `styled-components`, `polished`. Upgraded `react`/`react-dom` to 17.0.2, `react-hook-form` to 7.72.1, `react-toastify` to 8.2.0. Removed `.npmrc` legacy-peer-deps workaround. Sanity Studio updated to 5.19.0. Audit reduced from 5 findings (3 high) to 2 moderate dev-only.
+
+- 2026-04-05: OG/social metadata overhauled. All URLs now absolute. Default image changed to `craneFlockWide.png`. Description updated. `prerender.mjs` is now the canonical source for default OG tags.
+
+- 2026-03-25: Added repository-level npm rule (`.npmrc` with `legacy-peer-deps=true`) to avoid React 17 / Framer peer-dependency install conflicts (removed 2026-04-05 after dead dep cleanup).
 
 - 2026-03-22: Added `@sanity/orderable-document-list` for drag-and-drop project ordering in Studio and switched project queries to `orderRank` with `order` fallback.
 

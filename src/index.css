@@ -219,11 +219,11 @@ a:hover {
 
 .section-submenu {
   position: absolute;
-  top: -0.4rem;
+  top: -0.7rem;
   left: calc(100% - 1px);
   min-width: 12rem;
   white-space: nowrap;
-  padding-top: 0.7rem !important;
+  padding-top: 1rem !important;
   padding-right: 1.5rem !important;
   border: none !important;
   border-radius: 0 !important;

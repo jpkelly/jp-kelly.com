@@ -9,7 +9,7 @@
   --dropdown-border-width:  1px;
   --dropdown-border-style:  solid;
   --dropdown-border-color:  #D1D5DB;  /* same as Tailwind gray-300 / card border */
-  --dropdown-border:        var(--dropdown-border-width) var(--dropdown-border-style) var(--dropdown-border-color);
+  --dropdown-border:        none;
   --dropdown-radius:        0.5rem;   /* same as Tailwind rounded-lg */
   --dropdown-corner-bg:     black;    /* site background — fills concave junction corners */
 }

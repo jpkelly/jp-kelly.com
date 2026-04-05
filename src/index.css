@@ -228,8 +228,8 @@ a:hover {
 }
 
 .section-arrow {
-  margin-left: 0.6rem;
-  font-size: 0.55em;
+  margin-left: 1rem;
+  font-size: 0.75em;
   color: transparent;
   transition: color 0.15s ease;
 }

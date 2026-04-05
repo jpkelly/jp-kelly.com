@@ -184,7 +184,7 @@ a:hover {
 /* Compact projects dropdown so more items fit in the menu. */
 .dropdown-menu {
   padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
+  padding-bottom: 0.75rem;
   background-color: transparent !important;
   border: none !important;
   border-radius: 0 !important;

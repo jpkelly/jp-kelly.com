@@ -93,7 +93,7 @@ function groupProjectsBySection(projects) {
 // All convex corners use sweep=1 (CW small arc).
 // Concave junctions also use sweep=1 — the center sits at the junction point,
 // so the arc bulges outward into the void between the two panels.
-function buildMenuPath({ dW, dH, sY, fW, fH }, r, rc) {
+function buildMenuPath({ dW, dH, sY, fY, fW, fH }, r, rc) {
   if (sY === null || fW === 0) {
     return [
       `M ${r} 0`, `L ${dW - r} 0`,
@@ -107,8 +107,9 @@ function buildMenuPath({ dW, dH, sY, fW, fH }, r, rc) {
     ].join(' ');
   }
 
-  const flyoutBottom = sY + fH;
-  const safeTop = Math.max(rc + r, sY);
+  const flyTop = fY != null ? fY : sY;
+  const flyoutBottom = flyTop + fH;
+  const safeTop = Math.max(rc + r, flyTop);
   const flushThreshold = 2 * (r + rc);
 
   if (Math.abs(flyoutBottom - dH) < flushThreshold) {
@@ -177,9 +178,10 @@ function MenuBorderSVG({ dims }) {
   if (typeof window === 'undefined' || !dims) return null;
   const R = 8;   // convex radius px — matches --dropdown-radius: 0.5rem
   const RC = 8;  // concave junction radius px
-  const { dW, dH, sY, fW, fH } = dims;
+  const { dW, dH, sY, fY, fW, fH } = dims;
+  const flyTop = fY != null ? fY : sY;
   const totalW = sY !== null && fW > 0 ? dW + fW : dW;
-  const totalH = sY !== null && fH > 0 ? Math.max(dH, sY + fH) : dH;
+  const totalH = sY !== null && fH > 0 ? Math.max(dH, flyTop + fH) : dH;
   const d = buildMenuPath(dims, R, RC);
   return (
     <svg
@@ -244,6 +246,7 @@ const Header = props => {
       dW,
       dH,
       sY: secRect.top - ddRect.top,
+      fY: flyRect.top - ddRect.top,
       fW: flyRect.width,
       fH: flyRect.height,
     });

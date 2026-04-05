@@ -123,7 +123,7 @@ function buildMenuPath({ dW, dH, sY, fW, fH }, r, rc) {
       `L ${dW + fW} ${safeBottom - r}`,
       `A ${r} ${r} 0 0 1 ${dW + fW - r} ${safeBottom}`,
       `L ${dW + rc} ${safeBottom}`,
-      `A ${rc} ${rc} 0 0 1 ${dW} ${safeBottom + rc}`,   // concave bottom junction
+      `A ${rc} ${rc} 0 0 0 ${dW} ${safeBottom + rc}`,   // concave bottom junction
       `L ${dW} ${dH - r}`,
       `A ${r} ${r} 0 0 1 ${dW - r} ${dH}`,
       `L ${r} ${dH}`,
@@ -174,7 +174,7 @@ function MenuBorderSVG({ dims }) {
         <linearGradient id="menu-border-grad" gradientUnits="userSpaceOnUse"
           x1="0" y1="0" x2="0" y2={totalH}>
           <stop offset="0%" stopColor="transparent" />
-          <stop offset="40%" stopColor="#D1D5DB" />
+          <stop offset="25%" stopColor="#D1D5DB" />
         </linearGradient>
       </defs>
       <path d={d} fill="rgba(0,0,0,0.85)" stroke="url(#menu-border-grad)" strokeWidth="1" />

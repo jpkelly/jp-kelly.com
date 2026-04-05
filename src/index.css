@@ -232,6 +232,8 @@ a:hover {
 }
 
 .section-label {
+  display: flex !important;
+  align-items: center;
   width: 100%;
 }
 

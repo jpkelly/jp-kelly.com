@@ -193,15 +193,6 @@ a:hover {
 .dropdown-menu li {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-  font-size: 0.85rem !important;
-  line-height: 1.2 !important;
-}
-
-.dropdown-menu li a {
-  font-size: 0.85rem !important;
-  line-height: 1.1 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
 }
 
 .dropdown-menu .link.px-3 {

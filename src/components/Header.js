@@ -113,7 +113,6 @@ function buildMenuPath({ dW, dH, sY, fW, fH }, r, rc) {
 
   if (Math.abs(flyoutBottom - dH) < flushThreshold) {
     // Case 3: flyout bottom ≈ dropdown bottom — flush, no bottom junction
-    const bottomY = Math.max(dH, flyoutBottom);
     return [
       `M ${r} 0`, `L ${dW - r} 0`,
       `A ${r} ${r} 0 0 1 ${dW} ${r}`,
@@ -121,10 +120,10 @@ function buildMenuPath({ dW, dH, sY, fW, fH }, r, rc) {
       `A ${rc} ${rc} 0 0 0 ${dW + rc} ${safeTop}`,      // concave top junction
       `L ${dW + fW - r} ${safeTop}`,
       `A ${r} ${r} 0 0 1 ${dW + fW} ${safeTop + r}`,
-      `L ${dW + fW} ${bottomY - r}`,
-      `A ${r} ${r} 0 0 1 ${dW + fW - r} ${bottomY}`,
-      `L ${r} ${bottomY}`,
-      `A ${r} ${r} 0 0 1 0 ${bottomY - r}`,
+      `L ${dW + fW} ${dH - r}`,
+      `A ${r} ${r} 0 0 1 ${dW + fW - r} ${dH}`,
+      `L ${r} ${dH}`,
+      `A ${r} ${r} 0 0 1 0 ${dH - r}`,
       `L 0 ${r}`,
       `A ${r} ${r} 0 0 1 ${r} 0`, 'Z',
     ].join(' ');
@@ -207,35 +206,43 @@ const Header = props => {
   const [openSection, setOpenSection] = useState(null);
   const [borderDims, setBorderDims] = useState(null);
   const dropdownRef = useRef(null);
+  const baseDimsRef = useRef(null);
   const projects = useSiteProjects().filter(project => Boolean(project?.path && project?.menuLabel));
   const [dropdownLinks, setDropdownLinks] = useState(() => normalizeMenuLinks(menuLinks));
 
   useLayoutEffect(() => {
     if (!toggleMenu || !dropdownRef.current) {
       setBorderDims(null);
+      baseDimsRef.current = null;
       return;
     }
     const dropdown = dropdownRef.current;
     const ddRect = dropdown.getBoundingClientRect();
     if (ddRect.height === 0) { setBorderDims(null); return; }
 
+    // Capture base dimensions once when dropdown first opens (no section hovered)
+    if (!baseDimsRef.current) {
+      baseDimsRef.current = { dW: ddRect.width, dH: ddRect.height };
+    }
+    const { dW, dH } = baseDimsRef.current;
+
     if (!openSection) {
-      setBorderDims({ dW: ddRect.width, dH: ddRect.height, sY: null, fW: 0, fH: 0 });
+      setBorderDims({ dW, dH, sY: null, fW: 0, fH: 0 });
       return;
     }
 
     const sectionEl = dropdown.querySelector(`[data-section-key="${openSection}"]`);
     const flyoutEl = sectionEl?.querySelector('.section-submenu');
     if (!sectionEl || !flyoutEl) {
-      setBorderDims({ dW: ddRect.width, dH: ddRect.height, sY: null, fW: 0, fH: 0 });
+      setBorderDims({ dW, dH, sY: null, fW: 0, fH: 0 });
       return;
     }
 
     const secRect = sectionEl.getBoundingClientRect();
     const flyRect = flyoutEl.getBoundingClientRect();
     setBorderDims({
-      dW: ddRect.width,
-      dH: ddRect.height,
+      dW,
+      dH,
       sY: secRect.top - ddRect.top,
       fW: flyRect.width,
       fH: flyRect.height,

@@ -149,9 +149,8 @@ const Header = props => {
                           onMouseEnter={() => setOpenSection(key)}
                           onMouseLeave={() => setOpenSection(null)}
                         >
-                          <span className="link px-3 flex items-center justify-between gap-2 cursor-default">
+                          <span className="link px-3 flex items-center cursor-default">
                             {section.name}
-                            <span className="section-arrow">›</span>
                           </span>
                           {isOpen && (
                             <ul className="section-submenu dropdown-menu text-gray-200 py-3">

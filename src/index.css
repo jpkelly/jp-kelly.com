@@ -251,9 +251,9 @@ a:hover {
   top: calc(-1 * var(--dropdown-radius));
   background: radial-gradient(
     circle at 0% 100%,
-    var(--dropdown-corner-bg) calc(var(--dropdown-radius) - 1px),
+    var(--dropdown-bg) calc(var(--dropdown-radius) - 1px),
     var(--dropdown-border-color) var(--dropdown-radius),
-    var(--dropdown-bg) calc(var(--dropdown-radius) + 1px)
+    var(--dropdown-corner-bg) calc(var(--dropdown-radius) + 1px)
   );
 }
 
@@ -261,14 +261,9 @@ a:hover {
   bottom: calc(-1 * var(--dropdown-radius));
   background: radial-gradient(
     circle at 0% 0%,
-    var(--dropdown-corner-bg) calc(var(--dropdown-radius) - 1px),
+    var(--dropdown-bg) calc(var(--dropdown-radius) - 1px),
     var(--dropdown-border-color) var(--dropdown-radius),
-    var(--dropdown-bg) calc(var(--dropdown-radius) + 1px)
+    var(--dropdown-corner-bg) calc(var(--dropdown-radius) + 1px)
   );
 }
 
-.section-arrow {
-  font-size: 1rem;
-  opacity: 0.5;
-  line-height: 1;
-}

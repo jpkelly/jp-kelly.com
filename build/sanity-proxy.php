@@ -186,7 +186,7 @@ switch ($action) {
         break;
 
     case 'projects':
-        $query = '*[_type == "project"] | order(defined(orderRank) desc, orderRank asc, order asc)';
+        $query = '*[_type == "project"] | order(defined(orderRank) desc, orderRank asc, order asc) { ..., menuSection->{ _id, name, orderRank } }';
         break;
 
     case 'menuLinks':

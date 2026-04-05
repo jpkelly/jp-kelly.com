@@ -237,10 +237,11 @@ a:hover {
 .section-submenu {
   position: absolute;
   top: 0;
-  left: calc(100% - 1px); /* overlap dropdown right border by 1px; hides left border */
+  left: calc(100% - 1px);
   min-width: 12rem;
   white-space: nowrap;
   border: var(--dropdown-border-width) solid transparent !important;
+  border-left: none !important;
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
   overflow: visible;

@@ -68,6 +68,15 @@ function mapSanityAboutDoc(doc) {
 function About(props) {
 	const [aboutContent, setAboutContent] = useState(null);
 
+	const toolItems = useMemo(() => {
+		const tools = aboutContent?.toolsList || '';
+		return tools
+			.split(',')
+			.map(item => item.trim())
+			.filter(Boolean)
+			.join(', ');
+	}, [aboutContent?.toolsList]);
+
 	useEffect(() => {
 		let mounted = true;
 
@@ -106,15 +115,6 @@ function About(props) {
 			</div>
 		);
 	}
-
-	const toolItems = useMemo(() => {
-		const tools = aboutContent.toolsList || '';
-		return tools
-			.split(',')
-			.map(item => item.trim())
-			.filter(Boolean)
-			.join(', ');
-	}, [aboutContent.toolsList]);
 
 	return (
 		<div className="content-rail my-5 py-5">

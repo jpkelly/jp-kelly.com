@@ -201,3 +201,22 @@ a:hover {
     line-height: 1.9rem !important;
   }
 }
+
+/* Section flyout submenu */
+.section-item {
+  position: relative;
+}
+
+.section-submenu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 12rem;
+  white-space: nowrap;
+}
+
+.section-arrow {
+  font-size: 1rem;
+  opacity: 0.5;
+  line-height: 1;
+}

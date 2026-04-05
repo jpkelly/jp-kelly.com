@@ -91,6 +91,7 @@ function groupProjectsBySection(projects) {
 
 const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);
+  const [openSection, setOpenSection] = useState(null);
   const projects = useSiteProjects().filter(project => Boolean(project?.path && project?.menuLabel));
   const [dropdownLinks, setDropdownLinks] = useState(() => normalizeMenuLinks(menuLinks));
 
@@ -138,35 +139,47 @@ const Header = props => {
                 const { sortedSections, unsectioned } = groupProjectsBySection(projects);
                 return (
                   <>
-                    {sortedSections.map(({ section, projects: sectionProjects }) => (
-                      <React.Fragment key={section._id || section.name}>
-                        <li className="px-3 pt-3 pb-1 text-xs uppercase tracking-widest text-gray-400 select-none pointer-events-none">
-                          {section.name}
+                    {sortedSections.map(({ section, projects: sectionProjects }) => {
+                      const key = section._id || section.name;
+                      const isOpen = openSection === key;
+                      return (
+                        <li
+                          key={key}
+                          className="section-item relative"
+                          onMouseEnter={() => setOpenSection(key)}
+                          onMouseLeave={() => setOpenSection(null)}
+                        >
+                          <span className="link px-3 flex items-center justify-between gap-2 cursor-default">
+                            {section.name}
+                            <span className="section-arrow">›</span>
+                          </span>
+                          {isOpen && (
+                            <ul className="section-submenu dropdown-menu rounded-lg text-gray-200 bg-black bg-opacity-80 py-3">
+                              {sectionProjects.map(project => (
+                                <li
+                                  key={`${project.id}-${project.path}`}
+                                  onClick={() => { setToggleMenu(false); setOpenSection(null); }}
+                                >
+                                  {isExternalHref(project.path) ? (
+                                    <a className="link px-3" href={project.path} target="_blank" rel="noopener noreferrer">
+                                      {project.menuLabel}
+                                    </a>
+                                  ) : (
+                                    <Link className="link px-3" to={project.path}>
+                                      {project.menuLabel}
+                                    </Link>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </li>
-                        {sectionProjects.map(project => (
-                          <li
-                            key={`${project.id}-${project.path}`}
-                            className="py-3 text-2xl"
-                            onClick={() => { setToggleMenu(!toggleMenu); }}
-                          >
-                            {isExternalHref(project.path) ? (
-                              <a className="link px-3" href={project.path} target="_blank" rel="noopener noreferrer">
-                                {project.menuLabel}
-                              </a>
-                            ) : (
-                              <Link className="link px-3" to={project.path}>
-                                {project.menuLabel}
-                              </Link>
-                            )}
-                          </li>
-                        ))}
-                      </React.Fragment>
-                    ))}
+                      );
+                    })}
                     {unsectioned.map(project => (
                       <li
                         key={`${project.id}-${project.path}`}
-                        className="py-3 text-2xl"
-                        onClick={() => { setToggleMenu(!toggleMenu); }}
+                        onClick={() => { setToggleMenu(false); setOpenSection(null); }}
                       >
                         {isExternalHref(project.path) ? (
                           <a className="link px-3" href={project.path} target="_blank" rel="noopener noreferrer">
@@ -185,10 +198,7 @@ const Header = props => {
               {dropdownLinks.map(link => (
                 <li
                   key={link.id}
-                  className="py-3 text-2xl"
-                  onClick={() => {
-                    setToggleMenu(!toggleMenu);
-                  }}
+                  onClick={() => { setToggleMenu(false); setOpenSection(null); }}
                 >
                   {link.external || isExternalHref(link.href) ? (
                     <a className="link px-3" href={link.href} target="_blank" rel="noopener noreferrer">

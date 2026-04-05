@@ -109,6 +109,26 @@ function buildMenuPath({ dW, dH, sY, fW, fH }, r, rc) {
 
   const flyoutBottom = sY + fH;
   const safeTop = Math.max(rc + r, sY);
+  const flushThreshold = 2 * (r + rc);
+
+  if (Math.abs(flyoutBottom - dH) < flushThreshold) {
+    // Case 3: flyout bottom ≈ dropdown bottom — flush, no bottom junction
+    const bottomY = Math.max(dH, flyoutBottom);
+    return [
+      `M ${r} 0`, `L ${dW - r} 0`,
+      `A ${r} ${r} 0 0 1 ${dW} ${r}`,
+      `L ${dW} ${safeTop - rc}`,
+      `A ${rc} ${rc} 0 0 0 ${dW + rc} ${safeTop}`,      // concave top junction
+      `L ${dW + fW - r} ${safeTop}`,
+      `A ${r} ${r} 0 0 1 ${dW + fW} ${safeTop + r}`,
+      `L ${dW + fW} ${bottomY - r}`,
+      `A ${r} ${r} 0 0 1 ${dW + fW - r} ${bottomY}`,
+      `L ${r} ${bottomY}`,
+      `A ${r} ${r} 0 0 1 0 ${bottomY - r}`,
+      `L 0 ${r}`,
+      `A ${r} ${r} 0 0 1 ${r} 0`, 'Z',
+    ].join(' ');
+  }
 
   if (flyoutBottom <= dH) {
     // Case 1: flyout fits within dropdown height

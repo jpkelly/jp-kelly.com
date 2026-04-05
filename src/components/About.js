@@ -66,7 +66,7 @@ function mapSanityAboutDoc(doc) {
 }
 
 function About(props) {
-	const [aboutContent, setAboutContent] = useState(fallbackContent);
+	const [aboutContent, setAboutContent] = useState(null);
 
 	useEffect(() => {
 		let mounted = true;
@@ -74,16 +74,11 @@ function About(props) {
 		(async () => {
 			try {
 				const doc = await getAboutContent();
-				if (!mounted || !doc) {
-					return;
-				}
-
-				const mapped = mapSanityAboutDoc(doc);
-				if (mapped) {
-					setAboutContent(mapped);
-				}
+				if (!mounted) return;
+				const mapped = doc ? mapSanityAboutDoc(doc) : null;
+				setAboutContent(mapped || fallbackContent);
 			} catch (_err) {
-				// Keep fallback content if CMS fetch fails.
+				if (mounted) setAboutContent(fallbackContent);
 			}
 		})();
 
@@ -91,6 +86,26 @@ function About(props) {
 			mounted = false;
 		};
 	}, []);
+
+	if (!aboutContent) {
+		return (
+			<div className="content-rail my-5 py-5">
+				<div className="grid grid-cols-1 md:grid-cols-8 grid-rows-1 gap-10">
+					<div className="col-span-8 md:col-span-8 lg:col-span-3">
+						<div className="shimmer rounded h-8 w-1/2 mb-4" />
+						<div className="shimmer w-full" style={{ aspectRatio: '3/4' }} />
+					</div>
+					<div className="about-copy col-span-8 md:col-span-8 lg:col-span-5">
+						{[1, 0.9, 0.8, 1, 0.7].map((w, i) => (
+							<div key={i} className="shimmer rounded h-4 mb-3" style={{ width: `${w * 100}%` }} />
+						))}
+						<div className="shimmer rounded h-4 w-3/5 mb-6" />
+						<div className="shimmer rounded h-10 w-1/3 mt-4" />
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	const toolItems = useMemo(() => {
 		const tools = aboutContent.toolsList || '';

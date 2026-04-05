@@ -149,7 +149,8 @@ export function orderProjectsBySanity(baseProjects, sanityProjects) {
 }
 
 export function useSiteProjects() {
-	const [projects, setProjects] = useState(localProjects);
+	const [projects, setProjects] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		let isMounted = true;
@@ -157,13 +158,19 @@ export function useSiteProjects() {
 		(async () => {
 			try {
 				const sanityProjects = await getProjects();
-				if (!isMounted || !Array.isArray(sanityProjects) || sanityProjects.length === 0) {
-					return;
-				}
+				if (!isMounted) return;
 
-				setProjects(orderProjectsBySanity(localProjects, sanityProjects));
+				if (Array.isArray(sanityProjects) && sanityProjects.length > 0) {
+					setProjects(orderProjectsBySanity(localProjects, sanityProjects));
+				} else {
+					setProjects(orderProjectsBySanity(localProjects, []));
+				}
 			} catch (_err) {
-				// Keep local fallback ordering if Sanity is unavailable.
+				if (isMounted) {
+					setProjects(orderProjectsBySanity(localProjects, []));
+				}
+			} finally {
+				if (isMounted) setLoading(false);
 			}
 		})();
 
@@ -172,5 +179,5 @@ export function useSiteProjects() {
 		};
 	}, []);
 
-	return projects;
+	return { projects: projects || [], loading };
 }

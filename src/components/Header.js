@@ -214,7 +214,8 @@ const Header = props => {
   const [borderDims, setBorderDims] = useState(null);
   const dropdownRef = useRef(null);
   const baseDimsRef = useRef(null);
-  const projects = useSiteProjects().filter(project => Boolean(project?.path && project?.menuLabel));
+  const { projects: allProjects } = useSiteProjects();
+  const projects = allProjects.filter(project => Boolean(project?.path && project?.menuLabel));
   const [dropdownLinks, setDropdownLinks] = useState(() => normalizeMenuLinks(menuLinks));
 
   useLayoutEffect(() => {

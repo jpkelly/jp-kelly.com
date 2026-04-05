@@ -213,7 +213,7 @@ function ProjectRoutePage({ component: ProjectComponent, title, description, ima
 
 export function AppShell() {
 	const shellRef = useRef(null);
-	const projects = useSiteProjects();
+	const { projects } = useSiteProjects();
 	const projectRoutes = buildProjectRoutes(projects);
 
 	useEffect(() => {

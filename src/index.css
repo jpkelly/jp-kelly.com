@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+/* ─── Shimmer skeleton animation ──────────────────────────────────────────────
+   Used for loading placeholders before CMS content arrives.
+──────────────────────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 25%,
+    #2a2a2a 37%,
+    #1a1a1a 63%
+  );
+  background-size: 1200px 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
 /* ─── Dropdown menu design tokens ─────────────────────────────────────────────
    Edit these variables to restyle the dropdown and submenus in one place.
    Set --dropdown-border to 'none' to remove the border entirely.

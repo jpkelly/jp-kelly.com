@@ -240,6 +240,7 @@ a:hover {
   left: calc(100% - 1px); /* overlap dropdown right border by 1px */
   min-width: 12rem;
   white-space: nowrap;
+  border: var(--dropdown-border-width) solid var(--dropdown-border-color) !important;
   border-left: none !important;
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;

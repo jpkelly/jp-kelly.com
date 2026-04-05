@@ -227,8 +227,13 @@ a:hover {
   overflow: visible;
 }
 
+.section-label {
+  width: 100%;
+}
+
 .section-arrow {
-  margin-left: 1rem;
+  margin-left: auto;
+  padding-right: 0.15rem;
   font-size: 0.75em;
   color: transparent;
   transition: color 0.15s ease;

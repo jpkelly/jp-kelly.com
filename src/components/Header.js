@@ -300,7 +300,7 @@ const Header = props => {
                         >
                           <span className="link px-3 flex items-center cursor-default section-label">
                             {section.name}
-                            <span className="section-arrow">&#x279C;</span>
+                            <span className="section-arrow">&#x2192;</span>
                           </span>
                           {isOpen && (
                             <ul className="section-submenu dropdown-menu text-gray-200 py-3">

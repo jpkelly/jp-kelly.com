@@ -185,9 +185,9 @@ a:hover {
 .dropdown-menu {
   padding-top: 0.35rem;
   padding-bottom: 0.35rem;
-  background-color: var(--dropdown-bg) !important;
+  background-color: transparent !important;
   border: none !important;
-  border-radius: var(--dropdown-radius) !important;
+  border-radius: 0 !important;
 }
 
 .dropdown-menu li {
@@ -230,7 +230,7 @@ a:hover {
   min-width: 12rem;
   white-space: nowrap;
   border: none !important;
-  border-radius: var(--dropdown-radius) !important;
+  border-radius: 0 !important;
   overflow: visible;
 }
 

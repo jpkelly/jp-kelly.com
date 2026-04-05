@@ -117,7 +117,7 @@ function buildMenuPath({ dW, dH, sY, fW, fH }, r, rc) {
       `M ${r} 0`, `L ${dW - r} 0`,
       `A ${r} ${r} 0 0 1 ${dW} ${r}`,
       `L ${dW} ${safeTop - rc}`,
-      `A ${rc} ${rc} 0 0 1 ${dW + rc} ${safeTop}`,      // concave top junction
+      `A ${rc} ${rc} 0 0 0 ${dW + rc} ${safeTop}`,      // concave top junction
       `L ${dW + fW - r} ${safeTop}`,
       `A ${r} ${r} 0 0 1 ${dW + fW} ${safeTop + r}`,
       `L ${dW + fW} ${safeBottom - r}`,
@@ -137,7 +137,7 @@ function buildMenuPath({ dW, dH, sY, fW, fH }, r, rc) {
       `M ${r} 0`, `L ${dW - r} 0`,
       `A ${r} ${r} 0 0 1 ${dW} ${r}`,
       `L ${dW} ${safeTop - rc}`,
-      `A ${rc} ${rc} 0 0 1 ${dW + rc} ${safeTop}`,      // concave top junction
+      `A ${rc} ${rc} 0 0 0 ${dW + rc} ${safeTop}`,      // concave top junction
       `L ${dW + fW - r} ${safeTop}`,
       `A ${r} ${r} 0 0 1 ${dW + fW} ${safeTop + r}`,
       `L ${dW + fW} ${flyoutBottom - r}`,
@@ -167,7 +167,7 @@ function MenuBorderSVG({ dims }) {
       style={{
         position: 'absolute', top: 0, left: 0,
         width: totalW, height: totalH,
-        pointerEvents: 'none', zIndex: 60, overflow: 'visible',
+        pointerEvents: 'none', zIndex: -1, overflow: 'visible',
       }}
     >
       <defs>
@@ -177,7 +177,7 @@ function MenuBorderSVG({ dims }) {
           <stop offset="40%" stopColor="#D1D5DB" />
         </linearGradient>
       </defs>
-      <path d={d} fill="none" stroke="url(#menu-border-grad)" strokeWidth="1" />
+      <path d={d} fill="rgba(0,0,0,0.85)" stroke="url(#menu-border-grad)" strokeWidth="1" />
     </svg>
   );
 }

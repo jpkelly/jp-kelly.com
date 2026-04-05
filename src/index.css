@@ -232,36 +232,40 @@ a:hover {
   border-left: none !important;
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
+  overflow: visible;
 }
 
-/* Concave corner curves at the flyout-dropdown junction.
-   ::before = curve above the hovered section item (top junction)
-   ::after  = curve below the hovered section item (bottom junction) */
-.section-item:hover::before,
-.section-item:hover::after {
+/* Concave corner curves attached to the flyout so they sit precisely
+   at its top-left and bottom-left corners.
+   Focal point at the corner where flyout meets the dropdown border:
+   ::before → top junction:    focal = bottom-right (100% 100%)
+   ::after  → bottom junction: focal = top-right    (100%   0%) */
+.section-submenu::before,
+.section-submenu::after {
   content: '';
   position: absolute;
-  right: calc(-1 * var(--dropdown-border-width));
+  left: calc(-1 * var(--dropdown-radius));
   width: var(--dropdown-radius);
   height: var(--dropdown-radius);
   pointer-events: none;
+  z-index: 1;
 }
 
-.section-item:hover::before {
+.section-submenu::before {
   top: calc(-1 * var(--dropdown-radius));
   background: radial-gradient(
-    circle at 0% 100%,
-    var(--dropdown-bg) calc(var(--dropdown-radius) - 1px),
+    circle at 100% 100%,
+    transparent calc(var(--dropdown-radius) - 1px),
     var(--dropdown-border-color) var(--dropdown-radius),
     var(--dropdown-corner-bg) calc(var(--dropdown-radius) + 1px)
   );
 }
 
-.section-item:hover::after {
+.section-submenu::after {
   bottom: calc(-1 * var(--dropdown-radius));
   background: radial-gradient(
-    circle at 0% 0%,
-    var(--dropdown-bg) calc(var(--dropdown-radius) - 1px),
+    circle at 100% 0%,
+    transparent calc(var(--dropdown-radius) - 1px),
     var(--dropdown-border-color) var(--dropdown-radius),
     var(--dropdown-corner-bg) calc(var(--dropdown-radius) + 1px)
   );

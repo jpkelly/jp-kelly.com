@@ -225,6 +225,7 @@ a:hover {
   white-space: nowrap;
   padding-top: 1rem !important;
   padding-right: 1.5rem !important;
+  padding-bottom: 0.35rem !important;
   border: none !important;
   border-radius: 0 !important;
   overflow: visible;

@@ -235,37 +235,38 @@ a:hover {
   overflow: visible;
 }
 
-/* Concave corner curves attached to the flyout so they sit precisely
-   at its top-left and bottom-left corners.
-   Focal point at the corner where flyout meets the dropdown border:
-   ::before → top junction:    focal = bottom-right (100% 100%)
-   ::after  → bottom junction: focal = top-right    (100%   0%) */
+/* Concave corner squares sit outside the flyout — above and below it —
+   anchored at the junction with the dropdown's right border.
+   ::before = just above the flyout top edge
+   ::after  = just below the flyout bottom edge
+   Focal point is the inner corner where the dropdown border meets the flyout edge:
+   ::before → bottom-left (0% 100%), ::after → top-left (0% 0%) */
 .section-submenu::before,
 .section-submenu::after {
   content: '';
   position: absolute;
-  left: calc(-1 * var(--dropdown-radius));
+  left: 0;
   width: var(--dropdown-radius);
   height: var(--dropdown-radius);
   pointer-events: none;
-  z-index: 1;
+  z-index: 10;
 }
 
 .section-submenu::before {
-  top: calc(-1 * var(--dropdown-radius));
+  bottom: 100%;
   background: radial-gradient(
-    circle at 100% 100%,
-    transparent calc(var(--dropdown-radius) - 1px),
+    circle at 0% 100%,
+    var(--dropdown-bg) calc(var(--dropdown-radius) - 1px),
     var(--dropdown-border-color) var(--dropdown-radius),
     var(--dropdown-corner-bg) calc(var(--dropdown-radius) + 1px)
   );
 }
 
 .section-submenu::after {
-  bottom: calc(-1 * var(--dropdown-radius));
+  top: 100%;
   background: radial-gradient(
-    circle at 100% 0%,
-    transparent calc(var(--dropdown-radius) - 1px),
+    circle at 0% 0%,
+    var(--dropdown-bg) calc(var(--dropdown-radius) - 1px),
     var(--dropdown-border-color) var(--dropdown-radius),
     var(--dropdown-corner-bg) calc(var(--dropdown-radius) + 1px)
   );

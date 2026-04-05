@@ -235,17 +235,16 @@ a:hover {
   overflow: visible;
 }
 
-/* Concave corner squares sit outside the flyout — above and below it —
-   anchored at the junction with the dropdown's right border.
-   ::before = just above the flyout top edge
-   ::after  = just below the flyout bottom edge
-   Focal point is the inner corner where the dropdown border meets the flyout edge:
-   ::before → bottom-left (0% 100%), ::after → top-left (0% 0%) */
+/* Concave corner squares sit outside the flyout — above and below it.
+   Positioned to the LEFT of the flyout's left edge (in the dropdown's right margin).
+   Focal point at the right side — where the dropdown border meets the flyout:
+   ::before → bottom-right (100% 100%), ::after → top-right (100% 0%)
+   Inside arc = site background (the concave cutout), outside = dropdown background. */
 .section-submenu::before,
 .section-submenu::after {
   content: '';
   position: absolute;
-  left: 0;
+  left: calc(-1 * var(--dropdown-radius));
   width: var(--dropdown-radius);
   height: var(--dropdown-radius);
   pointer-events: none;
@@ -255,20 +254,20 @@ a:hover {
 .section-submenu::before {
   bottom: 100%;
   background: radial-gradient(
-    circle at 0% 100%,
-    var(--dropdown-bg) calc(var(--dropdown-radius) - 1px),
+    circle at 100% 100%,
+    var(--dropdown-corner-bg) calc(var(--dropdown-radius) - 1px),
     var(--dropdown-border-color) var(--dropdown-radius),
-    var(--dropdown-corner-bg) calc(var(--dropdown-radius) + 1px)
+    var(--dropdown-bg) calc(var(--dropdown-radius) + 1px)
   );
 }
 
 .section-submenu::after {
   top: 100%;
   background: radial-gradient(
-    circle at 0% 0%,
-    var(--dropdown-bg) calc(var(--dropdown-radius) - 1px),
+    circle at 100% 0%,
+    var(--dropdown-corner-bg) calc(var(--dropdown-radius) - 1px),
     var(--dropdown-border-color) var(--dropdown-radius),
-    var(--dropdown-corner-bg) calc(var(--dropdown-radius) + 1px)
+    var(--dropdown-bg) calc(var(--dropdown-radius) + 1px)
   );
 }
 

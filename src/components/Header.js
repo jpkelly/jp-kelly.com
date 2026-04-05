@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { BiHomeSmile } from 'react-icons/bi';
 import kamon from '../kamon.png';
@@ -92,8 +92,27 @@ function groupProjectsBySection(projects) {
 const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);
   const [openSection, setOpenSection] = useState(null);
+  const dropdownRef = useRef(null);
   const projects = useSiteProjects().filter(project => Boolean(project?.path && project?.menuLabel));
   const [dropdownLinks, setDropdownLinks] = useState(() => normalizeMenuLinks(menuLinks));
+
+  useLayoutEffect(() => {
+    if (!openSection || !dropdownRef.current) return;
+    const dropdownEl = dropdownRef.current;
+    const dropdownRect = dropdownEl.getBoundingClientRect();
+    if (dropdownRect.height === 0) return;
+    const sectionEl = dropdownEl.querySelector(`[data-section-key="${openSection}"]`);
+    if (!sectionEl) return;
+    const sectionRect = sectionEl.getBoundingClientRect();
+    const ratio = Math.min(1, Math.max(0, (sectionRect.top - dropdownRect.top) / dropdownRect.height));
+    const flyoutEl = sectionEl.querySelector('.section-submenu');
+    if (!flyoutEl) return;
+    const borderColor = getComputedStyle(dropdownEl).getPropertyValue('--dropdown-border-color').trim();
+    let r = 209, g = 213, b = 219;
+    const hex = borderColor.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+    if (hex) { r = parseInt(hex[1], 16); g = parseInt(hex[2], 16); b = parseInt(hex[3], 16); }
+    flyoutEl.style.setProperty('--flyout-gradient-start', `rgba(${r},${g},${b},${ratio.toFixed(3)})`);
+  }, [openSection]);
 
   useEffect(() => {
     let mounted = true;
@@ -134,7 +153,7 @@ const Header = props => {
         >
           <span className="px-3">Projects</span>
           {toggleMenu && (
-            <ul className="z-50 dropdown-menu absolute text-gray-200 py-3 ">
+            <ul ref={dropdownRef} className="z-50 dropdown-menu absolute text-gray-200 py-3 ">
               {(() => {
                 const { sortedSections, unsectioned } = groupProjectsBySection(projects);
                 return (
@@ -146,6 +165,7 @@ const Header = props => {
                         <li
                           key={key}
                           className="section-item relative"
+                          data-section-key={key}
                           onMouseEnter={() => setOpenSection(key)}
                           onMouseLeave={() => setOpenSection(null)}
                         >

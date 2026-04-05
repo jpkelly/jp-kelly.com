@@ -12,6 +12,7 @@
   --dropdown-border:        none;
   --dropdown-radius:        0.5rem;   /* same as Tailwind rounded-lg */
   --dropdown-corner-bg:     black;    /* site background — fills concave junction corners */
+  --flyout-gradient-start:  transparent; /* set dynamically in Header.js */
 }
 
 body {
@@ -247,7 +248,7 @@ a:hover {
   overflow: visible;
   background:
     linear-gradient(var(--dropdown-bg), var(--dropdown-bg)) padding-box,
-    linear-gradient(to bottom, transparent, var(--dropdown-border-color)) border-box !important;
+    linear-gradient(to bottom, var(--flyout-gradient-start, transparent), var(--dropdown-border-color)) border-box !important;
 }
 
 /* Top concave corner: sits above the flyout, to the left of its left edge.

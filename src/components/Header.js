@@ -89,30 +89,138 @@ function groupProjectsBySection(projects) {
   return { sortedSections, unsectioned };
 }
 
+// Builds an SVG path around the combined dropdown + flyout outline.
+// All convex corners use sweep=1 (CW small arc).
+// Concave junctions also use sweep=1 — the center sits at the junction point,
+// so the arc bulges outward into the void between the two panels.
+function buildMenuPath({ dW, dH, sY, fW, fH }, r, rc) {
+  if (sY === null || fW === 0) {
+    return [
+      `M ${r} 0`, `L ${dW - r} 0`,
+      `A ${r} ${r} 0 0 1 ${dW} ${r}`,
+      `L ${dW} ${dH - r}`,
+      `A ${r} ${r} 0 0 1 ${dW - r} ${dH}`,
+      `L ${r} ${dH}`,
+      `A ${r} ${r} 0 0 1 0 ${dH - r}`,
+      `L 0 ${r}`,
+      `A ${r} ${r} 0 0 1 ${r} 0`, 'Z',
+    ].join(' ');
+  }
+
+  const flyoutBottom = sY + fH;
+  const safeTop = Math.max(rc + r, sY);
+
+  if (flyoutBottom <= dH) {
+    // Case 1: flyout fits within dropdown height
+    const safeBottom = Math.min(dH - r - rc, flyoutBottom);
+    return [
+      `M ${r} 0`, `L ${dW - r} 0`,
+      `A ${r} ${r} 0 0 1 ${dW} ${r}`,
+      `L ${dW} ${safeTop - rc}`,
+      `A ${rc} ${rc} 0 0 1 ${dW + rc} ${safeTop}`,      // concave top junction
+      `L ${dW + fW - r} ${safeTop}`,
+      `A ${r} ${r} 0 0 1 ${dW + fW} ${safeTop + r}`,
+      `L ${dW + fW} ${safeBottom - r}`,
+      `A ${r} ${r} 0 0 1 ${dW + fW - r} ${safeBottom}`,
+      `L ${dW + rc} ${safeBottom}`,
+      `A ${rc} ${rc} 0 0 1 ${dW} ${safeBottom + rc}`,   // concave bottom junction
+      `L ${dW} ${dH - r}`,
+      `A ${r} ${r} 0 0 1 ${dW - r} ${dH}`,
+      `L ${r} ${dH}`,
+      `A ${r} ${r} 0 0 1 0 ${dH - r}`,
+      `L 0 ${r}`,
+      `A ${r} ${r} 0 0 1 ${r} 0`, 'Z',
+    ].join(' ');
+  } else {
+    // Case 2: flyout extends below dropdown
+    return [
+      `M ${r} 0`, `L ${dW - r} 0`,
+      `A ${r} ${r} 0 0 1 ${dW} ${r}`,
+      `L ${dW} ${safeTop - rc}`,
+      `A ${rc} ${rc} 0 0 1 ${dW + rc} ${safeTop}`,      // concave top junction
+      `L ${dW + fW - r} ${safeTop}`,
+      `A ${r} ${r} 0 0 1 ${dW + fW} ${safeTop + r}`,
+      `L ${dW + fW} ${flyoutBottom - r}`,
+      `A ${r} ${r} 0 0 1 ${dW + fW - r} ${flyoutBottom}`,
+      `L ${dW + r} ${flyoutBottom}`,
+      `A ${r} ${r} 0 0 1 ${dW} ${flyoutBottom - r}`,    // flyout bottom-left convex
+      `L ${dW} ${dH + rc}`,
+      `A ${rc} ${rc} 0 0 1 ${dW - rc} ${dH}`,          // concave bottom junction
+      `L ${r} ${dH}`,
+      `A ${r} ${r} 0 0 1 0 ${dH - r}`,
+      `L 0 ${r}`,
+      `A ${r} ${r} 0 0 1 ${r} 0`, 'Z',
+    ].join(' ');
+  }
+}
+
+function MenuBorderSVG({ dims }) {
+  if (typeof window === 'undefined' || !dims) return null;
+  const R = 8;   // convex radius px — matches --dropdown-radius: 0.5rem
+  const RC = 8;  // concave junction radius px
+  const { dW, dH, sY, fW, fH } = dims;
+  const totalW = sY !== null && fW > 0 ? dW + fW : dW;
+  const totalH = sY !== null && fH > 0 ? Math.max(dH, sY + fH) : dH;
+  const d = buildMenuPath(dims, R, RC);
+  return (
+    <svg
+      style={{
+        position: 'absolute', top: 0, left: 0,
+        width: totalW, height: totalH,
+        pointerEvents: 'none', zIndex: 60, overflow: 'visible',
+      }}
+    >
+      <defs>
+        <linearGradient id="menu-border-grad" gradientUnits="userSpaceOnUse"
+          x1="0" y1="0" x2="0" y2={totalH}>
+          <stop offset="0%" stopColor="transparent" />
+          <stop offset="100%" stopColor="#D1D5DB" />
+        </linearGradient>
+      </defs>
+      <path d={d} fill="none" stroke="url(#menu-border-grad)" strokeWidth="1" />
+    </svg>
+  );
+}
+
 const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);
   const [openSection, setOpenSection] = useState(null);
+  const [borderDims, setBorderDims] = useState(null);
   const dropdownRef = useRef(null);
   const projects = useSiteProjects().filter(project => Boolean(project?.path && project?.menuLabel));
   const [dropdownLinks, setDropdownLinks] = useState(() => normalizeMenuLinks(menuLinks));
 
   useLayoutEffect(() => {
-    if (!openSection || !dropdownRef.current) return;
-    const dropdownEl = dropdownRef.current;
-    const dropdownRect = dropdownEl.getBoundingClientRect();
-    if (dropdownRect.height === 0) return;
-    const sectionEl = dropdownEl.querySelector(`[data-section-key="${openSection}"]`);
-    if (!sectionEl) return;
-    const sectionRect = sectionEl.getBoundingClientRect();
-    const ratio = Math.min(1, Math.max(0, (sectionRect.top - dropdownRect.top) / dropdownRect.height));
-    const flyoutEl = sectionEl.querySelector('.section-submenu');
-    if (!flyoutEl) return;
-    const borderColor = getComputedStyle(dropdownEl).getPropertyValue('--dropdown-border-color').trim();
-    let r = 209, g = 213, b = 219;
-    const hex = borderColor.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
-    if (hex) { r = parseInt(hex[1], 16); g = parseInt(hex[2], 16); b = parseInt(hex[3], 16); }
-    flyoutEl.style.setProperty('--flyout-gradient-start', `rgba(${r},${g},${b},${ratio.toFixed(3)})`);
-  }, [openSection]);
+    if (!toggleMenu || !dropdownRef.current) {
+      setBorderDims(null);
+      return;
+    }
+    const dropdown = dropdownRef.current;
+    const ddRect = dropdown.getBoundingClientRect();
+    if (ddRect.height === 0) { setBorderDims(null); return; }
+
+    if (!openSection) {
+      setBorderDims({ dW: ddRect.width, dH: ddRect.height, sY: null, fW: 0, fH: 0 });
+      return;
+    }
+
+    const sectionEl = dropdown.querySelector(`[data-section-key="${openSection}"]`);
+    const flyoutEl = sectionEl?.querySelector('.section-submenu');
+    if (!sectionEl || !flyoutEl) {
+      setBorderDims({ dW: ddRect.width, dH: ddRect.height, sY: null, fW: 0, fH: 0 });
+      return;
+    }
+
+    const secRect = sectionEl.getBoundingClientRect();
+    const flyRect = flyoutEl.getBoundingClientRect();
+    setBorderDims({
+      dW: ddRect.width,
+      dH: ddRect.height,
+      sY: secRect.top - ddRect.top,
+      fW: flyRect.width,
+      fH: flyRect.height,
+    });
+  }, [toggleMenu, openSection]);
 
   useEffect(() => {
     let mounted = true;
@@ -154,6 +262,7 @@ const Header = props => {
           <span className="px-3">Projects</span>
           {toggleMenu && (
             <ul ref={dropdownRef} className="z-50 dropdown-menu absolute text-gray-200 py-3 ">
+              <MenuBorderSVG dims={borderDims} />
               {(() => {
                 const { sortedSections, unsectioned } = groupProjectsBySection(projects);
                 return (

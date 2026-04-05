@@ -12,7 +12,6 @@
   --dropdown-border:        none;
   --dropdown-radius:        0.5rem;   /* same as Tailwind rounded-lg */
   --dropdown-corner-bg:     black;    /* site background — fills concave junction corners */
-  --flyout-gradient-start:  transparent; /* set dynamically in Header.js */
 }
 
 body {
@@ -187,19 +186,8 @@ a:hover {
   padding-top: 0.35rem;
   padding-bottom: 0.35rem;
   background-color: var(--dropdown-bg) !important;
-  border: var(--dropdown-border) !important;
+  border: none !important;
   border-radius: var(--dropdown-radius) !important;
-}
-
-/* Gradient border on the main dropdown only — transparent at top, solid at bottom
-   on all sides. Uses the background-clip trick: transparent border + two-layer
-   background (dropdown bg clipped to padding-box, gradient clipped to border-box).
-   No pseudo-elements, no layout impact. Does not affect the submenu. */
-.dropdown-menu:not(.section-submenu) {
-  border: var(--dropdown-border-width) solid transparent !important;
-  background:
-    linear-gradient(var(--dropdown-bg), var(--dropdown-bg)) padding-box,
-    linear-gradient(to bottom, transparent, var(--dropdown-border-color)) border-box !important;
 }
 
 .dropdown-menu li {
@@ -241,39 +229,8 @@ a:hover {
   left: calc(100% - 1px);
   min-width: 12rem;
   white-space: nowrap;
-  border: var(--dropdown-border-width) solid transparent !important;
-  border-left: none !important;
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
+  border: none !important;
+  border-radius: var(--dropdown-radius) !important;
   overflow: visible;
-  background:
-    linear-gradient(var(--dropdown-bg), var(--dropdown-bg)) padding-box,
-    linear-gradient(to bottom, var(--flyout-gradient-start, transparent), var(--dropdown-border-color)) border-box !important;
-}
-
-/* Top concave corner: sits above the flyout, to the left of its left edge.
-   Its bottom-right corner (the inner junction) gets the radius.
-   border-right  = continues the dropdown's right border downward to flyout top
-   border-bottom = connects leftward into the flyout top border
-   background fills the cutout so nothing bleeds through. */
-.section-submenu::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: calc(-1 * var(--dropdown-radius));
-  width: var(--dropdown-radius);
-  height: var(--dropdown-radius);
-  pointer-events: none;
-  z-index: 10;
-  background: var(--dropdown-corner-bg);
-  border-right: var(--dropdown-border);
-  border-bottom: var(--dropdown-border);
-  border-bottom-right-radius: var(--dropdown-radius);
-}
-
-/* Bottom corner omitted: when the flyout is taller than the dropdown the
-   corner would float in empty space. Bottom-left of the flyout is square. */
-.section-submenu::after {
-  display: none;
 }
 

@@ -223,7 +223,7 @@ a:hover {
   left: calc(100% - 1px);
   min-width: 12rem;
   white-space: nowrap;
-  padding-top: 1.25rem !important;
+  padding-top: 0.35rem !important;
   border: none !important;
   border-radius: 0 !important;
   overflow: visible;

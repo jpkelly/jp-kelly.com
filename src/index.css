@@ -190,6 +190,26 @@ a:hover {
   border-radius: var(--dropdown-radius) !important;
 }
 
+/* Gradient border on the main dropdown only — transparent at top, solid at bottom.
+   Uses mask-composite to render only the 1px padding ring as the border,
+   so border-radius is preserved. Does not affect the submenu. */
+.dropdown-menu:not(.section-submenu) {
+  position: relative;
+}
+
+.dropdown-menu:not(.section-submenu)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--dropdown-radius);
+  padding: var(--dropdown-border-width);
+  background: linear-gradient(to bottom, transparent, var(--dropdown-border-color));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 .dropdown-menu li {
   padding-top: 0.35rem !important;
   padding-bottom: 0.35rem !important;

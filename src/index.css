@@ -227,3 +227,14 @@ a:hover {
   overflow: visible;
 }
 
+.section-arrow {
+  margin-left: 0.4rem;
+  font-size: 0.55em;
+  color: transparent;
+  transition: color 0.15s ease;
+}
+
+.section-item:hover .section-arrow {
+  color: #3b82f6;
+}
+

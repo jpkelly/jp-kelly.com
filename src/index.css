@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* ─── Dropdown menu design tokens ─────────────────────────────────────────────
+   Edit these variables to restyle the dropdown and submenus in one place.
+   Set --dropdown-border to 'none' to remove the border entirely.
+──────────────────────────────────────────────────────────────────────────── */
+:root {
+  --dropdown-bg:            rgba(0, 0, 0, 0.85);
+  --dropdown-border-width:  1px;
+  --dropdown-border-style:  solid;
+  --dropdown-border-color:  #D1D5DB;  /* same as Tailwind gray-300 / card border */
+  --dropdown-border:        var(--dropdown-border-width) var(--dropdown-border-style) var(--dropdown-border-color);
+  --dropdown-radius:        0.5rem;   /* same as Tailwind rounded-lg */
+  --dropdown-fade-stop:     50%;      /* how far down the top-fade extends */
+}
+
 body {
   background-color: black;
   margin: 0;
@@ -171,13 +185,15 @@ a:hover {
 .dropdown-menu {
   padding-top: 0.35rem;
   padding-bottom: 0.35rem;
-  background-color: rgba(0, 0, 0, 0.85) !important;
+  background-color: var(--dropdown-bg) !important;
+  border: var(--dropdown-border) !important;
+  border-radius: var(--dropdown-radius) !important;
 }
 
-/* Fade only the main dropdown background from transparent → solid at midpoint.
+/* Fade only the main dropdown background from transparent → solid.
    Does not affect submenus or content. */
 .dropdown-menu:not(.section-submenu) {
-  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.85) 50%) !important;
+  background: linear-gradient(to bottom, transparent 0%, var(--dropdown-bg) var(--dropdown-fade-stop)) !important;
   border-top-color: transparent !important;
 }
 

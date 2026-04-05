@@ -134,7 +134,7 @@ const Header = props => {
         >
           <span className="px-3">Projects</span>
           {toggleMenu && (
-            <ul className="z-50 dropdown-menu absolute rounded-lg border border-gray-300 text-gray-200 bg-black bg-opacity-80 py-3 ">
+            <ul className="z-50 dropdown-menu absolute text-gray-200 py-3 ">
               {(() => {
                 const { sortedSections, unsectioned } = groupProjectsBySection(projects);
                 return (
@@ -154,7 +154,7 @@ const Header = props => {
                             <span className="section-arrow">›</span>
                           </span>
                           {isOpen && (
-                            <ul className="section-submenu dropdown-menu rounded-lg border border-gray-300 text-gray-200 bg-black bg-opacity-80 py-3">
+                            <ul className="section-submenu dropdown-menu text-gray-200 py-3">
                               {sectionProjects.map(project => (
                                 <li
                                   key={`${project.id}-${project.path}`}

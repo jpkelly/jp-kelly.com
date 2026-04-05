@@ -235,33 +235,29 @@ a:hover {
   overflow: visible;
 }
 
-/* Corner pieces: transparent, two-sided border with radius at the inner corner.
-   Left border continues the dropdown right border into the gap.
-   Bottom/top border connects to the flyout top/bottom border.
-   border-radius curves the join — concave from the viewer. */
-.section-submenu::before,
-.section-submenu::after {
+/* Top concave corner: sits above the flyout, to the left of its left edge.
+   Its bottom-right corner (the inner junction) gets the radius.
+   border-right  = continues the dropdown's right border downward to flyout top
+   border-bottom = connects leftward into the flyout top border
+   background fills the cutout so nothing bleeds through. */
+.section-submenu::before {
   content: '';
   position: absolute;
-  left: calc(-1 * var(--dropdown-border-width));
+  bottom: 100%;
+  left: calc(-1 * var(--dropdown-radius));
   width: var(--dropdown-radius);
   height: var(--dropdown-radius);
   pointer-events: none;
   z-index: 10;
   background: var(--dropdown-corner-bg);
-}
-
-.section-submenu::before {
-  bottom: 100%;
-  border-left: var(--dropdown-border);
+  border-right: var(--dropdown-border);
   border-bottom: var(--dropdown-border);
-  border-bottom-left-radius: var(--dropdown-radius);
+  border-bottom-right-radius: var(--dropdown-radius);
 }
 
+/* Bottom corner omitted: when the flyout is taller than the dropdown the
+   corner would float in empty space. Bottom-left of the flyout is square. */
 .section-submenu::after {
-  top: 100%;
-  border-left: var(--dropdown-border);
-  border-top: var(--dropdown-border);
-  border-top-left-radius: var(--dropdown-radius);
+  display: none;
 }
 

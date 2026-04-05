@@ -11,7 +11,7 @@
   --dropdown-border-color:  #D1D5DB;  /* same as Tailwind gray-300 / card border */
   --dropdown-border:        var(--dropdown-border-width) var(--dropdown-border-style) var(--dropdown-border-color);
   --dropdown-radius:        0.5rem;   /* same as Tailwind rounded-lg */
-  --dropdown-fade-stop:     50%;      /* how far down the top-fade extends */
+  --dropdown-corner-bg:     black;    /* site background — fills concave junction corners */
 }
 
 body {
@@ -190,13 +190,6 @@ a:hover {
   border-radius: var(--dropdown-radius) !important;
 }
 
-/* Fade only the main dropdown background from transparent → solid.
-   Does not affect submenus or content. */
-.dropdown-menu:not(.section-submenu) {
-  background: linear-gradient(to bottom, transparent 0%, var(--dropdown-bg) var(--dropdown-fade-stop)) !important;
-  border-top-color: transparent !important;
-}
-
 .dropdown-menu li {
   padding-top: 0.35rem !important;
   padding-bottom: 0.35rem !important;
@@ -233,9 +226,45 @@ a:hover {
 .section-submenu {
   position: absolute;
   top: 0;
-  left: 100%;
+  left: calc(100% - 1px); /* overlap dropdown right border by 1px */
   min-width: 12rem;
   white-space: nowrap;
+  border-left: none !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+/* Concave corner curves at the flyout-dropdown junction.
+   ::before = curve above the hovered section item (top junction)
+   ::after  = curve below the hovered section item (bottom junction) */
+.section-item:hover::before,
+.section-item:hover::after {
+  content: '';
+  position: absolute;
+  right: calc(-1 * var(--dropdown-border-width));
+  width: var(--dropdown-radius);
+  height: var(--dropdown-radius);
+  pointer-events: none;
+}
+
+.section-item:hover::before {
+  top: calc(-1 * var(--dropdown-radius));
+  background: radial-gradient(
+    circle at 0% 100%,
+    var(--dropdown-corner-bg) calc(var(--dropdown-radius) - 1px),
+    var(--dropdown-border-color) var(--dropdown-radius),
+    var(--dropdown-bg) calc(var(--dropdown-radius) + 1px)
+  );
+}
+
+.section-item:hover::after {
+  bottom: calc(-1 * var(--dropdown-radius));
+  background: radial-gradient(
+    circle at 0% 0%,
+    var(--dropdown-corner-bg) calc(var(--dropdown-radius) - 1px),
+    var(--dropdown-border-color) var(--dropdown-radius),
+    var(--dropdown-bg) calc(var(--dropdown-radius) + 1px)
+  );
 }
 
 .section-arrow {

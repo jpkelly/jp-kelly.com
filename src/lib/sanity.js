@@ -104,7 +104,10 @@ export async function getProjects() {
     return [];
   }
 
-  const query = `*[_type == "project"] | order(defined(orderRank) desc, orderRank asc, order asc)`;
+  const query = `*[_type == "project"] | order(defined(orderRank) desc, orderRank asc, order asc) {
+    ...,
+    menuSection->{ _id, name, orderRank }
+  }`;
   return await sanityClient.fetch(query);
 }
 

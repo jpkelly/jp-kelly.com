@@ -61,6 +61,34 @@ function normalizeMenuLinks(links) {
     });
 }
 
+function groupProjectsBySection(projects) {
+  const sectionMap = new Map();
+  const unsectioned = [];
+
+  projects.forEach(project => {
+    const section = project.menuSection;
+    if (!section || !section.name) {
+      unsectioned.push(project);
+      return;
+    }
+    const key = section._id || section.name;
+    if (!sectionMap.has(key)) {
+      sectionMap.set(key, { section, projects: [] });
+    }
+    sectionMap.get(key).projects.push(project);
+  });
+
+  const sortedSections = Array.from(sectionMap.values()).sort((a, b) => {
+    const aRank = a.section.orderRank || '';
+    const bRank = b.section.orderRank || '';
+    if (aRank < bRank) return -1;
+    if (aRank > bRank) return 1;
+    return 0;
+  });
+
+  return { sortedSections, unsectioned };
+}
+
 const Header = props => {
   let [toggleMenu, setToggleMenu] = useState(false);
   const projects = useSiteProjects().filter(project => Boolean(project?.path && project?.menuLabel));
@@ -106,25 +134,54 @@ const Header = props => {
           <span className="px-3">Projects</span>
           {toggleMenu && (
             <ul className="z-50 dropdown-menu absolute rounded-b-lg text-gray-200 bg-black bg-opacity-80 py-3 ">
-              {projects.map(project => (
-                <li
-                  key={`${project.id}-${project.path}`}
-                  className="py-3 text-2xl"
-                  onClick={() => {
-                    setToggleMenu(!toggleMenu);
-                  }}
-                >
-                  {isExternalHref(project.path) ? (
-                    <a className="link px-3" href={project.path} target="_blank" rel="noopener noreferrer">
-                      {project.menuLabel}
-                    </a>
-                  ) : (
-                    <Link className="link px-3" to={project.path}>
-                      {project.menuLabel}
-                    </Link>
-                  )}
-                </li>
-              ))}
+              {(() => {
+                const { sortedSections, unsectioned } = groupProjectsBySection(projects);
+                return (
+                  <>
+                    {sortedSections.map(({ section, projects: sectionProjects }) => (
+                      <React.Fragment key={section._id || section.name}>
+                        <li className="px-3 pt-3 pb-1 text-xs uppercase tracking-widest text-gray-400 select-none pointer-events-none">
+                          {section.name}
+                        </li>
+                        {sectionProjects.map(project => (
+                          <li
+                            key={`${project.id}-${project.path}`}
+                            className="py-3 text-2xl"
+                            onClick={() => { setToggleMenu(!toggleMenu); }}
+                          >
+                            {isExternalHref(project.path) ? (
+                              <a className="link px-3" href={project.path} target="_blank" rel="noopener noreferrer">
+                                {project.menuLabel}
+                              </a>
+                            ) : (
+                              <Link className="link px-3" to={project.path}>
+                                {project.menuLabel}
+                              </Link>
+                            )}
+                          </li>
+                        ))}
+                      </React.Fragment>
+                    ))}
+                    {unsectioned.map(project => (
+                      <li
+                        key={`${project.id}-${project.path}`}
+                        className="py-3 text-2xl"
+                        onClick={() => { setToggleMenu(!toggleMenu); }}
+                      >
+                        {isExternalHref(project.path) ? (
+                          <a className="link px-3" href={project.path} target="_blank" rel="noopener noreferrer">
+                            {project.menuLabel}
+                          </a>
+                        ) : (
+                          <Link className="link px-3" to={project.path}>
+                            {project.menuLabel}
+                          </Link>
+                        )}
+                      </li>
+                    ))}
+                  </>
+                );
+              })()}
               {dropdownLinks.map(link => (
                 <li
                   key={link.id}

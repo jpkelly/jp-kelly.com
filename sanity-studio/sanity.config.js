@@ -28,8 +28,14 @@ export default defineConfig({
               S,
               context,
             }),
+            orderableDocumentListDeskItem({
+              type: 'menuSection',
+              title: 'Menu Sections',
+              S,
+              context,
+            }),
             ...S.documentTypeListItems().filter(
-              (item) => !['siteSettings', 'project'].includes(item.getId())
+              (item) => !['siteSettings', 'project', 'menuSection'].includes(item.getId())
             ),
           ]),
     }),

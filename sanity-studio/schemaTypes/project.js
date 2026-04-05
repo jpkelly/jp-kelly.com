@@ -65,6 +65,13 @@ export default {
     { name: 'id', title: 'ID', type: 'string', validation: uniqueProjectFieldValidation('id', 'ID') },
     { name: 'path', title: 'Path', type: 'string', validation: uniqueProjectFieldValidation('path', 'Path') },
     { name: 'menuLabel', title: 'Menu Label', type: 'string', validation: (Rule) => Rule.required() },
+    {
+      name: 'menuSection',
+      title: 'Menu Section',
+      type: 'reference',
+      to: [{type: 'menuSection'}],
+      description: 'Section this project appears under in the dropdown menu.',
+    },
     { name: 'routeKey', title: 'Route Key', type: 'string', validation: uniqueProjectFieldValidation('routeKey', 'Route Key') },
     { name: 'cardTitle', title: 'Card Title', type: 'string', validation: (Rule) => Rule.required() },
     { name: 'cardText', title: 'Card Text', type: 'text', validation: (Rule) => Rule.required() },

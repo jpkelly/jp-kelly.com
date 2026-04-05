@@ -87,6 +87,7 @@ function normalizeProject(project) {
 			menuLabel,
 			cardTitle,
 			cardText,
+			menuSection: project.menuSection || null,
 			seoImage: normalizedSeoImage,
 			aliases: Array.isArray(project.aliases) ? project.aliases.map(normalizePath).filter(Boolean) : [],
 			thumbnails: normalizeThumbnails(project)

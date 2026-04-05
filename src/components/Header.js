@@ -197,8 +197,13 @@ function MenuBorderSVG({ dims }) {
           <stop offset="0%" stopColor="transparent" />
           <stop offset="100%" stopColor="#D1D5DB" />
         </linearGradient>
+        <linearGradient id="menu-fill-grad" gradientUnits="userSpaceOnUse"
+          x1="0" y1="0" x2="0" y2={totalH}>
+          <stop offset="0%" stopColor="rgba(0,0,0,0.9)" />
+          <stop offset="100%" stopColor="rgba(30,30,30,0.9)" />
+        </linearGradient>
       </defs>
-      <path d={d} fill="rgba(0,0,0,0.85)" stroke="url(#menu-border-grad)" strokeWidth="1" />
+      <path d={d} fill="url(#menu-fill-grad)" stroke="url(#menu-border-grad)" strokeWidth="1" />
     </svg>
   );
 }

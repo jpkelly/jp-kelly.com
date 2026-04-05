@@ -237,14 +237,16 @@ a:hover {
 .section-submenu {
   position: absolute;
   top: 0;
-  left: calc(100% - 1px); /* overlap dropdown right border by 1px */
+  left: calc(100% - 1px); /* overlap dropdown right border by 1px; hides left border */
   min-width: 12rem;
   white-space: nowrap;
-  border: var(--dropdown-border-width) solid var(--dropdown-border-color) !important;
-  border-left: none !important;
+  border: var(--dropdown-border-width) solid transparent !important;
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
   overflow: visible;
+  background:
+    linear-gradient(var(--dropdown-bg), var(--dropdown-bg)) padding-box,
+    linear-gradient(to bottom, transparent, var(--dropdown-border-color)) border-box !important;
 }
 
 /* Top concave corner: sits above the flyout, to the left of its left edge.

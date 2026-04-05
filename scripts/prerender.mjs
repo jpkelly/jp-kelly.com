@@ -12,8 +12,8 @@ const templatePath = path.resolve(buildDir, 'index.html');
 const siteUrl = (process.env.SITE_URL || 'https://jp-kelly.com').replace(/\/$/, '');
 
 const DEFAULT_TITLE = 'JP Kelly | Portfolio';
-const DEFAULT_DESCRIPTION = 'Portfolio site for JP Kelly.';
-const DEFAULT_IMAGE_PATH = '/thumbnails/nac23vj.png';
+const DEFAULT_DESCRIPTION = 'Video engineer, VJ, and creative technologist — a portfolio of work at the intersection of technology and art.';
+const DEFAULT_IMAGE_PATH = '/thumbnails/craneFlockWide.png';
 
 function escapeHtml(value) {
   return String(value)
